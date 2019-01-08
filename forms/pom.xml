@@ -54,12 +54,12 @@
 		    <scope>provided</scope>
 		</dependency>
 		
-		<!--  Create word docs  -->
 		<dependency>
 		    <groupId>org.docx4j</groupId>
 		    <artifactId>docx4j</artifactId>
 		    <version>6.1.0</version>
 		</dependency>
+		
 	</dependencies>
 
 	<build>

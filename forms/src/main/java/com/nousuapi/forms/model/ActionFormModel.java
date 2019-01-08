@@ -9,19 +9,18 @@ import lombok.Setter;
 @Setter
 public class ActionFormModel {
 
-	private String title;
 	private int ageClass;
-	private String firstParagraphCommon;
-	private List<String> clerks;
+	private int playersInTeam;
+	private List<Clerks> clerks;
 	private int practises;
 	private List<String> summerPractisePlaces;
 	private List<String> winterPractisePlaces;
 	
-	public ActionFormModel(String title, int ageClass, String firstParagraphCommon, List<String> clerks, 
+	public ActionFormModel() {}
+	
+	public ActionFormModel(int ageClass, int playersInTeam, List<Clerks> clerks, 
 							int practises, List<String> summerPractisePlaces, List<String> winterPractisePlaces) {
-		this.title = title;
 		this.ageClass = ageClass;
-		this.firstParagraphCommon = firstParagraphCommon;
 		this.clerks = clerks;
 		this.practises = practises;
 		this.summerPractisePlaces = summerPractisePlaces;
