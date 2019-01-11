@@ -24,9 +24,9 @@ import com.nousuapi.forms.model.ActionFormModel;
 public class FormsController {
 
 	@RequestMapping("/actionForm")
-	public ResponseEntity<Object> createForm(@RequestBody ActionFormModel actionform) throws Docx4JException, IOException {
+	public ResponseEntity<Object> createForm() throws Docx4JException, IOException {
 		CreateFormDoc form = new CreateFormDoc();
-		form.replacePlaceholder(form.getTemplate("C:\\Users\\Matty\\Downloads\\Toimintakertomus.docx"), "YLEISTÄ", "jotain");
+		form.replacePlaceholder(form.getTemplate("src\\main\\resources\\templates\\Toimintakertomus.docx"), "YLEISTÄ", "jotain");
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	

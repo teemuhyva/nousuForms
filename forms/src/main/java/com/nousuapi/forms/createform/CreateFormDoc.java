@@ -51,7 +51,7 @@ public class CreateFormDoc {
 		    textElement.setValue(placeholder);
 		   }
 	  }
-	  writeDocxToStream(template, "C:\\Users\\\\Matty\\Downloads\\Toimintakertomus2.docx");
+	  writeDocxToStream(template, "src\\\\main\\\\resources\\\\templates\\\\Toimintakertomus.docx");
 	 }
 	
 	public void writeDocxToStream(WordprocessingMLPackage template, String target) throws IOException, Docx4JException {
