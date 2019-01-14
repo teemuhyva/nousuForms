@@ -9,21 +9,22 @@ import lombok.Setter;
 @Setter
 public class ActionFormModel {
 
-	private int ageClass;
-	private int playersInTeam;
-	private List<Clerks> clerks;
-	private int practises;
-	private List<String> summerPractisePlaces;
-	private List<String> winterPractisePlaces;
+	private String ikäluokka;
+	private String pelaajia;
+	private List<Clerks> seuraHenkilöt;
+	private String harjoittelu;
+	private List<String> talviharjoitukset;
+	private List<String> kesäharjoitukset;
 	
 	public ActionFormModel() {}
 	
-	public ActionFormModel(int ageClass, int playersInTeam, List<Clerks> clerks, 
-							int practises, List<String> summerPractisePlaces, List<String> winterPractisePlaces) {
-		this.ageClass = ageClass;
-		this.clerks = clerks;
-		this.practises = practises;
-		this.summerPractisePlaces = summerPractisePlaces;
-		this.winterPractisePlaces = winterPractisePlaces;
+	public ActionFormModel(String ikäluokka, String pelaajia, List<Clerks> seuraHenkilöt, 
+			String harjoittelu, List<String> kesäharjoitukset, List<String> talviharjoitukset) {
+		this.ikäluokka = ikäluokka;
+		this.pelaajia = pelaajia;
+		this.seuraHenkilöt = seuraHenkilöt;
+		this.harjoittelu = harjoittelu;
+		this.kesäharjoitukset = kesäharjoitukset;
+		this.talviharjoitukset = talviharjoitukset;
 	}
 }

@@ -21,11 +21,7 @@ import javax.mail.internet.MimeMultipart;
 
 public class EmailUtil {
 	
-	InputStream inputStream;
-	
-	private static final String USERNAME = "username";
-	private static final String PASSWORD = "password";
-	
+	InputStream inputStream;	
 	
 	public void createEmail() throws MessagingException, FileNotFoundException {
 	  Properties props = new Properties();
@@ -42,13 +38,13 @@ public class EmailUtil {
       props.put("mail.smtp.host", "smtp.gmail.com");
       props.put("mail.smtp.port", "587");
       
-      String from = "teemuhyva@gmail.com";
-      String to = "teemuhyva@gmail.com";
+      String from = "jyvaskylanousu@gmail.com";
+      String to = "jyvaskylanousu@gmail.com";
       
       Session session = Session.getInstance(props, new javax.mail.Authenticator() {
 
           protected PasswordAuthentication getPasswordAuthentication() {
-              return new PasswordAuthentication("teemuhyva@gmail.com", "");
+              return new PasswordAuthentication("jyvaskylanousu@gmail.com", "Nousu2019");
           }
       });
 
