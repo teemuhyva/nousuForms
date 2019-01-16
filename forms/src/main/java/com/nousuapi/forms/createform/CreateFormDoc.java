@@ -83,7 +83,7 @@ public class CreateFormDoc {
 		 File f = new File(target);
 		 template.save(f);
 	}
-	
+	/*
 	public static Map<String, Object> jsonToMap(JSONObject json) throws JSONException {
 	    Map<String, Object> jsonMap = new HashMap<String, Object>();
 
@@ -128,7 +128,7 @@ public class CreateFormDoc {
 	    }
 	    return list;
 	}
-
+*/
 	public JSONObject generateJsonFromForm(ActionFormModel actionForm) {
 		Gson gson = new GsonBuilder().create();
 		JSONObject jObject = new JSONObject(gson.toJson(actionForm));
