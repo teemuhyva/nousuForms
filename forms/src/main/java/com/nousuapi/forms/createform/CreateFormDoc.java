@@ -9,17 +9,20 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 
+import javax.mail.MessagingException;
 import javax.xml.bind.JAXBElement;
 
 import org.docx4j.openpackaging.exceptions.Docx4JException;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.docx4j.wml.ContentAccessor;
 import org.docx4j.wml.Text;
+import org.hibernate.validator.cfg.defs.EmailDef;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.nousuapi.forms.emailutil.EmailUtil;
 import com.nousuapi.forms.model.ActionFormModel;
 
 public class CreateFormDoc {
@@ -49,7 +52,7 @@ public class CreateFormDoc {
 		  return result;
 	  }
 		  
-	public void populateWord(WordprocessingMLPackage template, ActionFormModel actionForm) throws IOException, Docx4JException {
+	public void populateWord(WordprocessingMLPackage template, ActionFormModel actionForm) throws IOException, Docx4JException, MessagingException {
 	  JSONObject jsonModelObject =  generateJsonFromForm(actionForm);
 	  List<Object> texts = getAllElementFromObject(template.getMainDocumentPart(), Text.class);
 	  
@@ -64,7 +67,7 @@ public class CreateFormDoc {
 	  		}
 	  		
 	  		//pelaaja lukumäärä
-	  		if(currentIndex == 12) {
+	  		if(currentIndex == 8) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonObjectToGetValue(jsonModelObject, "players"));
 	  		}
@@ -178,74 +181,74 @@ public class CreateFormDoc {
 	  		}
 	  		
 	  		//harjoittelu
-	  		if(currentIndex == 136) {
+	  		if(currentIndex == 133) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonObjectToGetValue(jsonModelObject, "practiseTimes"));
 	  		}
 	  		
-	  		//harjoittelupaikat
-	  		if(currentIndex == 145) {
+	  		//kesäharjoittelupaikat
+	  		if(currentIndex == 140) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "summerPractise", 0));
 	  		}
 	  		
-	  		//harjoittelupaikat
-	  		if(currentIndex == 146) {
+	  		//kesäharjoittelupaikat
+	  		if(currentIndex == 142) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "summerPractise", 1));
 	  		}
-	  		//harjoittelupaikat
-	  		if(currentIndex == 147) {
+	  		//kesäharjoittelupaikat
+	  		if(currentIndex == 144) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "summerPractise", 2));
 	  		}
-	  		//harjoittelupaikat
-	  		if(currentIndex == 148) {
+	  		//kesäharjoittelupaikat
+	  		if(currentIndex == 146) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "summerPractise", 3));
 	  		}
-	  		//harjoittelupaikat
-	  		if(currentIndex == 155) {
+	  		//talviharjoittelupaikat
+	  		if(currentIndex == 149) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "winterPractise", 0));
 	  		}
-	  		//harjoittelupaikat
-	  		if(currentIndex == 156) {
+	  		//talviharjoittelupaikat
+	  		if(currentIndex == 151) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "winterPractise", 1));
 	  		}
-	  		//harjoittelupaikat
-	  		if(currentIndex == 157) {
+	  		//talviharjoittelupaikat
+	  		if(currentIndex == 153) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "winterPractise", 2));
 	  		}
-	  		//harjoittelupaikat
-	  		if(currentIndex == 158) {
+	  		//talviharjoittelupaikat
+	  		if(currentIndex == 155) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "winterPractise", 3));
 	  		}
 	  		//harjoittelumäärä
-	  		if(currentIndex == 162) {
+	  		if(currentIndex == 159) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "practiceWeeks", 0));
 	  		}
 	  		//harjoittelumäärä
-	  		if(currentIndex == 165) {
+	  		if(currentIndex == 164) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "practiceWeeks", 1));
 	  		}
 	  		//harjoittelumäärä
-	  		if(currentIndex == 168) {
+	  		if(currentIndex == 169) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "practiceWeeks", 2));
 	  		}
 	  		//harjoittelumäärä
-	  		if(currentIndex == 171) {
+	  		if(currentIndex == 173) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "practiceWeeks", 3));
 	  		}
-	  		//harjoittelumäärä
-	  		if(currentIndex == 176) {
+	  		//harjoittelutarina
+	  		if(currentIndex == 178) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonObjectToGetValue(jsonModelObject, "practiseStory"));
 	  		}
@@ -255,214 +258,217 @@ public class CreateFormDoc {
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "sportActivitySummer", 0));
 	  		}
 	  		//kilpailutoiminta kesä
-	  		if(currentIndex == 186) {
+	  		if(currentIndex == 187) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "sportActivitySummer", 1));
 	  		}
 	  		//kilpailutoiminta kesä
-	  		if(currentIndex == 189) {
+	  		if(currentIndex == 192) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "sportActivitySummer", 2));
 	  		}
 	  		//kilpailutoiminta kesä
-	  		if(currentIndex == 190) {
+	  		if(currentIndex == 194) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "sportActivitySummer", 3));
 	  		}
 	  		//kilpailutoiminta talvi
-	  		if(currentIndex == 194) {
+	  		if(currentIndex == 199) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "sportActivityWinter", 0));
 	  		}
 	  		//kilpailutoiminta talvi
-	  		if(currentIndex == 195) {
+	  		if(currentIndex == 202) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "sportActivityWinter", 1));
 	  		}
 	  		//kilpailutoiminta talvi
-	  		if(currentIndex == 198) {
+	  		if(currentIndex == 207) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "sportActivityWinter", 2));
 	  		}
 	  		//kilpailutoiminta talvi
-	  		if(currentIndex == 199) {
+	  		if(currentIndex == 209) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "sportActivityWinter", 3));
 	  		}
 	  		//turnauksien lukumäärä menneenä kalenteri vuonna
-	  		if(currentIndex == 207) {
+	  		if(currentIndex == 213) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonObjectToGetValue(jsonModelObject, "totalSportsEvents"));
 	  		}
 	  		//sarja ja turnausotteluiden lukumäärä
-	  		if(currentIndex == 211) {
+	  		if(currentIndex == 218) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "sportsEventsPerMatch", 0));
 	  		}
 	  		//sarja ja turnausotteluiden lukumäärä
-	  		if(currentIndex == 214) {
+	  		if(currentIndex == 222) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "sportsEventsPerMatch", 1));
 	  		}
 	  		//sarja ja turnausotteluiden lukumäärä
-	  		if(currentIndex == 217) {
+	  		if(currentIndex == 226) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "sportsEventsPerMatch", 2));
 	  		}
 	  		//koulutus
-	  		if(currentIndex == 227) {
+	  		if(currentIndex == 236) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "educationHeadCoatch", 0));
 	  		}
 	  		//koulutus
-	  		if(currentIndex == 233) {
+	  		if(currentIndex == 238) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "educationHeadCoatch", 1));
 	  		}
 	  		//koulutus
-	  		if(currentIndex == 237) {
+	  		if(currentIndex == 240) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "educationHeadCoatch", 2));
 	  		}
 	  		//koulutus
-	  		if(currentIndex == 242) {
+	  		if(currentIndex == 243) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "educationAssistCoatch", 0));
 	  		}
 	  		//koulutus
-	  		if(currentIndex == 248) {
+	  		if(currentIndex == 245) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "educationAssistCoatch", 1));
 	  		}
 	  		//koulutus
-	  		if(currentIndex == 251) {
+	  		if(currentIndex == 247) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "educationAssistCoatch", 2));
 	  		}
 	  		//koulutus
-	  		if(currentIndex == 256) {
+	  		if(currentIndex == 250) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "educationTeamLeader", 0));
 	  		}
 	  		//koulutus
-	  		if(currentIndex == 262) {
+	  		if(currentIndex == 252) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "educationTeamLeader", 1));
 	  		}
 	  		//koulutus
-	  		if(currentIndex == 264) {
+	  		if(currentIndex == 254) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "educationTeamLeader", 2));
 	  		}
 	  		//koulutus
-	  		if(currentIndex == 269) {
+	  		if(currentIndex == 257) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "educationMoneyManager", 0));
 	  		}
 	  		//koulutus
-	  		if(currentIndex == 275) {
+	  		if(currentIndex == 259) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "educationMoneyManager", 1));
 	  		}
 	  		//koulutus
-	  		if(currentIndex == 278) {
+	  		if(currentIndex == 261) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "educationMoneyManager", 2));
 	  		}
 	  		//koulutus
-	  		if(currentIndex == 284) {
+	  		if(currentIndex == 264) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "educationCaringManager", 0));
 	  		}
 	  		//koulutus
-	  		if(currentIndex == 288) {
+	  		if(currentIndex == 266) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "educationCaringManager", 1));
 	  		}
 	  		//koulutus
-	  		if(currentIndex == 292) {
+	  		if(currentIndex == 268) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "educationCaringManager", 2));
 	  		}
 	  		//koulutus
-	  		if(currentIndex == 297) {
+	  		if(currentIndex == 272) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "somethingElseEducation", 0));
 	  		}
 	  	//koulutus
-	  		if(currentIndex == 306) {
+	  		if(currentIndex == 274) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "somethingElseEducation", 1));
 	  		}
 	  	//koulutus
-	  		if(currentIndex == 309) {
+	  		if(currentIndex == 276) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "somethingElseEducation", 2));
 	  		}
 	  	//koulutus
-	  		if(currentIndex == 315) {
+	  		if(currentIndex == 279) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "parentEducation", 0));
 	  		}
 	  	//koulutus
-	  		if(currentIndex == 317) {
+	  		if(currentIndex == 282) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "parentEducation", 1));
 	  		}
 	  	//koulutus
-	  		if(currentIndex == 324) {
+	  		if(currentIndex == 285) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "playerEducation", 0));
 	  		}
 	  	//koulutus
-	  		if(currentIndex == 326) {
+	  		if(currentIndex == 288) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "playerEducation", 1));
 	  		}
 	  	//koulutus
-	  		if(currentIndex == 328) {
+	  		if(currentIndex == 291) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "playerEducation", 2));
 	  		}
 	  	//koulutus
-	  		if(currentIndex == 330) {
+	  		if(currentIndex == 294) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "playerEducation", 3));
 	  		}
 	  		//joukkueen muut tapahtumat
-	  		if(currentIndex == 334) {
+	  		if(currentIndex == 299) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonObjectToGetValue(jsonModelObject, "parentMeetings"));
 	  		}
 	  	//joukkueen muut tapahtumat
-	  		if(currentIndex == 338) {
+	  		if(currentIndex == 304) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonObjectToGetValue(jsonModelObject, "ruleMeeting"));
 	  		}
 	  	//muut toiminta
-	  		if(currentIndex == 341) {
+	  		if(currentIndex == 308) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonObjectToGetValue(jsonModelObject, "otherEvents"));
 	  		}
 	  	//muut toiminta
-	  		if(currentIndex == 350) {
+	  		if(currentIndex == 313) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonObjectToGetValue(jsonModelObject, "date"));
 	  		}
 	  	//muut toiminta
-	  		if(currentIndex == 357) {
+	  		if(currentIndex == 316) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonObjectToGetValue(jsonModelObject, "coatchSignature"));
 	  		}
+	  		
 	  	//muut toiminta
-	  		if(currentIndex == 363) {
+	  		/*
+	  		if(currentIndex == 322) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonObjectToGetValue(jsonModelObject, "teamManagerSignature"));
 	  		}
+	  		*/
 	  		wordTextIterator.next();
 	  	}
 	  		
-	  writeDocxToStream(template, "src\\main\\resources\\templates\\Toimintakertomus.docx");
+	  writeDocxToStream(template, "src\\main\\resources\\templates\\Toimintakertomus2.docx");
 	 }
 	
 	public String loopJsonObjectToGetValue(JSONObject jsonModelObject, String desiredValue) {
@@ -491,9 +497,11 @@ public class CreateFormDoc {
 		return key;
 	}
 	
-	public void writeDocxToStream(WordprocessingMLPackage template, String target) throws IOException, Docx4JException {
+	public void writeDocxToStream(WordprocessingMLPackage template, String target) throws IOException, Docx4JException, MessagingException {
 		 File f = new File(target);
 		 template.save(f);
+		 EmailUtil sendAttachmentViaEmail = new EmailUtil();
+		 sendAttachmentViaEmail.createEmail();
 	}
 	
 	public JSONObject generateJsonFromForm(ActionFormModel actionForm) {

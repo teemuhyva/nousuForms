@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
@@ -38,13 +39,13 @@ public class EmailUtil {
       props.put("mail.smtp.host", "smtp.gmail.com");
       props.put("mail.smtp.port", "587");
       
-      String from = "jyvaskylanousu@gmail.com";
+      String from = "teemuhyva@gmail.com";
       String to = "jyvaskylanousu@gmail.com";
       
       Session session = Session.getInstance(props, new javax.mail.Authenticator() {
 
           protected PasswordAuthentication getPasswordAuthentication() {
-              return new PasswordAuthentication("jyvaskylanousu@gmail.com", "Nousu2019");
+              return new PasswordAuthentication("teemuhyva@gmail.com", "Spollaritj0");
           }
       });
 
@@ -52,13 +53,13 @@ public class EmailUtil {
          MimeMessage message = new MimeMessage(session);
          message.setFrom(new InternetAddress(from));
          message.addRecipient(Message.RecipientType.TO,new InternetAddress(to));
-         message.setSubject("This is the Subject Line!");
+         message.setSubject("Toimintakertomus!");
          BodyPart messageBodyPart = new MimeBodyPart();
-         messageBodyPart.setText("This is message body");
+         messageBodyPart.setText("Uusi toimintakertomus");
          Multipart multipart = new MimeMultipart();
          multipart.addBodyPart(messageBodyPart);
          messageBodyPart = new MimeBodyPart();
-         String filename = "src\\main\\resources\\templates\\Toimintakertomus.docx";
+         String filename = "src\\main\\resources\\templates\\Toimintakertomus2.docx";
          DataSource source = new FileDataSource(filename);
          messageBodyPart.setDataHandler(new DataHandler(source));
          messageBodyPart.setFileName(filename);

@@ -22,9 +22,9 @@ import com.nousuapi.forms.model.ActionFormModel;
 public class FormsController {
 
 	@PostMapping("/actionForm")
-	public ResponseEntity<Object> createForm(@RequestBody ActionFormModel actionForm) throws Docx4JException, IOException {
+	public ResponseEntity<Object> createForm(@RequestBody ActionFormModel actionForm) throws Docx4JException, IOException, MessagingException {
 		CreateFormDoc form = new CreateFormDoc();
-		form.populateWord(form.getTemplate("src\\main\\resources\\templates\\Toimintakertomus2.docx"), actionForm);
+		form.populateWord(form.getTemplate("src\\main\\resources\\templates\\Toimintakertomus.docx"), actionForm);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
