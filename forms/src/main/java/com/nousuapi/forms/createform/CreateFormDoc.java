@@ -15,7 +15,6 @@ import javax.mail.MessagingException;
 import javax.xml.bind.JAXBElement;
 
 import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
 import org.docx4j.openpackaging.exceptions.Docx4JException;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.docx4j.wml.ContentAccessor;
@@ -25,8 +24,6 @@ import org.json.JSONObject;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.nousuapi.forms.FormsController;
-import com.nousuapi.forms.emailutil.EmailUtil;
 import com.nousuapi.forms.model.ActionFormModel;
 
 public class CreateFormDoc {
@@ -456,7 +453,7 @@ public class CreateFormDoc {
   			
 	  	} while(currentIndex < 317);
 	  		
-		  writeDocxToStream(template, "src/Toimintakertomus2.docx");
+		  writeDocxToStream(template, "Toimintakertomus2.docx");
 	 }
 	
 	public String loopJsonObjectToGetValue(JSONObject jsonModelObject, String desiredValue) {
@@ -486,8 +483,8 @@ public class CreateFormDoc {
 	}
 	
 	public void writeDocxToStream(WordprocessingMLPackage template, String target) throws Docx4JException, MessagingException {
-		 File f = new File(target);
-		 template.save(f);
+		File f = new File(target);
+		 template.save(f);		 
 	}
 	
 	public JSONObject generateJsonFromForm(ActionFormModel actionForm) {
