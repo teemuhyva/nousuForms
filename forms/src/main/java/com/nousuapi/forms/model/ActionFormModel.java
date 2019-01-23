@@ -1,5 +1,7 @@
 package com.nousuapi.forms.model;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -20,12 +22,12 @@ public class ActionFormModel {
 	private String practiseTimes;
 	private List<String> winterPractise;
 	private List<String> summerPractise;
-	private List<String> practiceWeeks;
+	private String practiceWeeks;
 	private String practiseStory;
 	private List<String> sportActivitySummer;
 	private List<String> sportActivityWinter;
 	private String totalSportsEvents;
-	private List<String> sportsEventsPerMatch;
+	private String sportsEventsPerMatch;
 	private List<String> educationHeadCoatch;
 	private List<String> educationAssistCoatch;
 	private List<String> educationTeamLeader;
@@ -37,20 +39,21 @@ public class ActionFormModel {
 	private String parentMeetings;
 	private String ruleMeeting;
 	private String otherEvents;
-	private Date date;
-	private String coatchSignature;
-	private String teamManagerSignature;
+	private String acceptance;
+	private String signature;
 	
 	public ActionFormModel() {}
 	
 	public ActionFormModel(String ageClass, String players, List<String> headCoatch, List<String> assistCoatch, 
 			List<String> teamLeaders, List<String> moneyManagers, List<String> caringManager, String practiseTimes, 
-			List<String> summerPractise, List<String> winterPractise, List<String> practiceWeeks, String practiseStory,
+			List<String> summerPractise, List<String> winterPractise, String practiceWeeks, String practiseStory,
 			List<String> sportActivitySummer, List<String> sportActivityWinter, String totalSportsEvents, 
-			List<String> sportsEventsPerMatch, List<String> educationHeadCoatch, List<String> educationAssistCoatch,
+			String sportsEventsPerMatch, List<String> educationHeadCoatch, List<String> educationAssistCoatch,
 			List<String> educationTeamLeader, List<String> educationMoneyManager, List<String> educationCaringManager,
 			List<String> somethingElseEducation, List<String> parentEducation, List<String> playerEducation, String parentMeetings,
-			String ruleMeeting, String otherEvents, Date date, String coatchSignature, String teamManagerSignature) {
+			String ruleMeeting, String otherEvents, String acceptance, String signature) {
+		
+		
 		this.ageClass = ageClass;
 		this.players = players;
 		this.headCoatch = headCoatch;
@@ -78,8 +81,7 @@ public class ActionFormModel {
 		this.parentMeetings = parentMeetings;
 		this.ruleMeeting = ruleMeeting;
 		this.otherEvents = otherEvents;
-		this.date = date;
-		this.coatchSignature = coatchSignature;
-		this.teamManagerSignature = teamManagerSignature;
+		this.acceptance = acceptance;
+		this.signature = signature;
 	}
 }

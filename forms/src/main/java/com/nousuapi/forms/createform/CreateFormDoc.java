@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -12,23 +14,27 @@ import java.util.ListIterator;
 import javax.mail.MessagingException;
 import javax.xml.bind.JAXBElement;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.Priority;
 import org.docx4j.openpackaging.exceptions.Docx4JException;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.docx4j.wml.ContentAccessor;
 import org.docx4j.wml.Text;
-import org.hibernate.validator.cfg.defs.EmailDef;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.nousuapi.forms.FormsController;
 import com.nousuapi.forms.emailutil.EmailUtil;
 import com.nousuapi.forms.model.ActionFormModel;
 
 public class CreateFormDoc {
 
-	public WordprocessingMLPackage getTemplate(String name) throws FileNotFoundException, Docx4JException {
-		WordprocessingMLPackage template = WordprocessingMLPackage.load(new FileInputStream(new File(name)));
+	private static final Logger LOGGER = Logger.getLogger(CreateFormDoc.class);
+	
+	public WordprocessingMLPackage getTemplate(File file) throws FileNotFoundException, Docx4JException {
+		WordprocessingMLPackage template = WordprocessingMLPackage.load(new FileInputStream(file));
 		return template;
 	}
 
@@ -52,14 +58,17 @@ public class CreateFormDoc {
 		  return result;
 	  }
 		  
-	public void populateWord(WordprocessingMLPackage template, ActionFormModel actionForm) throws IOException, Docx4JException, MessagingException {
+	public void populateWord(WordprocessingMLPackage template, ActionFormModel actionForm) throws  Docx4JException, MessagingException, FileNotFoundException, IOException {
 	  JSONObject jsonModelObject =  generateJsonFromForm(actionForm);
 	  List<Object> texts = getAllElementFromObject(template.getMainDocumentPart(), Text.class);
-	  
+	  int currentIndex = 0;
 	  	ListIterator<Object> wordTextIterator = texts.listIterator();
-	  	while(wordTextIterator.hasNext()) {
-	  		int currentIndex = wordTextIterator.nextIndex();
+	  	do {
+	  		if(wordTextIterator.hasNext()) {
+	  			wordTextIterator.next();
+	  		}
 	  		
+	  		currentIndex = wordTextIterator.nextIndex();
 	  		//ikäluokka
 	  		if(currentIndex == 3) {
 	  			Text formText = (Text) wordTextIterator.next();
@@ -230,22 +239,7 @@ public class CreateFormDoc {
 	  		//harjoittelumäärä
 	  		if(currentIndex == 159) {
 	  			Text formText = (Text) wordTextIterator.next();
-	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "practiceWeeks", 0));
-	  		}
-	  		//harjoittelumäärä
-	  		if(currentIndex == 164) {
-	  			Text formText = (Text) wordTextIterator.next();
-	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "practiceWeeks", 1));
-	  		}
-	  		//harjoittelumäärä
-	  		if(currentIndex == 169) {
-	  			Text formText = (Text) wordTextIterator.next();
-	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "practiceWeeks", 2));
-	  		}
-	  		//harjoittelumäärä
-	  		if(currentIndex == 173) {
-	  			Text formText = (Text) wordTextIterator.next();
-	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "practiceWeeks", 3));
+	  			formText.setValue(loopJsonObjectToGetValue(jsonModelObject, "practiceWeeks"));
 	  		}
 	  		//harjoittelutarina
 	  		if(currentIndex == 178) {
@@ -300,17 +294,7 @@ public class CreateFormDoc {
 	  		//sarja ja turnausotteluiden lukumäärä
 	  		if(currentIndex == 218) {
 	  			Text formText = (Text) wordTextIterator.next();
-	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "sportsEventsPerMatch", 0));
-	  		}
-	  		//sarja ja turnausotteluiden lukumäärä
-	  		if(currentIndex == 222) {
-	  			Text formText = (Text) wordTextIterator.next();
-	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "sportsEventsPerMatch", 1));
-	  		}
-	  		//sarja ja turnausotteluiden lukumäärä
-	  		if(currentIndex == 226) {
-	  			Text formText = (Text) wordTextIterator.next();
-	  			formText.setValue(loopJsonArrayToGetValue(jsonModelObject, "sportsEventsPerMatch", 2));
+	  			formText.setValue(loopJsonObjectToGetValue(jsonModelObject, "sportsEventsPerMatch"));
 	  		}
 	  		//koulutus
 	  		if(currentIndex == 236) {
@@ -449,26 +433,30 @@ public class CreateFormDoc {
 	  		}
 	  	//muut toiminta
 	  		if(currentIndex == 313) {
+				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+				LocalDate localDate = LocalDate.now();
 	  			Text formText = (Text) wordTextIterator.next();
-	  			formText.setValue(loopJsonObjectToGetValue(jsonModelObject, "date"));
+	  			formText.setValue(dtf.format(localDate));
 	  		}
 	  	//muut toiminta
+	  		
 	  		if(currentIndex == 316) {
 	  			Text formText = (Text) wordTextIterator.next();
-	  			formText.setValue(loopJsonObjectToGetValue(jsonModelObject, "coatchSignature"));
+	  			formText.setValue(loopJsonObjectToGetValue(jsonModelObject, "acceptance"));
 	  		}
 	  		
 	  	//muut toiminta
 	  		/*
-	  		if(currentIndex == 322) {
+	  		if(currentIndex == 318) {
 	  			Text formText = (Text) wordTextIterator.next();
-	  			formText.setValue(loopJsonObjectToGetValue(jsonModelObject, "teamManagerSignature"));
+	  			formText.setValue(loopJsonObjectToGetValue(jsonModelObject, "signature"));
 	  		}
 	  		*/
-	  		wordTextIterator.next();
-	  	}
+  			
+  			
+	  	} while(currentIndex < 317);
 	  		
-	  writeDocxToStream(template, "src\\main\\resources\\templates\\Toimintakertomus2.docx");
+		  writeDocxToStream(template, "src/Toimintakertomus2.docx");
 	 }
 	
 	public String loopJsonObjectToGetValue(JSONObject jsonModelObject, String desiredValue) {
@@ -477,7 +465,7 @@ public class CreateFormDoc {
 		for(Iterator<?> iterator = jsonModelObject.keys(); iterator.hasNext();) {
 			temp = (String) iterator.next();
 			if(temp.contains(desiredValue)) {
-				desired = jsonModelObject.getString(temp);
+				desired = jsonModelObject.getString(temp);				
 			}
 		}
 		
@@ -497,11 +485,9 @@ public class CreateFormDoc {
 		return key;
 	}
 	
-	public void writeDocxToStream(WordprocessingMLPackage template, String target) throws IOException, Docx4JException, MessagingException {
+	public void writeDocxToStream(WordprocessingMLPackage template, String target) throws Docx4JException, MessagingException {
 		 File f = new File(target);
 		 template.save(f);
-		 EmailUtil sendAttachmentViaEmail = new EmailUtil();
-		 sendAttachmentViaEmail.createEmail();
 	}
 	
 	public JSONObject generateJsonFromForm(ActionFormModel actionForm) {
