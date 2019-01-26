@@ -54,6 +54,11 @@ public class FormsController {
 		return new ResponseEntity<>(eLogger, HttpStatus.CREATED);
 	}
 	
+	@PostMapping("/jyvaskylacupjobsForm")
+	public ResponseEntity<Object> generateJob() {
+		return new ResponseEntity<Object>(HttpStatus.ACCEPTED);
+	}
+	
 	public EmailLogger SendEmailWithAttachment(File file, ActionFormModel actionForm) throws MessagingException, IOException {
 		EmailLogger eLogger = new EmailLogger();
 		
