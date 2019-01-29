@@ -2,39 +2,23 @@ package com.nousuapi.forms.entity;
 
 import java.sql.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.Getter;
-import lombok.Setter;
-
 @Entity
-@Table(name = "USERPURPOSE")
-@Getter
-@Setter
+@Table(name = "userpurpose")
 public class UserPurpose {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-	
-	@Column(name = "LOCATION")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;	
 	private String location;
-	
-	@Column(name = "FIELD_NAME")
 	private String fieldName;
-	
-	@Column(name = "PERSON_NAME")
 	private String personName;
-	
-	@Column(name = "GAME_DATE")
 	private Date date;
-	
-	@Column(name = "TIME")
 	private Date time;
 	
 	public UserPurpose() {}

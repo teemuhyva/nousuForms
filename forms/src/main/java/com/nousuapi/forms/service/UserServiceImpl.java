@@ -1,5 +1,7 @@
 package com.nousuapi.forms.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +21,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User findUser(String username) {
-		return null;
+		return userRepository.findUserByFullName(username);
 	}
 
 	@Override
@@ -29,6 +31,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void addNewUser(User user) {
+		user.setFullname(user.getFirstName() + user.getLastName());
 		userRepository.save(user);
 	}
 
