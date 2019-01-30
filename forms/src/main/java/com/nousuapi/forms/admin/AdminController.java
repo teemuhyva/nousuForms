@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nousuapi.forms.customer.CustomerResource;
-import com.nousuapi.forms.entity.User;
+import com.nousuapi.forms.entity.Customer;
 import com.nousuapi.forms.service.UserService;
 
 @RestController
@@ -24,7 +24,7 @@ public class AdminController {
 	private UserService userService;
 
 	@DeleteMapping("/removeuser")
-	private ResponseEntity<CustomerResource> removeUser(@RequestBody User user) {
+	private ResponseEntity<CustomerResource> removeUser(@RequestBody Customer user) {
 		userService.deleteUser(user.getFirstName(), user.getLastName());
 		
 		return new ResponseEntity<CustomerResource>(HttpStatus.MOVED_PERMANENTLY);

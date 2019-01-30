@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nousuapi.forms.customer.CustomerResource;
 import com.nousuapi.forms.customer.UserPurposeResource;
-import com.nousuapi.forms.entity.User;
+import com.nousuapi.forms.entity.Customer;
 import com.nousuapi.forms.entity.UserPurpose;
 import com.nousuapi.forms.service.UserPurposeService;
 import com.nousuapi.forms.service.UserService;
@@ -39,7 +39,7 @@ public class JklCupController {
 	public ResponseEntity<CustomerResource> getUserInfo(@PathVariable(value = "username") String username) {	
 		
 		CustomerResource cust = new CustomerResource();
-		User user = userService.findUser(username);
+		Customer user = userService.findUser(username);
 		if(user == null) {		
 			Link link = linkTo(JklCupController.class).slash("createuser").withRel("createuser");
 			cust.add(link);
@@ -52,7 +52,7 @@ public class JklCupController {
 	}
 
 	@PostMapping("/createuser")
-	public ResponseEntity<CustomerResource> createNewUser(@RequestBody User user) {
+	public ResponseEntity<CustomerResource> createNewUser(@RequestBody Customer user) {
 		userService.addNewUser(user);
 		
 		CustomerResource result = new CustomerResource();

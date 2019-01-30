@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.hateoas.ResourceSupport;
 
-import com.nousuapi.forms.entity.User;
+import com.nousuapi.forms.entity.Customer;
 import com.nousuapi.forms.entity.UserPurpose;
 import com.nousuapi.forms.tournament.JklCupController;
 
@@ -18,26 +18,26 @@ public class CustomerResource extends ResourceSupport {
 	
 	private String firstName;
 	private String lastName;
-	private String fullName;
+	private String team;
 	
 	public static String value(String firstName, String lastName) {
 		String fullName = firstName + lastName;
 		return fullName;
 	}
 	
-	public static CustomerResource valueOf(User user) {
+	public static CustomerResource valueOf(Customer user) {
 		CustomerResource customerResource = new CustomerResource();
 		customerResource.setFirstName(user.getFirstName());
 		customerResource.setLastName(user.getLastName());
-		customerResource.setFullName(user.getLastName());		
+		customerResource.setTeam(user.getTeam());		
 		
 		return customerResource;
 	}
 	
-	public static List<CustomerResource> toList(List<User> users) {
+	public static List<CustomerResource> toList(List<Customer> users) {
 		List<CustomerResource> resultList = new ArrayList<CustomerResource>();
 		
-		for(User u : users) {
+		for(Customer u : users) {
 			CustomerResource result = new CustomerResource();
 			result.setFirstName(u.getFirstName());
 			result.setLastName(u.getLastName());

@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,21 +18,19 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "customer")
-public class User {
+public class Customer {
 
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
+	
+	@NotNull
 	private String firstName;
+	@NotNull
 	private String lastName;
+	
 	private String fullName;
 	
-	/*
-	public User() {}
-	
-	public User(String firstName, String lastName) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-	}
-	*/
+	@NotNull
+	private String team;
 }
