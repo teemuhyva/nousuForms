@@ -31,8 +31,11 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void addNewUser(User user) {
-		user.setFullname(user.getFirstName() + user.getLastName());
-		userRepository.save(user);
+		//TODO: add custom exception if user already found
+		if(userRepository.findUserByFullName(user.getFullName()) == null) {
+			user.setFullName(user.getFirstName() + user.getLastName());
+			userRepository.save(user);
+		}		
 	}
 
 	@Override
@@ -41,4 +44,9 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 
+	@Override
+	public void deleteUser(String firstName, String lastName) {
+		String fullName = firstName + lastName;
+		userRepository.deleteByFullName(fullName);
+	}
 }

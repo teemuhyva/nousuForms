@@ -11,15 +11,14 @@ import javax.mail.MessagingException;
 import org.docx4j.openpackaging.exceptions.Docx4JException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.nousuapi.forms.createform.CreateFormDoc;
 import com.nousuapi.forms.emailutil.EmailUtil;
 import com.nousuapi.forms.model.ActionFormModel;
-import com.nousuapi.forms.model.EmailLogger;
 
 
 @RestController
@@ -29,29 +28,24 @@ public class FormsController {
 	private static final Logger logger = Logger.getLogger(FormsController.class.getName());
 	
 	@PostMapping("/actionForm")
-	public ResponseEntity<EmailLogger> createForm(@RequestBody ActionFormModel actionForm) throws Docx4JException,  MessagingException {
+	public ResponseEntity<?> createForm(@RequestBody ActionFormModel actionForm) throws Docx4JException,  MessagingException {
 		CreateFormDoc form = new CreateFormDoc();
-		EmailLogger eLogger = new EmailLogger();
 		File file = new File("Toimintakertomus.docx");		
 		try {
 			form.populateWord(form.getTemplate(file), actionForm);
-			logger.log(Level.INFO, "Worked ok");
 		} catch (FileNotFoundException e) {
 			logger.log(Level.SEVERE, "File not found");
-			eLogger.setErrorPart1(e.getMessage());
 		} catch (IOException e) {
 			logger.log(Level.SEVERE, "Something went horribly wrong!!!!!");
-			eLogger.setErrorPart2(e.getMessage());
 			e.printStackTrace();
 		}
 		
 		try {
-			eLogger = SendEmailWithAttachment(new File("Toimintakertomus2.docx"), actionForm);
+			SendEmailWithAttachment(new File("Toimintakertomus2.docx"), actionForm);
 		} catch (IOException e) {
 			e.printStackTrace();
-			eLogger.setErrorPart3(e.getMessage());
 		}
-		return new ResponseEntity<>(eLogger, HttpStatus.CREATED);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
 	@PostMapping("/jyvaskylacupjobsForm")
@@ -59,16 +53,12 @@ public class FormsController {
 		return new ResponseEntity<Object>(HttpStatus.ACCEPTED);
 	}
 	
-	public EmailLogger SendEmailWithAttachment(File file, ActionFormModel actionForm) throws MessagingException, IOException {
-		EmailLogger eLogger = new EmailLogger();
+	public void SendEmailWithAttachment(File file, ActionFormModel actionForm) throws MessagingException, IOException {
 		
 		 EmailUtil sendAttachmentViaEmail = new EmailUtil();
 		 try {			 
-			 eLogger = sendAttachmentViaEmail.createEmail(file, actionForm);
+			 sendAttachmentViaEmail.createEmail(file, actionForm);
 		} catch (FileNotFoundException e) {
-			eLogger.setErrorPart4(e.getMessage());
-		}
-		 
-		return eLogger;
+		}		 
 	}
 }

@@ -11,5 +11,17 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CustomerResource extends ResourceSupport {
-
+	
+	private String firstName;
+	private String lastName;
+	private String fullname;
+	
+	public static CustomerResource valueOf(User user) {
+		CustomerResource customerResource = new CustomerResource();
+		customerResource.setFirstName(user.getFirstName());
+		customerResource.setLastName(user.getLastName());
+		customerResource.setFullname(user.getLastName());		
+		
+		return customerResource;
+	}
 }
