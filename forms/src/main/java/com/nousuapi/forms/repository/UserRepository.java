@@ -12,8 +12,6 @@ import com.nousuapi.forms.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
 
-	@Transactional
-	@Modifying
 	@Query("SELECT u FROM User u WHERE u.fullName =:fullName")
 	User findUserByFullName(String fullName);
 	

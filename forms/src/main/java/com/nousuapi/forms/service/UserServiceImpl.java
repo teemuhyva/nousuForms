@@ -1,10 +1,12 @@
 package com.nousuapi.forms.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.nousuapi.forms.customer.CustomerResource;
 import com.nousuapi.forms.entity.User;
 import com.nousuapi.forms.entity.UserPurpose;
 import com.nousuapi.forms.repository.UserPurposeRepository;
@@ -20,8 +22,9 @@ public class UserServiceImpl implements UserService {
 	private UserPurposeRepository userPurposeRepository;
 	
 	@Override
-	public User findUser(String username) {
-		return userRepository.findUserByFullName(username);
+	public User findUser(String fullName) {
+		//TODO:return message / coded exception if user is found
+		return userRepository.findUserByFullName(fullName);
 	}
 
 	@Override
@@ -31,8 +34,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void addNewUser(User user) {
+		String fullName = CustomerResource.value(user.getFirstName(), user.getLastName());
 		//TODO: add custom exception if user already found
-		if(userRepository.findUserByFullName(user.getFullName()) == null) {
+		if(userRepository.findUserByFullName(fullName) == null) {
 			user.setFullName(user.getFirstName() + user.getLastName());
 			userRepository.save(user);
 		}		
@@ -48,5 +52,10 @@ public class UserServiceImpl implements UserService {
 	public void deleteUser(String firstName, String lastName) {
 		String fullName = firstName + lastName;
 		userRepository.deleteByFullName(fullName);
+	}
+
+	@Override
+	public List<User> listUsers() {		
+		return userRepository.findAll();
 	}
 }
