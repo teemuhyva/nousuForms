@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,40 +46,47 @@ public class JklCupController {
 			cust.add(link);
 		} else {
 			cust = CustomerResource.valueOf(user);
-			cust.add(getLink());
+			cust.add(CustomerResource.getLink(cust));
 		}
 		
-		return new ResponseEntity<CustomerResource>(cust, HttpStatus.OK);
+		return new ResponseEntity<>(cust, HttpStatus.OK);
 	}
 
 	@PostMapping("/createuser")
-	public ResponseEntity<CustomerResource> createNewUser(@RequestBody Customer user) {
+	public ResponseEntity<CustomerResource> createNewUser(@RequestBody Customer user) throws Exception {
 		userService.addNewUser(user);
 		
-		CustomerResource result = new CustomerResource();
-		result.add(getLink());
+		CustomerResource result = CustomerResource.getMessage();
+		Link link = linkTo(JklCupController.class)
+				.slash("updatepurpose")
+				.withRel("updatepurpose");	
+		result.add(link);
 					
-		return new ResponseEntity<CustomerResource>(result, HttpStatus.CREATED);
+		return new ResponseEntity<>(result, HttpStatus.CREATED);
 	}
 	
-	@GetMapping("/userpurpose")
-	public ResponseEntity<List<UserPurposeResource>> getUserPurpose(@RequestParam(required = true) String leaderFirstName,														
-													  @RequestParam(required = true) String leaderLastName,
-													  @RequestParam(required = true) String leaderLocation) {
+	@PutMapping("/updatepurpose")
+	public ResponseEntity<CustomerResource> updatePurpose(@RequestBody UserPurpose userPurpose) {
+		userPurposeService.updatePurpose(userPurpose);
+		CustomerResource result = new CustomerResource();
+		result.add(linkTo(JklCupController.class)
+				.slash("updatepurpose").withSelfRel(),
+				linkTo(JklCupController.class)
+				.slash("userinfo")
+				.slash(userPurpose.getLeaderFirstName() + userPurpose.getLeaderLastName())
+				.withRel("userinfo"));
 		
-		List<UserPurpose> uPurposeByLeader = userPurposeService.getDetails(leaderFirstName, leaderLastName, leaderLocation);
-		List<UserPurposeResource> result;
-		if(uPurposeByLeader.isEmpty()) {
-			result = Collections.emptyList();
-		} else {
-			result = UserPurposeResource.mapList(uPurposeByLeader);
-		}
-		
-		return new ResponseEntity<List<UserPurposeResource>>(result, HttpStatus.OK);
+		return new ResponseEntity<>(result, HttpStatus.CREATED);
 	}
 	
-	public Link getLink() {
-		Link link = linkTo(JklCupController.class).slash("userpurpose").withRel("userpurpose");	
-		return link;
+	@GetMapping("/userpurpose/{firstName}/{lastName}/{team}")
+	public ResponseEntity<List<UserPurposeResource>> getUserPurpose(@PathVariable(required = true) String firstName,														
+																	@PathVariable(required = true) String lastName,
+																	@PathVariable(required = true) String team) {
+		
+		List<UserPurpose> uPurposeByLeader = userPurposeService.getDetails(firstName);
+		List<UserPurposeResource> result = UserPurposeResource.mapList(uPurposeByLeader);
+				
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 }

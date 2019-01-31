@@ -1,5 +1,6 @@
 package com.nousuapi.forms.service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,15 +18,23 @@ public class UserPurposeServiceImpl implements UserPurposeService {
 	private UserPurposeRepository userPurposeRepository;
 	
 	@Override
-	public List<UserPurpose> getDetails(String leaderFirstName, String leaderLastName, String leaderLocation) {
+	public List<UserPurpose> getDetails(String leaderFirstName) {
 		List<UserPurpose> uPurpList = new ArrayList<>();
-		uPurpList = userPurposeRepository.getPurposeByCreatedLeader(leaderFirstName, leaderLastName, leaderLocation);
-		
-		if(uPurpList.isEmpty()) {
-			uPurpList = Collections.emptyList();
-		}
-		
+		uPurpList = userPurposeRepository.getPurposeByCreatedLeader(leaderFirstName);
+				
 		return uPurpList;
+	}
+
+	@Override
+	public void updatePurpose(UserPurpose userPurpose) {
+		/*
+		 * this will need to get actual date from client
+		 * for testing purposes hardcoded
+		 */
+		Date date = new Date(0);
+		userPurpose.setDate(date);
+		userPurpose.setTime(date);
+		userPurposeRepository.save(userPurpose);
 	}
 
 }

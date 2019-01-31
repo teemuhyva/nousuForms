@@ -9,7 +9,7 @@ public interface UserService {
 	
 	public Customer findUser(String username);
 	public UserPurpose findUserPurpose(String username);
-	public void addNewUser(Customer user);
+	public void addNewUser(Customer user) throws Exception;
 	public UserPurpose addUserPurpose(Customer user, UserPurpose userPurpose);
 	public void deleteUser(String firstName, String lastName);
 	public List<Customer> listUsers();

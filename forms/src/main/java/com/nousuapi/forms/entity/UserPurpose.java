@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,27 +25,30 @@ public class UserPurpose {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;	
+	private long id;
+	
+	@NotNull
 	private String location;
+	
+	@NotNull
 	private String fieldName;
+	
+	@NotNull
 	private String personName;
+	
+	@NotNull
 	private String leaderFirstName;
+	
+	@NotNull
 	private String leaderLastName;
-	private String leaderLocation;
+	
+	@NotNull
+	private String leaderTeam;
+	
+	@NotNull
 	private Date date;
+	
+	@NotNull
 	private Date time;
 	
-	/*
-	public UserPurpose(String location, String fieldName, String personName, Date date, Date time,
-			String leaderFirstName, String leaderLastName, String leaderLocation) {
-		this.location = location;
-		this.fieldName = fieldName;
-		this.personName = personName;
-		this.date = date;
-		this.time = time;
-		this.leaderFirstName = leaderFirstName;
-		this.leaderLastName = leaderLastName;
-		this.leaderLocation = leaderLocation;
-	}
-	*/
 }

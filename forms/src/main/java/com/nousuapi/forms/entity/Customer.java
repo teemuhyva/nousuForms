@@ -31,6 +31,9 @@ public class Customer {
 	
 	private String fullName;
 	
-	@NotNull
 	private String team;
+	
+	private String email;
+	
+	private String phone;
 }

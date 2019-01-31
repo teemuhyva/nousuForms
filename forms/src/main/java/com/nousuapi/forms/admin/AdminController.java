@@ -30,7 +30,7 @@ public class AdminController {
 		return new ResponseEntity<CustomerResource>(HttpStatus.MOVED_PERMANENTLY);
 	}
 	
-	@GetMapping("/getUsers")
+	@GetMapping("/getusers")
 	private ResponseEntity<List<CustomerResource>> getUsers() {
 		List<CustomerResource> result = CustomerResource.toList(userService.listUsers());
 		

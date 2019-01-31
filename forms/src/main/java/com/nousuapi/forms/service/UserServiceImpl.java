@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.nousuapi.forms.customer.CustomerResource;
 import com.nousuapi.forms.entity.Customer;
 import com.nousuapi.forms.entity.UserPurpose;
+import com.nousuapi.forms.exceptions.CustomException;
 import com.nousuapi.forms.repository.UserPurposeRepository;
 import com.nousuapi.forms.repository.UserRepository;
 
@@ -33,13 +34,15 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void addNewUser(Customer user) {
+	public void addNewUser(Customer user) throws Exception {
 		String fullName = CustomerResource.value(user.getFirstName(), user.getLastName());
 		//TODO: add custom exception if user already found
-		if(userRepository.findUserByFullName(fullName) == null) {
-			user.setFullName(user.getFirstName() + user.getLastName());
-			userRepository.save(user);
-		}		
+		if(userRepository.findUserByFullName(fullName) != null) {
+			throw new Exception(CustomException.ALREADYFOUND);
+		}	
+		
+		user.setFullName(user.getFirstName() + user.getLastName());
+		userRepository.save(user);
 	}
 
 	@Override
