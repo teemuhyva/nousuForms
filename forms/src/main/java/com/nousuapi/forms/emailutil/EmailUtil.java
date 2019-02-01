@@ -9,6 +9,8 @@ import java.util.Base64;
 
 import javax.mail.MessagingException;
 
+import com.nousuapi.forms.exceptions.CustomException;
+import com.nousuapi.forms.exceptions.ErrorLogging;
 import com.nousuapi.forms.model.ActionFormModel;
 import com.sendgrid.Attachments;
 import com.sendgrid.Content;
@@ -24,8 +26,8 @@ public class EmailUtil {
 		
 	InputStream inputStream;	
 	
-	public void createEmail(File file, ActionFormModel actionForm) throws MessagingException, FileNotFoundException, IOException {
-	  
+	public ErrorLogging createEmail(File file, ActionFormModel actionForm) throws Exception {
+	  ErrorLogging log = new ErrorLogging();
       SendGrid sendGrid = new SendGrid(System.getenv("SENDGRID_APIKEY"));
       String subject = "Toimintakertomus - "+ actionForm.getSignature();
       Email from = new Email("jyvaskylanousu@gmail.com");
@@ -52,6 +54,7 @@ public class EmailUtil {
       attachment.setFilename("Toimintakertomus.docx");
       attachment.setDisposition("attachment");
       mail.addAttachments(attachment);
+      
       Request req = new Request();
       
       try {    	  
@@ -61,8 +64,9 @@ public class EmailUtil {
     	  Response response = sendGrid.api(req);
     	  
       } catch(IOException e) {
-    	  throw e;
+    	  log.setError5(e.getMessage());
+    	  throw new Exception(CustomException.SENDING_EMAIL_FAILED);
       }
-      
+      return log;
    }
 }

@@ -27,27 +27,35 @@ public class UserPurpose {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
+	//where user is located during tournament
 	@NotNull
 	private String location;
 	
+	//tournament field name
 	@NotNull
 	private String fieldName;
 	
+	//name of user (not leader)
 	@NotNull
 	private String personName;
 	
+	//teamleader (who will assign persons in purpose)
 	@NotNull
 	private String leaderFirstName;
 	
 	@NotNull
 	private String leaderLastName;
 	
+	//leader team
 	@NotNull
 	private String leaderTeam;
 	
+	//date when person will be onsite
+	//TODO: other date for when this info was entered / updated?
 	@NotNull
 	private Date date;
 	
+	//what time person will be onsite
 	@NotNull
 	private Date time;
 	

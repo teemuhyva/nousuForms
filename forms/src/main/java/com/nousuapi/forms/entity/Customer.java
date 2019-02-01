@@ -20,6 +20,11 @@ import lombok.Setter;
 @Table(name = "customer")
 public class Customer {
 
+	/*
+	 * Teamleader info 
+	 * 
+	 */
+	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
