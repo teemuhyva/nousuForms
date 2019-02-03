@@ -239,6 +239,21 @@ public class CreateFormDoc {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonObjectToGetValue(jsonModelObject, "practiceWeeks"));
 	  		}
+	  		//harjoittelumäärä
+	  		if(currentIndex == 164) {
+	  			Text formText = (Text) wordTextIterator.next();
+	  			formText.setValue(loopJsonObjectToGetValue(jsonModelObject, "practiceWeeks2"));
+	  		}
+	  		//harjoittelumäärä
+	  		if(currentIndex == 169) {
+	  			Text formText = (Text) wordTextIterator.next();
+	  			formText.setValue(loopJsonObjectToGetValue(jsonModelObject, "practiceWeeks3"));
+	  		}
+	  		//harjoittelumäärä
+	  		if(currentIndex == 173) {
+	  			Text formText = (Text) wordTextIterator.next();
+	  			formText.setValue(loopJsonObjectToGetValue(jsonModelObject, "practiceWeeks4"));
+	  		}
 	  		//harjoittelutarina
 	  		if(currentIndex == 178) {
 	  			Text formText = (Text) wordTextIterator.next();
@@ -293,6 +308,16 @@ public class CreateFormDoc {
 	  		if(currentIndex == 218) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonObjectToGetValue(jsonModelObject, "sportsEventsPerMatch"));
+	  		}
+	  		//sarja ja turnausotteluiden lukumäärä
+	  		if(currentIndex == 222) {
+	  			Text formText = (Text) wordTextIterator.next();
+	  			formText.setValue(loopJsonObjectToGetValue(jsonModelObject, "sportsEventsPerMatch2"));
+	  		}
+	  		//sarja ja turnausotteluiden lukumäärä
+	  		if(currentIndex == 226) {
+	  			Text formText = (Text) wordTextIterator.next();
+	  			formText.setValue(loopJsonObjectToGetValue(jsonModelObject, "sportsEventsPerMatch3"));
 	  		}
 	  		//koulutus
 	  		if(currentIndex == 236) {
@@ -419,28 +444,32 @@ public class CreateFormDoc {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonObjectToGetValue(jsonModelObject, "parentMeetings"));
 	  		}
-	  	//joukkueen muut tapahtumat
+	  		//joukkueen muut tapahtumat
 	  		if(currentIndex == 304) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonObjectToGetValue(jsonModelObject, "ruleMeeting"));
 	  		}
-	  	//muut toiminta
+	  		//muut toiminta
 	  		if(currentIndex == 308) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonObjectToGetValue(jsonModelObject, "otherEvents"));
 	  		}
-	  	//muut toiminta
+	  		//muut toiminta
 	  		if(currentIndex == 313) {
 				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 				LocalDate localDate = LocalDate.now();
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(dtf.format(localDate));
 	  		}
-	  	//muut toiminta
-	  	
-	  		if(currentIndex == 318) {
+	  		//muut toiminta		  	
+	  		if(currentIndex == 316) {
 	  			Text formText = (Text) wordTextIterator.next();
 	  			formText.setValue(loopJsonObjectToGetValue(jsonModelObject, "signature"));
+	  		}
+	  		//muut toiminta	  	
+	  		if(currentIndex == 318) {
+	  			Text formText = (Text) wordTextIterator.next();
+	  			formText.setValue("");
 	  		}
 	  		
   			
@@ -481,7 +510,6 @@ public class CreateFormDoc {
 	
 	public JSONArray generateJsonFromForm(List<ActionFormModel> actionForm) throws JsonParseException, JsonMappingException, IOException {
 		String json = new Gson().toJson(actionForm);
-		JSONObject jObject = new JSONObject();
 		JSONArray arr = new JSONArray(json);
 		
 		return arr;

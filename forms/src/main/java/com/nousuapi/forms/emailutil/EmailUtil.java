@@ -10,6 +10,9 @@ import java.util.List;
 
 import javax.mail.MessagingException;
 
+import org.json.JSONArray;
+
+import com.nousuapi.forms.createform.CreateFormDoc;
 import com.nousuapi.forms.exceptions.CustomException;
 import com.nousuapi.forms.exceptions.ErrorLogging;
 import com.nousuapi.forms.model.ActionFormModel;
@@ -29,13 +32,19 @@ public class EmailUtil {
 	
 	public ErrorLogging createEmail(File file, List<ActionFormModel> actionForm) throws Exception {
 	  ErrorLogging log = new ErrorLogging();
-      SendGrid sendGrid = new SendGrid(System.getenv("SENDGRID_APIKEY"));
-      String subject = "Toimintakertomus - ";
+	  
+	  CreateFormDoc doc = new CreateFormDoc();
+	  JSONArray arr = doc.generateJsonFromForm(actionForm);
+	  String signature = doc.loopJsonObjectToGetValue(arr, "signature");
+	  
+	  
+	  SendGrid sendGrid = new SendGrid(System.getenv("SENDGRID_APIKEY"));
+      String subject = "Toimintakertomus - " +  signature;
       Email from = new Email("jyvaskylanousu@gmail.com");
       Email to = new Email("jyvaskylanousu@gmail.com");
       Content content = new Content();
       content.setType("text/plain");
-      content.setValue("Hei.\n\n Liitteenä toimintakertomus. \n\n Ystävällisin Terveisin\n");
+      content.setValue("Hei.\n\n Liitteenä toimintakertomus. \n\n Ystävällisin Terveisin\n" + signature);
       Personalization perz = new Personalization();
       perz.addTo(to);
       perz.setSubject(subject);
