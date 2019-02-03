@@ -22,8 +22,9 @@ import org.docx4j.wml.Text;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.nousuapi.forms.model.ActionFormModel;
 
 public class CreateFormDoc {
@@ -55,8 +56,8 @@ public class CreateFormDoc {
 		  return result;
 	  }
 		  
-	public void populateWord(WordprocessingMLPackage template, ActionFormModel actionForm) throws  Docx4JException, MessagingException, FileNotFoundException, IOException {
-	  JSONObject jsonModelObject =  generateJsonFromForm(actionForm);
+	public void populateWord(WordprocessingMLPackage template, List<ActionFormModel> actionForm) throws  Docx4JException, MessagingException, FileNotFoundException, IOException {
+		JSONArray jsonModelObject =  generateJsonFromForm(actionForm);
 	  List<Object> texts = getAllElementFromObject(template.getMainDocumentPart(), Text.class);
 	  int currentIndex = 0;
 	  	ListIterator<Object> wordTextIterator = texts.listIterator();
@@ -436,13 +437,6 @@ public class CreateFormDoc {
 	  			formText.setValue(dtf.format(localDate));
 	  		}
 	  	//muut toiminta
-	  		
-	  		if(currentIndex == 316) {
-	  			Text formText = (Text) wordTextIterator.next();
-	  			formText.setValue(loopJsonObjectToGetValue(jsonModelObject, "acceptance"));
-	  		}
-	  		
-	  	//muut toiminta
 	  	
 	  		if(currentIndex == 318) {
 	  			Text formText = (Text) wordTextIterator.next();
@@ -456,41 +450,40 @@ public class CreateFormDoc {
 		  writeDocxToStream(template, "Toimintakertomus2.docx");
 	 }
 	
-	public String loopJsonObjectToGetValue(JSONObject jsonModelObject, String desiredValue) {
-		String desired = "";
-		String temp = "";
-		for(Iterator<?> iterator = jsonModelObject.keys(); iterator.hasNext();) {
-			temp = (String) iterator.next();
-			if(temp.contains(desiredValue)) {
-				desired = jsonModelObject.getString(temp);				
+	public String loopJsonObjectToGetValue(JSONArray jArray, String desiredValue) {
+		
+		String desired = "";		
+		
+		for(int i = 0; i < jArray.length(); i++) {
+			JSONObject jObject = jArray.getJSONObject(i);
+			Iterator iter = jObject.keys();
+			while(iter.hasNext()) {
+				String firstKey = (String)iter.next();
+				String firstValue = jObject.getString(firstKey);
+				
+				if(firstValue.contains(desiredValue)) {
+					while(iter.hasNext()) {
+						String key = (String)iter.next();
+						String value = jObject.getString(key);
+						desired = value;
+					}
+				}
 			}
 		}
 		
 		return desired;
 	}
 	
-	/*
-	public String loopJsonArrayToGetValue(JSONObject jsonModelObject, String desiredValue, int index) {
-		JSONArray arr = jsonModelObject.getJSONArray(desiredValue);
-		String key = "";
-		
-		for(int i = 0; i < arr.length(); i++) {
-			if(i == index) {
-				key = arr.getString(i);
-			}
-		}
-		
-		return key;
-	}
-	*/
 	public void writeDocxToStream(WordprocessingMLPackage template, String target) throws Docx4JException, MessagingException {
 		File f = new File(target);
 		 template.save(f);		 
 	}
 	
-	public JSONObject generateJsonFromForm(ActionFormModel actionForm) {
-		Gson gson = new GsonBuilder().create();
-		JSONObject jObject = new JSONObject(gson.toJson(actionForm));
-		return jObject;
+	public JSONArray generateJsonFromForm(List<ActionFormModel> actionForm) throws JsonParseException, JsonMappingException, IOException {
+		String json = new Gson().toJson(actionForm);
+		JSONObject jObject = new JSONObject();
+		JSONArray arr = new JSONArray(json);
+		
+		return arr;
 	}
 }

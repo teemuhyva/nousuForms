@@ -3,13 +3,10 @@ package com.nousuapi.forms;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.mail.MessagingException;
-
-import org.docx4j.openpackaging.exceptions.Docx4JException;
-import org.hibernate.internal.util.xml.ErrorLogger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,10 +27,11 @@ public class FormsController {
 	private static final Logger logger = Logger.getLogger(FormsController.class.getName());
 	
 	@PostMapping("/actionForm")
-	public ResponseEntity<?> createForm(@RequestBody ActionFormModel actionForm) throws Exception {
+	public ResponseEntity<?> createForm(@RequestBody List<ActionFormModel> actionForm) throws Exception {
 		ErrorLogging log = new ErrorLogging();
 		CreateFormDoc form = new CreateFormDoc();
 		File file = new File("Toimintakertomus.docx");		
+		
 		try {
 			form.populateWord(form.getTemplate(file), actionForm);
 		} catch (FileNotFoundException e) {
@@ -50,35 +48,25 @@ public class FormsController {
 			e.printStackTrace();
 			log.setError3(e.getMessage());
 		}
+		
 		return new ResponseEntity<>(log,HttpStatus.CREATED);
 	}
-	
-	@PostMapping("/ilmanbodya")
-	public ResponseEntity<?> createForm() throws Exception {
-		ActionFormModel model = new ActionFormModel();
-		try {
-			SendEmailWithAttachment(new File("Toimintakertomus2.docx"), model);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return new ResponseEntity<>(HttpStatus.CREATED);
-	}
-	
 	
 	@PostMapping("/jyvaskylacupjobsForm")
 	public ResponseEntity<Object> generateJob() {
 		return new ResponseEntity<Object>(HttpStatus.ACCEPTED);
 	}
 	
-	public ErrorLogging SendEmailWithAttachment(File file, ActionFormModel actionForm) throws Exception {
+	public ErrorLogging SendEmailWithAttachment(File file, List<ActionFormModel> actionForm) throws Exception {
 		ErrorLogging log = new ErrorLogging();
-		 EmailUtil sendAttachmentViaEmail = new EmailUtil();
-		 try {			 
+		EmailUtil sendAttachmentViaEmail = new EmailUtil();
+		 
+		try {			 
 			 log = sendAttachmentViaEmail.createEmail(file, actionForm);
 		} catch (FileNotFoundException e) {
 			log.setError4(e.getMessage());
 		}
 		 
-		 return log;
+		return log;
 	}
 }

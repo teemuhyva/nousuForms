@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Base64;
+import java.util.List;
 
 import javax.mail.MessagingException;
 
@@ -26,15 +27,15 @@ public class EmailUtil {
 		
 	InputStream inputStream;	
 	
-	public ErrorLogging createEmail(File file, ActionFormModel actionForm) throws Exception {
+	public ErrorLogging createEmail(File file, List<ActionFormModel> actionForm) throws Exception {
 	  ErrorLogging log = new ErrorLogging();
       SendGrid sendGrid = new SendGrid(System.getenv("SENDGRID_APIKEY"));
-      String subject = "Toimintakertomus - "+ actionForm.getSignature();
+      String subject = "Toimintakertomus - ";
       Email from = new Email("jyvaskylanousu@gmail.com");
       Email to = new Email("jyvaskylanousu@gmail.com");
       Content content = new Content();
       content.setType("text/plain");
-      content.setValue("Hei.\n\n Liitteenä toimintakertomus. \n\n Ystävällisin Terveisin\n" + actionForm.getSignature());
+      content.setValue("Hei.\n\n Liitteenä toimintakertomus. \n\n Ystävällisin Terveisin\n");
       Personalization perz = new Personalization();
       perz.addTo(to);
       perz.setSubject(subject);
@@ -68,5 +69,6 @@ public class EmailUtil {
     	  throw new Exception(CustomException.SENDING_EMAIL_FAILED);
       }
       return log;
-   }
+   }   
+   
 }
