@@ -32,7 +32,6 @@ public class UserPurpose {
 	private String location;
 	
 	//tournament field name
-	@NotNull
 	private String fieldName;
 	
 	//name of user (not leader)
@@ -50,13 +49,25 @@ public class UserPurpose {
 	@NotNull
 	private String leaderTeam;
 	
+	@NotNull
+	private String phoneNumber;
+	
+	private String ilGroup;
 	//date when person will be onsite
 	//TODO: other date for when this info was entered / updated?
+	
 	@NotNull
-	private Date date;
+	private String userRole;
+	@NotNull
+	private Date updatedTime;
+	
+	@NotNull
+	private Date dayOnsite;
 	
 	//what time person will be onsite
 	@NotNull
-	private Date time;
+	private Date startTime;
 	
+	@NotNull
+	private Date endTime;
 }

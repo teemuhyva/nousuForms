@@ -32,9 +32,14 @@ public class UserPurposeServiceImpl implements UserPurposeService {
 		 * for testing purposes hardcoded
 		 */
 		Date date = new Date(0);
-		userPurpose.setDate(date);
-		userPurpose.setTime(date);
+		userPurpose.setUpdatedTime(date);
+		userPurpose.setStartTime(date);
 		userPurposeRepository.save(userPurpose);
+	}
+
+	@Override
+	public List<UserPurpose> getAll() {		
+		return userPurposeRepository.listAll();
 	}
 
 }

@@ -9,4 +9,6 @@ public interface UserPurposeService {
 	public List<UserPurpose> getDetails(String leaderFirstName);
 	
 	public void updatePurpose(UserPurpose userPurpose);
+	
+	public List<UserPurpose> getAll();
 }

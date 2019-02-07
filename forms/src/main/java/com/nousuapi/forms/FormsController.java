@@ -52,11 +52,6 @@ public class FormsController {
 		return new ResponseEntity<>(log,HttpStatus.CREATED);
 	}
 	
-	@PostMapping("/jyvaskylacupjobsForm")
-	public ResponseEntity<Object> generateJob() {
-		return new ResponseEntity<Object>(HttpStatus.ACCEPTED);
-	}
-	
 	public ErrorLogging SendEmailWithAttachment(File file, List<ActionFormModel> actionForm) throws Exception {
 		ErrorLogging log = new ErrorLogging();
 		EmailUtil sendAttachmentViaEmail = new EmailUtil();

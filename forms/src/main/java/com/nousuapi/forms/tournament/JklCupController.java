@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nousuapi.forms.customer.CustomerResource;
-import com.nousuapi.forms.customer.UserPurposeResource;
+import com.nousuapi.forms.adminuser.AdminUserResource;
+import com.nousuapi.forms.adminuser.UserPurposeResource;
 import com.nousuapi.forms.entity.Customer;
 import com.nousuapi.forms.entity.UserPurpose;
 import com.nousuapi.forms.service.UserPurposeService;
@@ -37,26 +37,26 @@ public class JklCupController {
 	private UserPurposeService userPurposeService;
 	
 	@GetMapping("/userinfo/{username}")
-	public ResponseEntity<CustomerResource> getUserInfo(@PathVariable(value = "username") String username) {	
+	public ResponseEntity<AdminUserResource> getUserInfo(@PathVariable(value = "username") String username) {	
 		
-		CustomerResource cust = new CustomerResource();
+		AdminUserResource cust = new AdminUserResource();
 		Customer user = userService.findUser(username);
 		if(user == null) {		
 			Link link = linkTo(JklCupController.class).slash("createuser").withRel("createuser");
 			cust.add(link);
 		} else {
-			cust = CustomerResource.valueOf(user);
-			cust.add(CustomerResource.getLink(cust));
+			cust = AdminUserResource.valueOf(user);
+			cust.add(AdminUserResource.getLink(cust));
 		}
 		
 		return new ResponseEntity<>(cust, HttpStatus.OK);
 	}
 
 	@PostMapping("/createuser")
-	public ResponseEntity<CustomerResource> createNewUser(@RequestBody Customer user) throws Exception {
+	public ResponseEntity<AdminUserResource> createNewUser(@RequestBody Customer user) throws Exception {
 		userService.addNewUser(user);
 		
-		CustomerResource result = CustomerResource.getMessage();
+		AdminUserResource result = AdminUserResource.getMessage();
 		Link link = linkTo(JklCupController.class)
 				.slash("updatepurpose")
 				.withRel("updatepurpose");	
@@ -66,9 +66,9 @@ public class JklCupController {
 	}
 	
 	@PutMapping("/updatepurpose")
-	public ResponseEntity<CustomerResource> updatePurpose(@RequestBody UserPurpose userPurpose) {
+	public ResponseEntity<AdminUserResource> updatePurpose(@RequestBody UserPurpose userPurpose) {
 		userPurposeService.updatePurpose(userPurpose);
-		CustomerResource result = new CustomerResource();
+		AdminUserResource result = new AdminUserResource();
 		result.add(linkTo(JklCupController.class)
 				.slash("updatepurpose").withSelfRel(),
 				linkTo(JklCupController.class)

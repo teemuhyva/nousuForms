@@ -1,4 +1,4 @@
-package com.nousuapi.forms.customer;
+package com.nousuapi.forms.adminuser;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
@@ -34,8 +34,8 @@ public class UserPurposeResource  extends ResourceSupport {
 			result.setLocation(up.getLocation());
 			result.setPersonName(up.getPersonName());
 			result.setFieldName(up.getFieldName());
-			result.setDate(up.getDate());
-			result.setTime(up.getTime());
+			result.setDate(up.getUpdatedTime());
+			result.setTime(up.getStartTime());
 			
 			result.add(linkTo(JklCupController.class).slash("updatepurpose").withRel("userpurpose"));
 			resultList.add(result);

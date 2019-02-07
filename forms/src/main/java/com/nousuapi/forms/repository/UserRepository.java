@@ -12,12 +12,13 @@ import com.nousuapi.forms.entity.Customer;
 @Repository
 public interface UserRepository extends JpaRepository<Customer, String> {
 
-	@Query("SELECT u FROM Customer u WHERE u.fullName =:fullName")
+	@Transactional
+	@Query("SELECT u FROM Customer  u WHERE u.fullName =:fullName")
 	Customer findUserByFullName(String fullName);
 	
 	
 	@Transactional
 	@Modifying
-	@Query("DELETE FROM Customer u WHERE u.fullName =:fullName")
+	@Query("DELETE FROM Customer  u WHERE u.fullName =:fullName")
 	void deleteByFullName(String fullName);
 }

@@ -1,4 +1,4 @@
-package com.nousuapi.forms.customer;
+package com.nousuapi.forms.adminuser;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
@@ -17,7 +17,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CustomerResource extends ResourceSupport {
+public class AdminUserResource extends ResourceSupport {
 	
 	private String firstName;
 	private String lastName;
@@ -32,8 +32,8 @@ public class CustomerResource extends ResourceSupport {
 		return fullName;
 	}
 	
-	public static CustomerResource valueOf(Customer user) {
-		CustomerResource customerResource = new CustomerResource();
+	public static AdminUserResource valueOf(Customer user) {
+		AdminUserResource customerResource = new AdminUserResource();
 		customerResource.setFirstName(user.getFirstName());
 		customerResource.setLastName(user.getLastName());
 		customerResource.setEmail(user.getEmail());
@@ -43,11 +43,11 @@ public class CustomerResource extends ResourceSupport {
 		return customerResource;
 	}
 	
-	public static List<CustomerResource> toList(List<Customer> users) {
-		List<CustomerResource> resultList = new ArrayList<CustomerResource>();
+	public static List<AdminUserResource> toList(List<Customer> users) {
+		List<AdminUserResource> resultList = new ArrayList<AdminUserResource>();
 		
 		for(Customer u : users) {
-			CustomerResource result = new CustomerResource();
+			AdminUserResource result = new AdminUserResource();
 			result.setFirstName(u.getFirstName());
 			result.setLastName(u.getLastName());
 			result.setTeam(u.getTeam());
@@ -60,13 +60,13 @@ public class CustomerResource extends ResourceSupport {
 		return resultList;
 	}
 	
-	public static CustomerResource getMessage() {
-		CustomerResource message = new CustomerResource();
+	public static AdminUserResource getMessage() {
+		AdminUserResource message = new AdminUserResource();
 		message.setSuccessMessage("Päivitys onnistui!");
 		return message;
 	}
 	
-	public static Link getLink(CustomerResource customer) {
+	public static Link getLink(AdminUserResource customer) {
 		Link link = linkTo(JklCupController.class)
 				.slash("userpurpose")
 				.slash(customer.getFirstName())
