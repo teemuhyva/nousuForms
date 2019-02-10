@@ -1,6 +1,6 @@
 package com.nousuapi.forms.entity;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,46 +28,42 @@ public class UserPurpose {
 	private long id;
 	
 	//where user is located during tournament
-	@NotNull
+	
 	private String location;
 	
 	//tournament field name
 	private String fieldName;
 	
 	//name of user (not leader)
-	@NotNull
+	
 	private String personName;
 	
 	//teamleader (who will assign persons in purpose)
-	@NotNull
+	
 	private String leaderFirstName;
 	
-	@NotNull
+	
 	private String leaderLastName;
 	
 	//leader team
-	@NotNull
+	
 	private String leaderTeam;
 	
-	@NotNull
+	
 	private String phoneNumber;
 	
 	private String ilGroup;
 	//date when person will be onsite
 	//TODO: other date for when this info was entered / updated?
 	
-	@NotNull
 	private String userRole;
-	@NotNull
+	
 	private Date updatedTime;
 	
-	@NotNull
 	private Date dayOnsite;
 	
 	//what time person will be onsite
-	@NotNull
 	private Date startTime;
 	
-	@NotNull
 	private Date endTime;
 }

@@ -1,8 +1,9 @@
 package com.nousuapi.forms.service;
 
-import java.sql.Date;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class UserPurposeServiceImpl implements UserPurposeService {
 		 * this will need to get actual date from client
 		 * for testing purposes hardcoded
 		 */
-		Date date = new Date(0);
+		Date date = new Date();
 		userPurpose.setUpdatedTime(date);
 		userPurpose.setStartTime(date);
 		userPurposeRepository.save(userPurpose);
