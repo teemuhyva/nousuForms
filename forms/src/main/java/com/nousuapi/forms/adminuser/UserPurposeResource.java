@@ -31,13 +31,12 @@ public class UserPurposeResource  extends ResourceSupport {
 		for(UserPurpose up : userPurpose) {
 			UserPurposeResource result = new UserPurposeResource();
 			result.setLeaderFullName(up.getLeaderFirstName() + up.getLeaderLastName());
-			result.setLocation(up.getLocation());
+			result.setLocation(up.getLocation().toString());
 			result.setPersonName(up.getPersonName());
 			result.setFieldName(up.getFieldName());
 			result.setDate(up.getUpdatedTime());
-			result.setTime(up.getStartTime());
-			
-			result.add(linkTo(JklCupController.class).slash("updatepurpose").withRel("userpurpose"));
+			result.setTime(up.getStartTime());			
+			result.add(linkTo(JklCupController.class).slash("updatepurpose").withRel("updatepurpose"));
 			resultList.add(result);
 		}
 		

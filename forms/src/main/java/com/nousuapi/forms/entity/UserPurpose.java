@@ -3,12 +3,18 @@ package com.nousuapi.forms.entity;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import com.nousuapi.forms.enums.IlGroup;
+import com.nousuapi.forms.enums.Location;
+import com.nousuapi.forms.enums.UserRole;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,21 +34,22 @@ public class UserPurpose {
 	private long id;
 	
 	//where user is located during tournament
-	
-	private String location;
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	private Location location;
 	
 	//tournament field name
 	private String fieldName;
 	
-	//name of user (not leader)
-	
+	//name of user (not leader)	
+	@NotNull
 	private String personName;
 	
 	//teamleader (who will assign persons in purpose)
-	
+	@NotNull
 	private String leaderFirstName;
 	
-	
+	@NotNull
 	private String leaderLastName;
 	
 	//leader team
@@ -52,11 +59,14 @@ public class UserPurpose {
 	
 	private String phoneNumber;
 	
-	private String ilGroup;
+	@Enumerated(EnumType.STRING)
+	private IlGroup ilGroup;
 	//date when person will be onsite
 	//TODO: other date for when this info was entered / updated?
 	
-	private String userRole;
+	@NotNull
+	@Enumerated(EnumType.STRING)
+	private UserRole userRole;
 	
 	private Date updatedTime;
 	

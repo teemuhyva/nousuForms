@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.nousuapi.forms.adminuser.AdminUserResource;
+import com.nousuapi.forms.adminuser.CustomerResource;
 import com.nousuapi.forms.entity.Customer;
 import com.nousuapi.forms.entity.UserPurpose;
 import com.nousuapi.forms.exceptions.CustomException;
@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void addNewUser(Customer user) throws Exception {
-		String fullName = AdminUserResource.value(user.getFirstName(), user.getLastName());
+		String fullName = CustomerResource.value(user.getFirstName(), user.getLastName());
 		//TODO: add custom exception if user already found
 		if(userRepository.findUserByFullName(fullName) != null) {
 			throw new Exception(CustomException.ALREADYFOUND);

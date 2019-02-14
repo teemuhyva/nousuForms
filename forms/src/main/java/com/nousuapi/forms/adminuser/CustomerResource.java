@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.ResourceSupport;
 
+import com.nousuapi.forms.admin.AdminController;
 import com.nousuapi.forms.entity.Customer;
 import com.nousuapi.forms.entity.UserPurpose;
 import com.nousuapi.forms.tournament.JklCupController;
@@ -17,13 +18,14 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AdminUserResource extends ResourceSupport {
+public class CustomerResource extends ResourceSupport {
 	
 	private String firstName;
 	private String lastName;
 	private String email;
 	private String phone;
 	private String team;
+	private UserPurpose userPurpose;
 	
 	private String successMessage;
 	
@@ -32,8 +34,8 @@ public class AdminUserResource extends ResourceSupport {
 		return fullName;
 	}
 	
-	public static AdminUserResource valueOf(Customer user) {
-		AdminUserResource customerResource = new AdminUserResource();
+	public static CustomerResource valueOf(Customer user) {
+		CustomerResource customerResource = new CustomerResource();
 		customerResource.setFirstName(user.getFirstName());
 		customerResource.setLastName(user.getLastName());
 		customerResource.setEmail(user.getEmail());
@@ -43,36 +45,26 @@ public class AdminUserResource extends ResourceSupport {
 		return customerResource;
 	}
 	
-	public static List<AdminUserResource> toList(List<Customer> users) {
-		List<AdminUserResource> resultList = new ArrayList<AdminUserResource>();
+	public static List<CustomerResource> toList(List<Customer> users) {
+		List<CustomerResource> resultList = new ArrayList<CustomerResource>();
+		CustomerResource result;
 		
 		for(Customer u : users) {
-			AdminUserResource result = new AdminUserResource();
+			result = new CustomerResource();
 			result.setFirstName(u.getFirstName());
 			result.setLastName(u.getLastName());
 			result.setTeam(u.getTeam());
 			result.setEmail(u.getEmail());
 			result.setPhone(u.getPhone());
-			result.add(getLink(result));
 			resultList.add(result);
 		}
 		
 		return resultList;
 	}
 	
-	public static AdminUserResource getMessage() {
-		AdminUserResource message = new AdminUserResource();
+	public static CustomerResource getMessage() {
+		CustomerResource message = new CustomerResource();
 		message.setSuccessMessage("Päivitys onnistui!");
 		return message;
-	}
-	
-	public static Link getLink(AdminUserResource customer) {
-		Link link = linkTo(JklCupController.class)
-				.slash("userpurpose")
-				.slash(customer.getFirstName())
-				.slash(customer.getLastName())
-				.slash(customer.getTeam())
-				.withRel("userpurpose");	
-		return link;
 	}
 }
