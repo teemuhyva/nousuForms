@@ -70,9 +70,11 @@ public class UserPurpose {
 	
 	private Date updatedTime;
 	
+	@NotNull
 	private Date dayOnsite;
 	
 	//what time person will be onsite
+	@NotNull
 	private Date startTime;
 	
 	private Date endTime;

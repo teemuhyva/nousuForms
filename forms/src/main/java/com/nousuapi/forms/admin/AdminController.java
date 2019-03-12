@@ -76,7 +76,7 @@ public class AdminController {
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
-	@PostMapping("/jyvaskylacupjobsForm")
+	@GetMapping("/jyvaskylacupjobsForm")
 	public ResponseEntity<List<UserPurpose>> generateJob() throws EncryptedDocumentException, IOException {
 		List<UserPurpose> listUsersAndPurpose = userPurposeService.getAll();		
 		JklCupExcel createExcel = new JklCupExcel();

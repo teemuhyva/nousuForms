@@ -169,6 +169,7 @@ public class JklCupExcel {
         
         OutputStream fileOut = new FileOutputStream("src\\main\\resources\\jklcup.xls");
         wb.write(fileOut);
+        wb.close();
         fileOut.close();
 	}
 	

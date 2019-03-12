@@ -48,13 +48,6 @@ public class UserPurposeServiceImpl implements UserPurposeService {
 			throw new Exception(CustomException.NO_USER_PURPOSE_ADDED);
 		}
 		
-		/*
-		 * this will need to get actual date from client
-		 * for testing purposes hardcoded
-		 */
-		Date date = new Date();
-		userPurpose.setUpdatedTime(date);
-		userPurpose.setStartTime(date);
 		userPurposeRepository.save(userPurpose);
 	}
 	
@@ -67,13 +60,6 @@ public class UserPurposeServiceImpl implements UserPurposeService {
 			throw new Exception(CustomException.USER_NOT_CREATED);
 		}
 		
-		/*
-		 * this will need to get actual date from client
-		 * for testing purposes hardcoded
-		 */
-		Date date = new Date(); 
-		userPurpose.setUpdatedTime(date);
-		userPurpose.setStartTime(date);
 		userPurposeRepository.save(userPurpose);
 	}
 
