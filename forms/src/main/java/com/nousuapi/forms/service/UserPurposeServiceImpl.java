@@ -77,5 +77,6 @@ public class UserPurposeServiceImpl implements UserPurposeService {
 		}
 		return uPurpList;
 	}
+	
 
 }

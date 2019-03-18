@@ -62,13 +62,9 @@ public class JklCupController {
 
 	@PostMapping("/createuser")
 	public ResponseEntity<CustomerResource> createNewUser(@RequestBody Customer user) throws Exception {
-		userService.addNewUser(user);
 		
+		userService.addNewUser(user);		
 		CustomerResource result = CustomerResource.getMessage();
-		Link link = linkTo(JklCupController.class)
-				.slash("updatepurpose")
-				.withRel("updatepurpose");	
-		result.add(link);
 					
 		return new ResponseEntity<>(result, HttpStatus.CREATED);
 	}
@@ -92,13 +88,11 @@ public class JklCupController {
 																	@PathVariable(required = true) String lastName) throws Exception {
 		
 		List<UserPurpose> uPurposeByLeader = userPurposeService.getDetails(firstName, lastName);
-		List<UserPurposeResource> result = UserPurposeResource.mapList(uPurposeByLeader);
 		
-		UserPurposeLinkedResource upl = new UserPurposeLinkedResource();
-		upl.setUserPurposeResource(result);
+		UserPurposeLinkedResource upl = UserPurposeLinkedResource.checkResult(uPurposeByLeader);
+		
 		upl.add(linkTo(JklCupController.class).slash("updatepurpose").withRel("createpurpose"));
-		
-				
+						
 		return new ResponseEntity<>(upl, HttpStatus.OK);
 	}
 }

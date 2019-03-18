@@ -8,6 +8,8 @@ import java.util.List;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.ResourceSupport;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.nousuapi.forms.admin.AdminController;
 import com.nousuapi.forms.entity.Customer;
 import com.nousuapi.forms.entity.UserPurpose;
@@ -56,6 +58,7 @@ public class CustomerResource extends ResourceSupport {
 			result.setTeam(u.getTeam());
 			result.setEmail(u.getEmail());
 			result.setPhone(u.getPhone());
+			result.add(linkTo(AdminController.class).slash("userpurposeinfo").slash(u.getFirstName()).slash(u.getLastName()).withRel("userpurposeinfo"));
 			resultList.add(result);
 		}
 		

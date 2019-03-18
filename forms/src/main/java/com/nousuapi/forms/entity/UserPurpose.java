@@ -10,10 +10,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import com.nousuapi.forms.enums.IlGroup;
 import com.nousuapi.forms.enums.Location;
+import com.nousuapi.forms.enums.OnsiteDay;
 import com.nousuapi.forms.enums.UserRole;
 
 import lombok.AllArgsConstructor;
@@ -38,7 +41,7 @@ public class UserPurpose {
 	@Enumerated(EnumType.STRING)
 	private Location location;
 	
-	//tournament field name
+	//can be removed ( same thing as location )
 	private String fieldName;
 	
 	//name of user (not leader)	
@@ -68,13 +71,12 @@ public class UserPurpose {
 	@Enumerated(EnumType.STRING)
 	private UserRole userRole;
 	
-	private Date updatedTime;
-	
 	@NotNull
-	private Date dayOnsite;
-	
+	@Enumerated(EnumType.STRING)
+	private OnsiteDay dayOnsite;
+		
 	//what time person will be onsite
-	@NotNull
+	@Temporal(TemporalType.DATE)
 	private Date startTime;
 	
 	private Date endTime;

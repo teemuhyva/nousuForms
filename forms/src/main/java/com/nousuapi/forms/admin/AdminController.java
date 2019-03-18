@@ -57,23 +57,23 @@ public class AdminController {
 	private ResponseEntity<UserPurposeLinkedResource> getUserPurposeInfo(
 			@PathVariable(value = "firstName") String firstName,
 			@PathVariable(value = "lastName") String lastName) {
-		List<UserPurpose> userPurposeList = userPurposeService.getUserPurposeInfo(firstName, lastName);
-		List<UserPurposeResource> result = new ArrayList<>();
-		if(!userPurposeList.isEmpty()) {
-			result = UserPurposeResource.mapList(userPurposeList);
-		}
-
-		UserPurposeLinkedResource purpose = new UserPurposeLinkedResource();
-		purpose.setUserPurposeResource(result);
-		purpose.add(linkTo(AdminController.class).slash("adduserpurpose").withRel("newpurpose"));
 		
-		return new ResponseEntity<>(purpose, HttpStatus.OK);
+		List<UserPurpose> userPurposeList = userPurposeService.getUserPurposeInfo(firstName, lastName);
+		
+		UserPurposeLinkedResource result = UserPurposeLinkedResource.checkResult(userPurposeList);
+
+		result.add(linkTo(AdminController.class).slash("adduserpurpose").withRel("newpurpose"));
+		
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
-	@PutMapping("/adduserpurpose")
+	@PostMapping("/adduserpurpose")
 	public ResponseEntity<UserPurposeResource> addUserPurpose(@RequestBody UserPurpose userPurpose) throws Exception  {
 		userPurposeService.addNewPurpose(userPurpose);
-		return new ResponseEntity<>(HttpStatus.CREATED);
+		UserPurposeResource result = UserPurposeResource.getMessage();
+		result.add(linkTo(AdminController.class).slash("adduserpurpose").withRel("newpurpose"));
+		result.add(linkTo(JklCupController.class).slash("updatePurpose").withRel("updatepurpose"));
+		return new ResponseEntity<>(result, HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/jyvaskylacupjobsForm")
