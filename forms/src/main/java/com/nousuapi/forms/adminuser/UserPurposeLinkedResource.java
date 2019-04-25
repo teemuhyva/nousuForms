@@ -13,15 +13,13 @@ import lombok.Setter;
 @Setter
 public class UserPurposeLinkedResource  extends ResourceSupport {
 
-	private String personName;
 	private String leaderFullName;
 	private List<UserPurposeResource> userPurposeResource;
 		
-	public static UserPurposeLinkedResource mapResource(List<UserPurpose> userPurposeList, String leaderName, String userFullName) {
+	public static UserPurposeLinkedResource mapResource(List<UserPurpose> userPurposeList, String leaderName) {
 		
 		UserPurposeLinkedResource result = new UserPurposeLinkedResource();
 		result.setLeaderFullName(leaderName);
-		result.setPersonName(userFullName);
 		result.setUserPurposeResource(UserPurposeResource.mapList(userPurposeList));
 		
 		return result;
@@ -31,12 +29,10 @@ public class UserPurposeLinkedResource  extends ResourceSupport {
 		UserPurposeLinkedResource upl = new UserPurposeLinkedResource();
 		if(!userPurposeList.isEmpty()) {
 			String leaderName = "";
-			String userName = "";
 			for(UserPurpose user : userPurposeList) {
 				leaderName = user.getLeaderFirstName() + " " + user.getLeaderLastName();
-				userName = user.getPersonName();
 			}
-			upl = mapResource(userPurposeList, leaderName, userName);
+			upl = mapResource(userPurposeList, leaderName);
 		}
 		
 		return upl;

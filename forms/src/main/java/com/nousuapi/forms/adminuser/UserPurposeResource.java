@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.hateoas.ResourceSupport;
 
 import com.nousuapi.forms.entity.UserPurpose;
+import com.nousuapi.forms.enums.IlGroup;
 import com.nousuapi.forms.enums.OnsiteDay;
 import com.nousuapi.forms.tournament.JklCupController;
 
@@ -23,7 +24,9 @@ public class UserPurposeResource  extends ResourceSupport {
 	private String fieldName;
 	private OnsiteDay weekDay;
 	private Date time;
+	private String personName;
 	private String successMessage;
+	private IlGroup ilGroup;
 	
 	public static List<UserPurposeResource> mapList(List<UserPurpose> userPurpose) {
 		List<UserPurposeResource> resultList = new ArrayList<UserPurposeResource>();
@@ -33,7 +36,9 @@ public class UserPurposeResource  extends ResourceSupport {
 			result.setLocation(up.getLocation().toString());
 			result.setFieldName(up.getFieldName());
 			result.setWeekDay(up.getDayOnsite());
-			result.setTime(up.getStartTime());			
+			result.setIlGroup(up.getIlGroup());
+			result.setPersonName(up.getPersonName());
+			result.setTime(up.getStartTime());
 			result.add(linkTo(JklCupController.class).slash("updatepurpose").withRel("updatepurpose"));
 			resultList.add(result);
 		}
