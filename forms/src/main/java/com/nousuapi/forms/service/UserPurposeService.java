@@ -2,6 +2,7 @@ package com.nousuapi.forms.service;
 
 import java.util.List;
 
+import com.nousuapi.forms.adminuser.UserPurposeResource;
 import com.nousuapi.forms.entity.UserPurpose;
 
 public interface UserPurposeService {
@@ -15,4 +16,6 @@ public interface UserPurposeService {
 	public List<UserPurpose> getAll();
 	
 	public List<UserPurpose> getUserPurposeInfo(String leaderFullName);
+
+	void deleteUserPurpose(UserPurpose userPurpose);
 }

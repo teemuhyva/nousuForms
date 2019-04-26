@@ -55,6 +55,7 @@ public class CustomerResource extends ResourceSupport {
 			result.setEmail(u.getEmail());
 			result.setPhone(u.getPhone());
 			result.add(linkTo(AdminController.class).slash("userpurposeinfo").slash(u.getFullName()).withRel("userpurposeinfo"));
+			result.add(linkTo(AdminController.class).slash("removeuser").withRel("delete"));
 			resultList.add(result);
 		}
 		

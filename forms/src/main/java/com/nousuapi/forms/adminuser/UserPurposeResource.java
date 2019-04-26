@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.springframework.hateoas.ResourceSupport;
 
+import com.nousuapi.forms.admin.AdminController;
 import com.nousuapi.forms.entity.UserPurpose;
 import com.nousuapi.forms.enums.IlGroup;
 import com.nousuapi.forms.enums.OnsiteDay;
@@ -41,7 +42,10 @@ public class UserPurposeResource  extends ResourceSupport {
 			result.setPersonName(up.getPersonName());
 			result.setUserRole(up.getUserRole());
 			result.setTime(up.getStartTime());
-			result.add(linkTo(JklCupController.class).slash("updatepurpose").withRel("updatepurpose"));
+			result.add(
+				linkTo(JklCupController.class).slash("updatepurpose").withRel("updatepurpose"),
+				linkTo(AdminController.class).slash("deletepurpose").withRel("removepurpose")
+			);
 			resultList.add(result);
 		}
 		

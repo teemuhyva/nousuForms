@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.nousuapi.forms.entity.Customer;
+import com.nousuapi.forms.entity.UserPurpose;
 
 @Repository
 public interface UserRepository extends JpaRepository<Customer, String> {
@@ -21,4 +22,5 @@ public interface UserRepository extends JpaRepository<Customer, String> {
 	@Modifying
 	@Query("DELETE FROM Customer  u WHERE u.fullName =:fullName")
 	void deleteByFullName(String fullName);
+	
 }

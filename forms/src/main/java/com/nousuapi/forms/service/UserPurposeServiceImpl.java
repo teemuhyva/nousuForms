@@ -10,6 +10,7 @@ import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.nousuapi.forms.adminuser.UserPurposeResource;
 import com.nousuapi.forms.entity.Customer;
 import com.nousuapi.forms.entity.UserPurpose;
 import com.nousuapi.forms.exceptions.CustomException;
@@ -76,6 +77,11 @@ public class UserPurposeServiceImpl implements UserPurposeService {
 			return new ArrayList<UserPurpose>();
 		}
 		return uPurpList;
+	}
+	
+	@Override
+	public void deleteUserPurpose(UserPurpose userPurpose) {
+		userPurposeRepository.deleteGivenRow(userPurpose.getPersonName(), userPurpose.getUserRole(), userPurpose.getLocation());
 	}
 	
 

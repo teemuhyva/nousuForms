@@ -9,7 +9,10 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.nousuapi.forms.adminuser.UserPurposeResource;
 import com.nousuapi.forms.entity.UserPurpose;
+import com.nousuapi.forms.enums.Location;
+import com.nousuapi.forms.enums.UserRole;
 
 @Repository
 public interface UserPurposeRepository extends JpaRepository<UserPurpose, String>{
@@ -23,4 +26,8 @@ public interface UserPurposeRepository extends JpaRepository<UserPurpose, String
 	@Query("SELECT u FROM UserPurpose u")
 	List<UserPurpose> listAll();
 	
+	@Transactional
+	@Modifying
+	@Query("DELETE FROM UserPurpose  u WHERE u.personName =:personName and u.userRole =:userRole and u.location =:location")
+	void deleteGivenRow(String personName, UserRole userRole, Location location);
 }
