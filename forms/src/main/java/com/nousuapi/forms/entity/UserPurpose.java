@@ -41,22 +41,15 @@ public class UserPurpose {
 	@Enumerated(EnumType.STRING)
 	private Location location;
 	
-	//can be removed ( same thing as location )
-	private String fieldName;
-	
 	//name of user (not leader)	
 	@NotNull
 	private String personName;
 	
 	//teamleader (who will assign persons in purpose)
 	@NotNull
-	private String leaderFirstName;
-	
-	@NotNull
-	private String leaderLastName;
+	private String leaderFullName;
 	
 	//leader team
-	
 	private String leaderTeam;
 	
 	

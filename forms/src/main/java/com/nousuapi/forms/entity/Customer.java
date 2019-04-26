@@ -30,10 +30,6 @@ public class Customer {
 	private long id;
 	
 	@NotNull
-	private String firstName;
-	@NotNull
-	private String lastName;
-	
 	private String fullName;
 	
 	private String team;

@@ -11,6 +11,6 @@ public interface UserService {
 	public UserPurpose findUserPurpose(String username);
 	public void addNewUser(Customer user) throws Exception;
 	public UserPurpose addUserPurpose(Customer user, UserPurpose userPurpose);
-	public void deleteUser(String firstName, String lastName);
+	public void deleteUser(String fullname);
 	public List<Customer> listUsers();
 }

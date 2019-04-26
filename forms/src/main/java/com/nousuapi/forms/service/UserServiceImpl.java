@@ -33,13 +33,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void addNewUser(Customer user) throws Exception {
-		String fullName = CustomerResource.value(user.getFirstName(), user.getLastName());
+		String fullName = CustomerResource.value(user.getFullName());
 		//TODO: add custom exception if user already found
 		if(userRepository.findUserByFullName(fullName) != null) {
 			throw new Exception(CustomException.ALREADYFOUND);
 		}	
 		
-		user.setFullName(user.getFirstName() + user.getLastName());
 		userRepository.save(user);
 	}
 
@@ -50,9 +49,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void deleteUser(String firstName, String lastName) {
-		String fullName = firstName + lastName;
-		userRepository.deleteByFullName(fullName);
+	public void deleteUser(String fullname) {
+		userRepository.deleteByFullName(fullname);
 	}
 
 	@Override

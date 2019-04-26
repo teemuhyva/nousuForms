@@ -30,7 +30,7 @@ public class UserPurposeLinkedResource  extends ResourceSupport {
 		if(!userPurposeList.isEmpty()) {
 			String leaderName = "";
 			for(UserPurpose user : userPurposeList) {
-				leaderName = user.getLeaderFirstName() + " " + user.getLeaderLastName();
+				leaderName = user.getLeaderFullName();
 			}
 			upl = mapResource(userPurposeList, leaderName);
 		}

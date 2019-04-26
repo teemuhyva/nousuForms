@@ -41,7 +41,7 @@ public class AdminController {
 
 	@DeleteMapping("/removeuser")
 	private ResponseEntity<CustomerResource> removeUser(@RequestBody Customer user) {
-		userService.deleteUser(user.getFirstName(), user.getLastName());
+		userService.deleteUser(user.getFullName());
 		
 		return new ResponseEntity<>(HttpStatus.MOVED_PERMANENTLY);
 	}
@@ -53,12 +53,11 @@ public class AdminController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
-	@GetMapping("/userpurposeinfo/{firstName}/{lastName}")
+	@GetMapping("/userpurposeinfo/{leaderfullname}")
 	private ResponseEntity<UserPurposeLinkedResource> getUserPurposeInfo(
-			@PathVariable(value = "firstName") String firstName,
-			@PathVariable(value = "lastName") String lastName) {
+			@PathVariable(value = "leaderfullname") String leaderFullName) {
 		
-		List<UserPurpose> userPurposeList = userPurposeService.getUserPurposeInfo(firstName, lastName);
+		List<UserPurpose> userPurposeList = userPurposeService.getUserPurposeInfo(leaderFullName);
 		
 		UserPurposeLinkedResource result = UserPurposeLinkedResource.checkResult(userPurposeList);
 

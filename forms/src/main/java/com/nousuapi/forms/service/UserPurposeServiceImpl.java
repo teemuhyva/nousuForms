@@ -26,8 +26,8 @@ public class UserPurposeServiceImpl implements UserPurposeService {
 	private UserRepository userRepository;
 	
 	@Override
-	public List<UserPurpose> getDetails(String leaderFirstName, String leaderLastName) throws Exception {
-		List<UserPurpose> uPurpList = userPurposeRepository.getPurposeByTeamLeader(leaderFirstName, leaderLastName);
+	public List<UserPurpose> getDetails(String leaderFullName) throws Exception {
+		List<UserPurpose> uPurpList = userPurposeRepository.getPurposeByTeamLeader(leaderFullName);
 		if(uPurpList.isEmpty()) {
 			 throw new Exception(CustomException.NO_USER_PURPOSE_ADDED);
 		}
@@ -37,8 +37,8 @@ public class UserPurposeServiceImpl implements UserPurposeService {
 
 	@Override
 	public void updatePurpose(UserPurpose userPurpose) throws Exception {
-		Customer cust = userRepository.findUserByFullName(userPurpose.getLeaderFirstName() + userPurpose.getLeaderLastName());
-		List<UserPurpose> up = userPurposeRepository.getPurposeByTeamLeader(userPurpose.getLeaderFirstName(), userPurpose.getLeaderLastName());
+		Customer cust = userRepository.findUserByFullName(userPurpose.getLeaderFullName());
+		List<UserPurpose> up = userPurposeRepository.getPurposeByTeamLeader(userPurpose.getLeaderFullName());
 		
 		if(cust == null) {
 			throw new Exception(CustomException.NO_USER_FOUND_FOR_PURPOSE);
@@ -55,7 +55,7 @@ public class UserPurposeServiceImpl implements UserPurposeService {
 	//add new user purpose by superuser. Teamleaders cannot do purpose modification before this is done
 	@Override
 	public void addNewPurpose(UserPurpose userPurpose) throws Exception  {		
-		Customer checkExistUser = userRepository.findUserByFullName(userPurpose.getLeaderFirstName() + userPurpose.getLeaderLastName());
+		Customer checkExistUser = userRepository.findUserByFullName(userPurpose.getLeaderFullName());
 		if(checkExistUser == null) {
 			throw new Exception(CustomException.USER_NOT_CREATED);
 		}
@@ -69,8 +69,8 @@ public class UserPurposeServiceImpl implements UserPurposeService {
 	}
 
 	@Override
-	public List<UserPurpose> getUserPurposeInfo(String firstName, String lastName) {
-		List<UserPurpose> uPurpList = userPurposeRepository.getPurposeByTeamLeader(firstName, lastName);
+	public List<UserPurpose> getUserPurposeInfo(String leaderFullName) {
+		List<UserPurpose> uPurpList = userPurposeRepository.getPurposeByTeamLeader(leaderFullName);
 		
 		if(uPurpList.isEmpty()) {
 			return new ArrayList<UserPurpose>();

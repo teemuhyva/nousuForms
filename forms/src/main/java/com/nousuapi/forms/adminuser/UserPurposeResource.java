@@ -11,6 +11,7 @@ import org.springframework.hateoas.ResourceSupport;
 import com.nousuapi.forms.entity.UserPurpose;
 import com.nousuapi.forms.enums.IlGroup;
 import com.nousuapi.forms.enums.OnsiteDay;
+import com.nousuapi.forms.enums.UserRole;
 import com.nousuapi.forms.tournament.JklCupController;
 
 import lombok.Getter;
@@ -25,6 +26,7 @@ public class UserPurposeResource  extends ResourceSupport {
 	private OnsiteDay weekDay;
 	private Date time;
 	private String personName;
+	private UserRole userRole;
 	private String successMessage;
 	private IlGroup ilGroup;
 	
@@ -34,10 +36,10 @@ public class UserPurposeResource  extends ResourceSupport {
 		for(UserPurpose up : userPurpose) {
 			UserPurposeResource result = new UserPurposeResource();
 			result.setLocation(up.getLocation().toString());
-			result.setFieldName(up.getFieldName());
 			result.setWeekDay(up.getDayOnsite());
 			result.setIlGroup(up.getIlGroup());
 			result.setPersonName(up.getPersonName());
+			result.setUserRole(up.getUserRole());
 			result.setTime(up.getStartTime());
 			result.add(linkTo(JklCupController.class).slash("updatepurpose").withRel("updatepurpose"));
 			resultList.add(result);

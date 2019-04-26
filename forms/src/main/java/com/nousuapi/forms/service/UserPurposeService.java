@@ -6,7 +6,7 @@ import com.nousuapi.forms.entity.UserPurpose;
 
 public interface UserPurposeService {
 
-	public List<UserPurpose> getDetails(String leaderFirstName, String leaderLastName) throws Exception;
+	public List<UserPurpose> getDetails(String leaderFullName) throws Exception;
 	
 	public void updatePurpose(UserPurpose userPurpose) throws Exception;
 	
@@ -14,5 +14,5 @@ public interface UserPurposeService {
 	
 	public List<UserPurpose> getAll();
 	
-	public List<UserPurpose> getUserPurposeInfo(String firstName, String lastName);
+	public List<UserPurpose> getUserPurposeInfo(String leaderFullName);
 }

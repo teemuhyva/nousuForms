@@ -16,8 +16,8 @@ public interface UserPurposeRepository extends JpaRepository<UserPurpose, String
 	
 	@Transactional
 	@Modifying
-	@Query("SELECT u FROM UserPurpose u WHERE u.leaderFirstName =:leaderFirstName AND u.leaderLastName =:leaderLastName")	
-	List<UserPurpose> getPurposeByTeamLeader(String leaderFirstName, String leaderLastName);
+	@Query("SELECT u FROM UserPurpose u WHERE u.leaderFullName =:leaderFullName")	
+	List<UserPurpose> getPurposeByTeamLeader(String leaderFullName);
 	
 	@Transactional
 	@Query("SELECT u FROM UserPurpose u")

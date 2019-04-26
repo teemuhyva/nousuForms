@@ -52,8 +52,7 @@ public class JklCupController {
 			cust = CustomerResource.valueOf(user);
 			cust.add(linkTo(JklCupController.class)
 					.slash("userpurpose")
-					.slash(cust.getFirstName())
-					.slash(cust.getLastName())
+					.slash(cust.getLeaderFullName())
 					.withRel("userpurposeinfo"));
 		}
 		
@@ -77,17 +76,16 @@ public class JklCupController {
 				.slash("updatepurpose").withSelfRel(),
 				linkTo(JklCupController.class)
 				.slash("userinfo")
-				.slash(userPurpose.getLeaderFirstName() + userPurpose.getLeaderLastName())
+				.slash(userPurpose.getLeaderFullName())
 				.withRel("userinfo"));
 		
 		return new ResponseEntity<>(result, HttpStatus.CREATED);
 	}
 	
-	@GetMapping("/userpurpose/{firstName}/{lastName}")
-	public ResponseEntity<UserPurposeLinkedResource> getUserPurpose(@PathVariable(required = true) String firstName,														
-																	@PathVariable(required = true) String lastName) throws Exception {
+	@GetMapping("/userpurpose/{leaderFullName}")
+	public ResponseEntity<UserPurposeLinkedResource> getUserPurpose(@PathVariable(required = true) String leaderFullname) throws Exception {
 		
-		List<UserPurpose> uPurposeByLeader = userPurposeService.getDetails(firstName, lastName);
+		List<UserPurpose> uPurposeByLeader = userPurposeService.getDetails(leaderFullname);
 		
 		UserPurposeLinkedResource upl = UserPurposeLinkedResource.checkResult(uPurposeByLeader);
 		

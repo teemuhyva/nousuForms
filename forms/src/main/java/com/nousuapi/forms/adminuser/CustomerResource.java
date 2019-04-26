@@ -22,8 +22,7 @@ import lombok.Setter;
 @Setter
 public class CustomerResource extends ResourceSupport {
 	
-	private String firstName;
-	private String lastName;
+	private String leaderFullName;
 	private String email;
 	private String phone;
 	private String team;
@@ -31,15 +30,13 @@ public class CustomerResource extends ResourceSupport {
 	
 	private String successMessage;
 	
-	public static String value(String firstName, String lastName) {
-		String fullName = firstName + lastName;
-		return fullName;
+	public static String value(String fullname) {
+		return fullname;
 	}
 	
 	public static CustomerResource valueOf(Customer user) {
 		CustomerResource customerResource = new CustomerResource();
-		customerResource.setFirstName(user.getFirstName());
-		customerResource.setLastName(user.getLastName());
+		customerResource.setLeaderFullName(user.getFullName());
 		customerResource.setEmail(user.getEmail());
 		customerResource.setPhone(user.getPhone());
 		customerResource.setTeam(user.getTeam());
@@ -53,12 +50,11 @@ public class CustomerResource extends ResourceSupport {
 		
 		for(Customer u : users) {
 			result = new CustomerResource();
-			result.setFirstName(u.getFirstName());
-			result.setLastName(u.getLastName());
+			result.setLeaderFullName(u.getFullName());
 			result.setTeam(u.getTeam());
 			result.setEmail(u.getEmail());
 			result.setPhone(u.getPhone());
-			result.add(linkTo(AdminController.class).slash("userpurposeinfo").slash(u.getFirstName()).slash(u.getLastName()).withRel("userpurposeinfo"));
+			result.add(linkTo(AdminController.class).slash("userpurposeinfo").slash(u.getFullName()).withRel("userpurposeinfo"));
 			resultList.add(result);
 		}
 		
