@@ -22,6 +22,7 @@ import lombok.Setter;
 @Setter
 public class UserPurposeResource  extends ResourceSupport {
 
+	private long userId;
 	private String location;
 	private String fieldName;
 	private OnsiteDay weekDay;
@@ -36,6 +37,7 @@ public class UserPurposeResource  extends ResourceSupport {
 		
 		for(UserPurpose up : userPurpose) {
 			UserPurposeResource result = new UserPurposeResource();
+			result.setUserId(up.getId());
 			result.setLocation(up.getLocation().toString());
 			result.setWeekDay(up.getDayOnsite());
 			result.setIlGroup(up.getIlGroup());

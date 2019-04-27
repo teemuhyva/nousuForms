@@ -22,6 +22,7 @@ import lombok.Setter;
 @Setter
 public class CustomerResource extends ResourceSupport {
 	
+	private long userId;
 	private String leaderFullName;
 	private String email;
 	private String phone;
@@ -36,6 +37,7 @@ public class CustomerResource extends ResourceSupport {
 	
 	public static CustomerResource valueOf(Customer user) {
 		CustomerResource customerResource = new CustomerResource();
+		customerResource.setUserId(user.getId());
 		customerResource.setLeaderFullName(user.getFullName());
 		customerResource.setEmail(user.getEmail());
 		customerResource.setPhone(user.getPhone());
@@ -50,6 +52,7 @@ public class CustomerResource extends ResourceSupport {
 		
 		for(Customer u : users) {
 			result = new CustomerResource();
+			result.setUserId(u.getId());
 			result.setLeaderFullName(u.getFullName());
 			result.setTeam(u.getTeam());
 			result.setEmail(u.getEmail());

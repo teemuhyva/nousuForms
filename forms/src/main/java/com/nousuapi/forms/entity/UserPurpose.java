@@ -2,6 +2,7 @@ package com.nousuapi.forms.entity;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -33,7 +34,8 @@ import lombok.Setter;
 public class UserPurpose {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="userid")
 	private long id;
 	
 	//where user is located during tournament
