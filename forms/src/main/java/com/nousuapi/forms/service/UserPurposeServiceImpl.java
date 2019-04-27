@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.nousuapi.forms.adminuser.UserPurposeResource;
 import com.nousuapi.forms.entity.Customer;
 import com.nousuapi.forms.entity.UserPurpose;
+import com.nousuapi.forms.enums.UserRole;
 import com.nousuapi.forms.exceptions.CustomException;
 import com.nousuapi.forms.repository.UserPurposeRepository;
 import com.nousuapi.forms.repository.UserRepository;
@@ -49,7 +50,19 @@ public class UserPurposeServiceImpl implements UserPurposeService {
 			throw new Exception(CustomException.NO_USER_PURPOSE_ADDED);
 		}
 		
-		userPurposeRepository.save(userPurpose);
+		for(UserPurpose u : up) {
+			if(userPurpose.getId() == u.getId()) {
+				u.setLocation(userPurpose.getLocation());
+				u.setPersonName(userPurpose.getPersonName());
+				u.setIlGroup(userPurpose.getIlGroup());
+				u.setWeekDay(userPurpose.getWeekDay());
+				u.setUserRole(userPurpose.getUserRole());
+				
+				userPurposeRepository.save(u);
+			}
+		}
+		
+		
 	}
 	
 	
@@ -81,7 +94,7 @@ public class UserPurposeServiceImpl implements UserPurposeService {
 	
 	@Override
 	public void deleteUserPurpose(UserPurpose userPurpose) {
-		userPurposeRepository.deleteGivenRow(userPurpose.getPersonName(), userPurpose.getUserRole(), userPurpose.getLocation());
+		userPurposeRepository.deleteGivenRow(userPurpose.getPersonName(), userPurpose.getId());
 	}
 	
 

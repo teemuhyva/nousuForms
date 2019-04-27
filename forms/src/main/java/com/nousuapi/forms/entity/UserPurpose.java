@@ -68,7 +68,7 @@ public class UserPurpose {
 	
 	@NotNull
 	@Enumerated(EnumType.STRING)
-	private OnsiteDay dayOnsite;
+	private OnsiteDay weekDay;
 		
 	//what time person will be onsite
 	@Temporal(TemporalType.DATE)

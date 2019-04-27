@@ -43,14 +43,14 @@ public class AdminController {
 	private ResponseEntity<CustomerResource> removeUser(@RequestBody Customer user) {
 		userService.deleteUser(user.getFullName());
 		
-		return new ResponseEntity<>(HttpStatus.MOVED_PERMANENTLY);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/deletepurpose")
 	private ResponseEntity<UserPurposeLinkedResource> removeUserPurpose(@RequestBody UserPurpose userPurpose) {
 		userPurposeService.deleteUserPurpose(userPurpose);
 		
-		return new ResponseEntity<>(HttpStatus.MOVED_PERMANENTLY);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@GetMapping("/getusers")

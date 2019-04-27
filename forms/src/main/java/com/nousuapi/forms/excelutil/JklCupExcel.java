@@ -38,7 +38,7 @@ public class JklCupExcel {
         	
         	switch(up.getLocation()) {
 	        	case Vehkahalli: {
-	        		if(up.getDayOnsite().equals(OnsiteDay.Lauantai)) {
+	        		if(up.getWeekDay().equals(OnsiteDay.Lauantai)) {
 	        			if(up.getUserRole() == UserRole.Kenttävastaava) {
 	        				validator.updateSheetVehkaHalli(9, 2, wb.getSheetAt(0), up);
 	        			} else if(up.getUserRole() == UserRole.Kenttäpäällikkö){
@@ -55,7 +55,7 @@ public class JklCupExcel {
 	        		break;
 	        	}
 	        	case Vehkalampi: {
-	        		if(up.getDayOnsite().equals(OnsiteDay.Lauantai)) {
+	        		if(up.getWeekDay().equals(OnsiteDay.Lauantai)) {
 	        			if(up.getUserRole() == UserRole.Kenttävastaava) {
 	        				validator.updateSheetVehkaHalli(22, 2, wb.getSheetAt(0), up);
 	        			} else if(up.getUserRole() == UserRole.Kenttäpäällikkö) {
@@ -72,7 +72,7 @@ public class JklCupExcel {
 	        		break;
 	        	}
 	        	case Huhtasuo: {
-	        		if(up.getDayOnsite().equals(OnsiteDay.Lauantai)) {
+	        		if(up.getWeekDay().equals(OnsiteDay.Lauantai)) {
 	        			if(up.getUserRole() == UserRole.Kenttävastaava) {
 	        				validator.updateSheetVehkaHalli(9, 2, wb.getSheetAt(1), up);
 	        			} else if(up.getUserRole() == UserRole.Kenttäpäällikkö){
@@ -105,7 +105,7 @@ public class JklCupExcel {
 	        		break;
 	        	}
 	        	case Palokankenttä: {
-	        		if(up.getDayOnsite().equals(OnsiteDay.Lauantai)) {
+	        		if(up.getWeekDay().equals(OnsiteDay.Lauantai)) {
 	        			if(up.getUserRole() == UserRole.Kenttävastaava) {
 	        				validator.updateSheetVehkaHalli(9, 2, wb.getSheetAt(2), up);
 	        			} else if(up.getUserRole() == UserRole.Kenttäpäällikkö){
@@ -138,9 +138,9 @@ public class JklCupExcel {
 	        		break;
 	        	}
 	        	case Palokankoulu: {
-	        		if(up.getDayOnsite().equals(OnsiteDay.Perjantai)) {
+	        		if(up.getWeekDay().equals(OnsiteDay.Perjantai)) {
         				validator.updateSheetVehkaHalli(10, 2, wb.getSheetAt(3), up);
-	        		} else if(up.getDayOnsite().equals(OnsiteDay.Lauantai)) {
+	        		} else if(up.getWeekDay().equals(OnsiteDay.Lauantai)) {
 	        			validator.updateSheetVehkaHalli(17, 2, wb.getSheetAt(3), up);
 	        		} else {
 	        			validator.updateSheetVehkaHalli(17, 8, wb.getSheetAt(3), up);
@@ -149,7 +149,7 @@ public class JklCupExcel {
 	        	}
 	        	case Muut: {
 	        		if(up.getUserRole() == UserRole.Yövalvonta) {
-	        			if(up.getDayOnsite().equals(OnsiteDay.Perjantai)) {
+	        			if(up.getWeekDay().equals(OnsiteDay.Perjantai)) {
 	        				validator.updateSheetVehkaHalli(10, 2, wb.getSheetAt(4), up);
 	        			} else {
 	        				validator.updateSheetVehkaHalli(10, 8, wb.getSheetAt(4), up);
@@ -157,7 +157,7 @@ public class JklCupExcel {
 	        		}
 	        		
 	        		if(up.getUserRole() == UserRole.Yövalvonta) {
-	        			if(up.getDayOnsite().equals(OnsiteDay.Perjantai)) {
+	        			if(up.getWeekDay().equals(OnsiteDay.Perjantai)) {
 	        				validator.updateSheetVehkaHalli(23, 2, wb.getSheetAt(4), up);
 	        			} else {
 	        				validator.updateSheetVehkaHalli(23, 8, wb.getSheetAt(4), up);

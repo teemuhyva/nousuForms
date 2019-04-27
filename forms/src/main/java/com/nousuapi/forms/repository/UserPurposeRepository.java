@@ -28,6 +28,6 @@ public interface UserPurposeRepository extends JpaRepository<UserPurpose, String
 	
 	@Transactional
 	@Modifying
-	@Query("DELETE FROM UserPurpose  u WHERE u.personName =:personName and u.userRole =:userRole and u.location =:location")
-	void deleteGivenRow(String personName, UserRole userRole, Location location);
+	@Query("DELETE FROM UserPurpose  u WHERE u.personName =:personName and u.id =:id")
+	void deleteGivenRow(String personName, long id);
 }

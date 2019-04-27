@@ -39,7 +39,7 @@ public class UserPurposeResource  extends ResourceSupport {
 			UserPurposeResource result = new UserPurposeResource();
 			result.setUserId(up.getId());
 			result.setLocation(up.getLocation().toString());
-			result.setWeekDay(up.getDayOnsite());
+			result.setWeekDay(up.getWeekDay());
 			result.setIlGroup(up.getIlGroup());
 			result.setPersonName(up.getPersonName());
 			result.setUserRole(up.getUserRole());
