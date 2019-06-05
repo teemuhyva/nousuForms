@@ -87,7 +87,11 @@ public class UserPurposeServiceImpl implements UserPurposeService {
 		List<UserPurpose> uPurpList = userPurposeRepository.getPurposeByTeamLeader(leaderFullName);
 		
 		if(uPurpList.isEmpty()) {
-			return new ArrayList<UserPurpose>();
+			List<UserPurpose> emptyListWithLeader = new ArrayList<>();
+			UserPurpose user = new UserPurpose();
+			user.setLeaderFullName(leaderFullName);
+			emptyListWithLeader.add(user);
+			return emptyListWithLeader;
 		}
 		return uPurpList;
 	}

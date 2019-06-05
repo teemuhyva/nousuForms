@@ -36,19 +36,22 @@ public class UserPurposeResource  extends ResourceSupport {
 		List<UserPurposeResource> resultList = new ArrayList<UserPurposeResource>();
 		
 		for(UserPurpose up : userPurpose) {
-			UserPurposeResource result = new UserPurposeResource();
-			result.setUserId(up.getId());
-			result.setLocation(up.getLocation().toString());
-			result.setWeekDay(up.getWeekDay());
-			result.setIlGroup(up.getIlGroup());
-			result.setPersonName(up.getPersonName());
-			result.setUserRole(up.getUserRole());
-			result.setTime(up.getStartTime());
-			result.add(
-				linkTo(JklCupController.class).slash("updatepurpose").withRel("updatepurpose"),
-				linkTo(AdminController.class).slash("deletepurpose").withRel("removepurpose")
-			);
-			resultList.add(result);
+			if(up.getPersonName() != null) {
+				UserPurposeResource result = new UserPurposeResource();
+				result.setUserId(up.getId());
+				result.setLocation(up.getLocation().toString());
+				result.setWeekDay(up.getWeekDay());
+				result.setIlGroup(up.getIlGroup());
+				result.setPersonName(up.getPersonName());
+				result.setUserRole(up.getUserRole());
+				result.setTime(up.getStartTime());
+				result.add(
+					linkTo(JklCupController.class).slash("updatepurpose").withRel("updatepurpose"),
+					linkTo(AdminController.class).slash("deletepurpose").withRel("removepurpose")
+				);
+				resultList.add(result);
+			}
+			
 		}
 		
 		return resultList;
