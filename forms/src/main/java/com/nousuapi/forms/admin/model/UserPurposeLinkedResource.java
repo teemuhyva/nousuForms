@@ -1,4 +1,4 @@
-package com.nousuapi.forms.adminuser;
+package com.nousuapi.forms.admin.model;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.nousuapi.forms.adminuser;
+package com.nousuapi.forms.admin.model;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 

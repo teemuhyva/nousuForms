@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.nousuapi.forms.adminuser.UserPurposeResource;
+import com.nousuapi.forms.admin.model.UserPurposeResource;
 import com.nousuapi.forms.entity.UserPurpose;
 import com.nousuapi.forms.enums.Location;
 import com.nousuapi.forms.enums.UserRole;
