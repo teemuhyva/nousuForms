@@ -30,7 +30,15 @@ public class SignUp {
 	@Column(name="userid")
 	private long id;
 	@NotNull
+	private String dateOfBirth;
+	@NotNull
+	private String address;
+	@NotNull
 	private String email;
+	@NotNull
+	private int postNum;
+	@NotNull
+	private String postOffice;
 	@NotNull
 	private String parentName;
 	@NotNull
@@ -39,4 +47,7 @@ public class SignUp {
 	private String phone;
 	@NotNull
 	private String ageClass;
+	
+	private Double payment;
+	private String other;
 }
