@@ -16,7 +16,7 @@ public class SignUpExcel {
 
 	public void generateForSignedUsers(List<SignupResource> userList) throws IOException {
 		
-		InputStream inp = new FileInputStream("src\\main\\resources\\Ilmoittautuneetuusi.xls");
+		InputStream inp = new FileInputStream("Ilmoittautuneet.xls");
     	HSSFWorkbook wb = new HSSFWorkbook(inp);
     	
     	int rowCount = 2;
@@ -27,7 +27,7 @@ public class SignUpExcel {
     		rowCount++;
     	}
     	
-    	OutputStream fileOut = new FileOutputStream("C:\\temp\\uudetIlmoittautuneet.xls");
+    	OutputStream fileOut = new FileOutputStream("uudetIlmoittautuneet.xls");
         wb.write(fileOut);
         wb.close();
         fileOut.close();

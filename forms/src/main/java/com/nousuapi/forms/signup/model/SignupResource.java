@@ -1,12 +1,9 @@
 package com.nousuapi.forms.signup.model;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.math3.analysis.function.Sin;
+import org.springframework.hateoas.ResourceSupport;
 
 import com.nousuapi.forms.entity.SignUp;
 
@@ -15,7 +12,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class SignupResource {
+public class SignupResource  extends ResourceSupport {
 
 	private String dateOfBirth;
 	private String email;

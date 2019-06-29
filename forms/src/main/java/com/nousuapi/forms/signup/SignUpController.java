@@ -1,5 +1,7 @@
 package com.nousuapi.forms.signup;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -12,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nousuapi.forms.admin.AdminController;
 import com.nousuapi.forms.excelutil.SignUpExcel;
 import com.nousuapi.forms.service.SignUpService;
+import com.nousuapi.forms.signup.model.SignUpResourceMapper;
 import com.nousuapi.forms.signup.model.SignupResource;
 
 @RestController
@@ -28,6 +32,15 @@ public class SignUpController {
 		
 		signUpService.signChild(signUpForm);
 		return new ResponseEntity<>(HttpStatus.CREATED);
+	}
+	
+	@GetMapping("/")
+	public ResponseEntity<SignUpResourceMapper> getSignedUpUsers() {
+		List<SignupResource> listUsers = signUpService.getSignedUsers();
+		SignUpResourceMapper result = new SignUpResourceMapper();
+		result.setSignUpList(listUsers);
+		result.add(linkTo(SignUpController.class).slash("/generate").withRel("download"));
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
 	@GetMapping("/generate")
