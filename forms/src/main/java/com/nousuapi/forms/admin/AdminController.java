@@ -3,7 +3,6 @@ package com.nousuapi.forms.admin;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.poi.EncryptedDocumentException;
@@ -14,14 +13,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nousuapi.forms.adminuser.CustomerResource;
-import com.nousuapi.forms.adminuser.UserPurposeLinkedResource;
-import com.nousuapi.forms.adminuser.UserPurposeResource;
+import com.nousuapi.forms.admin.model.CustomerResource;
+import com.nousuapi.forms.admin.model.UserPurposeLinkedResource;
+import com.nousuapi.forms.admin.model.UserPurposeResource;
 import com.nousuapi.forms.entity.Customer;
 import com.nousuapi.forms.entity.UserPurpose;
 import com.nousuapi.forms.excelutil.JklCupExcel;

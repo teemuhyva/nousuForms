@@ -21,9 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nousuapi.forms.admin.AdminController;
-import com.nousuapi.forms.adminuser.CustomerResource;
-import com.nousuapi.forms.adminuser.UserPurposeLinkedResource;
-import com.nousuapi.forms.adminuser.UserPurposeResource;
+import com.nousuapi.forms.admin.model.CustomerResource;
+import com.nousuapi.forms.admin.model.UserPurposeLinkedResource;
+import com.nousuapi.forms.admin.model.UserPurposeResource;
 import com.nousuapi.forms.entity.Customer;
 import com.nousuapi.forms.entity.UserPurpose;
 import com.nousuapi.forms.service.UserPurposeService;

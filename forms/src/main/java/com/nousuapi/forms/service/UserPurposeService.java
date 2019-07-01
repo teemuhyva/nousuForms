@@ -2,7 +2,7 @@ package com.nousuapi.forms.service;
 
 import java.util.List;
 
-import com.nousuapi.forms.adminuser.UserPurposeResource;
+import com.nousuapi.forms.admin.model.UserPurposeResource;
 import com.nousuapi.forms.entity.UserPurpose;
 
 public interface UserPurposeService {
