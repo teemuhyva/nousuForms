@@ -11,11 +11,16 @@ import java.util.List;
 import javax.mail.MessagingException;
 
 import org.json.JSONArray;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.nousuapi.forms.createform.CreateFormDoc;
+import com.nousuapi.forms.createform.PaymentTemplate;
 import com.nousuapi.forms.exceptions.CustomException;
 import com.nousuapi.forms.exceptions.ErrorLogging;
+import com.nousuapi.forms.helpers.DocumentHelperUtil;
 import com.nousuapi.forms.model.ActionFormModel;
+import com.nousuapi.forms.signup.model.SignupResource;
 import com.sendgrid.Attachments;
 import com.sendgrid.Content;
 import com.sendgrid.Email;
@@ -28,14 +33,17 @@ import com.sendgrid.SendGrid;
 
 public class EmailUtil {
 		
-	InputStream inputStream;	
+	private static Logger logger = LoggerFactory.getLogger(EmailUtil.class);
+	
+	InputStream inputStream;
 	
 	public ErrorLogging createEmail(File file, List<ActionFormModel> actionForm) throws Exception {
+	  DocumentHelperUtil docs = new DocumentHelperUtil();
 	  ErrorLogging log = new ErrorLogging();
 	  
 	  CreateFormDoc doc = new CreateFormDoc();
-	  JSONArray arr = doc.generateJsonFromForm(actionForm);
-	  String signature = doc.loopJsonObjectToGetValue(arr, "signature");
+	  JSONArray arr = docs.generateJsonFromForm(actionForm);
+	  String signature = docs.loopJsonObjectToGetValue(arr, "signature");
 	  
 	  
 	  SendGrid sendGrid = new SendGrid(System.getenv("SENDGRID_APIKEY"));
@@ -78,6 +86,51 @@ public class EmailUtil {
     	  throw new Exception(CustomException.SENDING_EMAIL_FAILED);
       }
       return log;
-   }   
+   }
+	
+	public void paymentEmail(File file, SignupResource signUpFormModel) throws Exception {
+		SendGrid sendGrid = new SendGrid(System.getenv("SENDGRID_APIKEY"));
+		 String subject = "Ilmoittautuminen syksy 2019";
+	      Email from = new Email("jyvaskylanousu@gmail.com");
+	      Email to = new Email(signUpFormModel.getEmail());
+	      Content content = new Content();
+	      content.setType("text/plain");
+	      content.setValue("Hei.\n\n Olemme vastaanottaneet ilmoittautumisenne jalkapallokerhoon. \n\n "
+	      				+ "Liitteenä lasku. Muistahan laittaa viestikenttään maksupohjassa olevan tekstin. Kiitos \n\n"
+	      				+ "Ystävällisin Terveisin\n"
+	      				+ "Jyväskylän nousu ry");
+	      Personalization perz = new Personalization();
+	      perz.addTo(to);
+	      perz.setSubject(subject);
+	      
+	      Mail mail = new Mail();
+	      mail.setFrom(from);
+	      mail.setSubject(subject);
+	      mail.setReplyTo(to);
+	      mail.addContent(content);
+	      mail.addPersonalization(perz);
+	      
+	      byte[] filedata = org.apache.commons.io.IOUtils.toByteArray(new FileInputStream(file));
+	      Attachments attachment = new Attachments();
+	      String fileString = Base64.getEncoder().encodeToString(filedata);
+	      
+	      attachment.setContent(fileString);
+	      attachment.setFilename("Toimintakertomus.docx");
+	      attachment.setDisposition("attachment");
+	      mail.addAttachments(attachment);
+	      
+	      Request req = new Request();
+	      
+	      try {    	  
+	    	  req.setMethod(Method.POST);
+	    	  req.setEndpoint("mail/send");
+	    	  req.setBody(mail.build());
+	    	  Response response = sendGrid.api(req);
+	    	  
+	      } catch(IOException e) {
+	    	  logger.error(":::::::: " + e.getMessage());
+	    	  throw new Exception(CustomException.SENDING_EMAIL_FAILED);
+	      }
+	}
    
 }
