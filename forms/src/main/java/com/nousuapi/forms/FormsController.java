@@ -28,7 +28,7 @@ public class FormsController {
 		
 		ErrorLogging log = new ErrorLogging();
 		CreateFormDoc form = new CreateFormDoc();
-		File file = new File("src\\main\\resources\\Toimintakertomus.docx");		
+		File file = new File("Toimintakertomus.docx");		
 		
 		try {
 			DocumentHelperUtil docs = new DocumentHelperUtil();

@@ -50,7 +50,7 @@ public class SignUpController {
 		SignupResource signUpFormModel = SignupResource.mapFromActionModel(signUpForm);
 		signUpService.signChild(signUpFormModel);
 		
-		File file = new File("src\\main\\resources\\Laskupohjamalli.docx");
+		File file = new File("src//main///resources//Laskupohjamalli.docx");
 		
 		try {
 			DocumentHelperUtil docs = new DocumentHelperUtil();
@@ -63,7 +63,7 @@ public class SignUpController {
 		}
 		
 		try {
-			sendPaymentEmail(new File("src\\main\\resources\\Laskupohjamalli2.docx"), signUpFormModel);
+			sendPaymentEmail(new File("src//main///resources//Laskupohjamalli2.docx"), signUpFormModel);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

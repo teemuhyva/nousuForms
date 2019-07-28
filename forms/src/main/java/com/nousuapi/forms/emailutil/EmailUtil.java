@@ -79,8 +79,7 @@ public class EmailUtil {
     	  req.setMethod(Method.POST);
     	  req.setEndpoint("mail/send");
     	  req.setBody(mail.build());
-    	  Response response = sendGrid.api(req);
-    	  
+    	  Response response = sendGrid.api(req);    	  
       } catch(IOException e) {
     	  log.setError5(e.getMessage());
     	  throw new Exception(CustomException.SENDING_EMAIL_FAILED);
@@ -89,7 +88,7 @@ public class EmailUtil {
    }
 	
 	public void paymentEmail(File file, SignupResource signUpFormModel) throws Exception {
-		SendGrid sendGrid = new SendGrid(System.getenv("SENDGRID_APIKEY"));
+		SendGrid sendGrid = new SendGrid(System.getenv("SENDGRID_APIKEY_PAYMENT"));
 		 String subject = "Ilmoittautuminen syksy 2019";
 	      Email from = new Email("jyvaskylanousu@gmail.com");
 	      Email to = new Email(signUpFormModel.getEmail());
@@ -115,7 +114,7 @@ public class EmailUtil {
 	      String fileString = Base64.getEncoder().encodeToString(filedata);
 	      
 	      attachment.setContent(fileString);
-	      attachment.setFilename("Toimintakertomus.docx");
+	      attachment.setFilename("Laskupohjamalli2.docx");
 	      attachment.setDisposition("attachment");
 	      mail.addAttachments(attachment);
 	      
@@ -126,7 +125,6 @@ public class EmailUtil {
 	    	  req.setEndpoint("mail/send");
 	    	  req.setBody(mail.build());
 	    	  Response response = sendGrid.api(req);
-	    	  
 	      } catch(IOException e) {
 	    	  logger.error(":::::::: " + e.getMessage());
 	    	  throw new Exception(CustomException.SENDING_EMAIL_FAILED);

@@ -35,27 +35,21 @@ public class PaymentTemplate {
 		
 		do {
 			if(worldTextIter.hasNext()) {
-				worldTextIter.next();
+				Text formText = (Text)worldTextIter.next();
 				if(currentIndex == 0) {
-					Text formText = (Text) worldTextIter.next();
-					logger.info("First field with index ::::: " + currentIndex + " " + signUpFormModel.getParentName());
 					formText.setValue(signUpFormModel.getParentName());
 				} else if(currentIndex == 1) {
-					Text formText = (Text) worldTextIter.next();
-					logger.info("second field with index ::::: " + currentIndex + " " + signUpFormModel.getAddress());
 					formText.setValue(signUpFormModel.getAddress());
 				} else if(currentIndex == 2) {
-					Text formText = (Text) worldTextIter.next();
-					logger.info("Third field with index ::::: " + currentIndex + " " + signUpFormModel.getPostNum() + " " + signUpFormModel.getPostOffice());
 					formText.setValue(signUpFormModel.getPostNum() + " " + signUpFormModel.getPostOffice());
-				} else if(currentIndex == 3) {
-					Text formText = (Text) worldTextIter.next();
-					logger.info("fourth field with index ::::: " + currentIndex + " " + signUpFormModel.getAddress());
-					formText.setValue(signUpFormModel.getAddress());
 				} else if(currentIndex == 52) {
-					Text formText = (Text) worldTextIter.next();
-					logger.info("Fifth field with index ::::: " + currentIndex + " " + signUpFormModel.getParentName());
+					formText.setValue(signUpFormModel.getChildName());
+				} else if(currentIndex == 100) {
 					formText.setValue(signUpFormModel.getParentName());
+				} else if(currentIndex == 101) {
+					formText.setValue(signUpFormModel.getAddress());
+				} else if(currentIndex == 102) {
+					formText.setValue(signUpFormModel.getPostNum() + " " + signUpFormModel.getPostOffice());
 				}
 			}
 			
@@ -64,6 +58,6 @@ public class PaymentTemplate {
 			
 		} while(worldTextIter.hasNext());
 		
-		docs.writeDocxToStream(template, "src\\main\\resources\\Laskupohjamalli2.docx");
+		docs.writeDocxToStream(template, "src//main///resources//Laskupohjamalli2.docx");
 	}
 }
