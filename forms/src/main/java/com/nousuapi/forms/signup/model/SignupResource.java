@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.hateoas.ResourceSupport;
 
 import com.nousuapi.forms.entity.SignUp;
+import com.nousuapi.forms.model.ActionFormModel;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -37,6 +38,8 @@ public class SignupResource  extends ResourceSupport {
 		sign.setChildName(signUp.getChildName());
 		sign.setPhone(signUp.getPhone());
 		sign.setAgeClass(signUp.getAgeClass());
+		sign.setPayment(signUp.getPayment());
+		sign.setOther(signUp.getOther());
 		
 		return sign;
 	}
@@ -62,7 +65,32 @@ public class SignupResource  extends ResourceSupport {
 		userRes.setEmail(user.getEmail());
 		userRes.setParentName(user.getParentName());
 		userRes.setPhone(user.getPhone());
+		userRes.setPayment(user.getPayment());
+		userRes.setOther(user.getOther());
 		
 		return userRes;
+	}
+	
+	//ugly implementation but needs to be done as wp front will send only key value pair
+	//here we going to map those values depending on map value.
+	//hopefully someday we get actual resource from frontend
+	public static SignupResource mapFromActionModel(List<ActionFormModel> signUpForm) {
+		SignupResource signUpUser = new SignupResource();
+		
+		for(ActionFormModel frontValues : signUpForm) {
+			if(frontValues.getName().equals("dateOfBirth")) signUpUser.setDateOfBirth(frontValues.getValue());
+			else if(frontValues.getName().equals("address")) signUpUser.setAddress(frontValues.getValue());
+			else if(frontValues.getName().equals("email")) signUpUser.setEmail(frontValues.getValue());
+			else if(frontValues.getName().equals("postNum")) signUpUser.setPostNum(Integer.parseInt(frontValues.getValue()));
+			else if(frontValues.getName().equals("postOffice")) signUpUser.setPostOffice(frontValues.getValue());
+			else if(frontValues.getName().equals("parentName")) signUpUser.setParentName(frontValues.getValue());
+			else if(frontValues.getName().equals("childName")) signUpUser.setChildName(frontValues.getValue());
+			else if(frontValues.getName().equals("phone")) signUpUser.setPhone(frontValues.getValue());
+			else if(frontValues.getName().equals("ageClass")) signUpUser.setAgeClass(frontValues.getValue());
+			else if(frontValues.getName().equals("payment")) signUpUser.setPayment(Double.parseDouble(frontValues.getValue()));
+			else if(frontValues.getName().equals("other")) signUpUser.setOther(frontValues.getValue());
+		}
+		
+		return signUpUser;
 	}
 }

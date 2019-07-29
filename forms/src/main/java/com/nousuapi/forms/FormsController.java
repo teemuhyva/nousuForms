@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,29 +15,27 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nousuapi.forms.createform.CreateFormDoc;
 import com.nousuapi.forms.emailutil.EmailUtil;
 import com.nousuapi.forms.exceptions.ErrorLogging;
+import com.nousuapi.forms.helpers.DocumentHelperUtil;
 import com.nousuapi.forms.model.ActionFormModel;
 
 
 @RestController
 @RequestMapping("/api/forms")
 public class FormsController {
-
-	private static final Logger logger = Logger.getLogger(FormsController.class.getName());
 	
 	@PostMapping("/actionForm")
 	public ResponseEntity<?> createForm(@RequestBody List<ActionFormModel> actionForm) throws Exception {
+		
 		ErrorLogging log = new ErrorLogging();
 		CreateFormDoc form = new CreateFormDoc();
 		File file = new File("Toimintakertomus.docx");		
 		
 		try {
-			form.populateWord(form.getTemplate(file), actionForm);
+			DocumentHelperUtil docs = new DocumentHelperUtil();
+			form.populateWord(docs.getTemplate(file), actionForm, null);
 		} catch (FileNotFoundException e) {
-			logger.log(Level.SEVERE, "File not found");
 			log.setError1(e.getMessage());
 		} catch (IOException e) {
-			logger.log(Level.SEVERE, "Something went horribly wrong!!!!!");
-			
 		}
 		
 		try {

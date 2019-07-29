@@ -26,4 +26,15 @@ public class SignUpServiceImpl implements SignUpService {
 		return SignupResource.fromEntityToResource(practiseRepository.getUsers());
 	}
 
+	@Override
+	public void removeChildFromSignedUp(SignupResource signUpForm) {
+		SignUp removeSigned = SignupResource.valueOf(signUpForm);
+		practiseRepository.deleteSignedUpChildern(removeSigned.getDateOfBirth(), removeSigned.getChildName(), removeSigned.getEmail());
+	}
+
+	@Override
+	public void removeAllSignedUpChilds() {
+		practiseRepository.deleteAll();
+	}
+
 }

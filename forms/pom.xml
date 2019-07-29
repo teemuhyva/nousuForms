@@ -133,6 +133,12 @@
 		    <version>2.9.8</version>
 		</dependency>
 		
+		<!-- slf4j  -->
+		<dependency>
+		    <groupId>org.slf4j</groupId>
+		    <artifactId>slf4j-api</artifactId>
+		    <version>1.7.13</version>
+		</dependency>
 	</dependencies>
 
 	<build>
