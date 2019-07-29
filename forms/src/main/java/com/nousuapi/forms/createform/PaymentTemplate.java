@@ -58,6 +58,6 @@ public class PaymentTemplate {
 			
 		} while(worldTextIter.hasNext());
 		
-		docs.writeDocxToStream(template, "src//main///resources//Laskupohjamalli2.docx");
+		docs.writeDocxToStream(template, "Ilmoittautumislasku.docx");
 	}
 }

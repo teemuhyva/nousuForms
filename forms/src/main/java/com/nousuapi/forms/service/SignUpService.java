@@ -8,5 +8,9 @@ public interface SignUpService {
 
 	void signChild(SignupResource signUpForm);
 	
+	void removeChildFromSignedUp(SignupResource signUpForm);
+	
+	void removeAllSignedUpChilds();
+	
 	List<SignupResource> getSignedUsers();
 }

@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
-import java.util.logging.Level;
 
 import javax.mail.MessagingException;
 
@@ -23,17 +22,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nousuapi.forms.createform.CreateFormDoc;
-import com.nousuapi.forms.createform.PaymentTemplate;
 import com.nousuapi.forms.emailutil.EmailUtil;
 import com.nousuapi.forms.excelutil.SignUpExcel;
-import com.nousuapi.forms.exceptions.ErrorLogging;
 import com.nousuapi.forms.helpers.DocumentHelperUtil;
 import com.nousuapi.forms.model.ActionFormModel;
 import com.nousuapi.forms.service.SignUpService;
 import com.nousuapi.forms.signup.model.SignUpResourceMapper;
 import com.nousuapi.forms.signup.model.SignupResource;
-
-import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/api/signup")
@@ -50,7 +45,7 @@ public class SignUpController {
 		SignupResource signUpFormModel = SignupResource.mapFromActionModel(signUpForm);
 		signUpService.signChild(signUpFormModel);
 		
-		File file = new File("src//main///resources//Laskupohjamalli.docx");
+		File file = new File("Laskupohjamalli.docx");
 		
 		try {
 			DocumentHelperUtil docs = new DocumentHelperUtil();
@@ -63,7 +58,7 @@ public class SignUpController {
 		}
 		
 		try {
-			sendPaymentEmail(new File("src//main///resources//Laskupohjamalli2.docx"), signUpFormModel);
+			sendPaymentEmail(new File("Ilmoittautumislasku.docx"), signUpFormModel);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -89,7 +84,7 @@ public class SignUpController {
 			e.printStackTrace();
 		}
 	}
-	
+		
 	public void sendPaymentEmail(File file, SignupResource signUpFormModel) throws Exception {
 		EmailUtil sendAttachmentViaEmail = new EmailUtil();
 		 

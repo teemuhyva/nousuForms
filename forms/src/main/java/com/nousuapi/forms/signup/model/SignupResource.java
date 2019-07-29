@@ -38,6 +38,8 @@ public class SignupResource  extends ResourceSupport {
 		sign.setChildName(signUp.getChildName());
 		sign.setPhone(signUp.getPhone());
 		sign.setAgeClass(signUp.getAgeClass());
+		sign.setPayment(signUp.getPayment());
+		sign.setOther(signUp.getOther());
 		
 		return sign;
 	}
@@ -63,6 +65,8 @@ public class SignupResource  extends ResourceSupport {
 		userRes.setEmail(user.getEmail());
 		userRes.setParentName(user.getParentName());
 		userRes.setPhone(user.getPhone());
+		userRes.setPayment(user.getPayment());
+		userRes.setOther(user.getOther());
 		
 		return userRes;
 	}

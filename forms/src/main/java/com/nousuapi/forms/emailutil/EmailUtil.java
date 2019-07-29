@@ -114,7 +114,7 @@ public class EmailUtil {
 	      String fileString = Base64.getEncoder().encodeToString(filedata);
 	      
 	      attachment.setContent(fileString);
-	      attachment.setFilename("Laskupohjamalli2.docx");
+	      attachment.setFilename("Ilmoittautumislasku.docx");
 	      attachment.setDisposition("attachment");
 	      mail.addAttachments(attachment);
 	      
