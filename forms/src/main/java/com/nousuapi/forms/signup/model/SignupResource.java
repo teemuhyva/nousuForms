@@ -15,6 +15,7 @@ import lombok.Setter;
 @Setter
 public class SignupResource  extends ResourceSupport {
 
+	private long rowId;
 	private String dateOfBirth;
 	private String email;
 	private String address;
@@ -29,6 +30,7 @@ public class SignupResource  extends ResourceSupport {
 	
 	public static SignUp valueOf(SignupResource signUp) {
 		SignUp sign = new SignUp();
+		sign.setId(signUp.getRowId());
 		sign.setDateOfBirth(signUp.getDateOfBirth());
 		sign.setAddress(signUp.getAddress());
 		sign.setPostNum(signUp.getPostNum());
@@ -56,6 +58,7 @@ public class SignupResource  extends ResourceSupport {
 	
 	private static SignupResource mapUserDetails(SignUp user) {
 		SignupResource userRes = new SignupResource();
+		userRes.setRowId(user.getId());
 		userRes.setDateOfBirth(user.getDateOfBirth());
 		userRes.setAddress(user.getAddress());
 		userRes.setPostNum(user.getPostNum());
@@ -78,7 +81,8 @@ public class SignupResource  extends ResourceSupport {
 		SignupResource signUpUser = new SignupResource();
 		
 		for(ActionFormModel frontValues : signUpForm) {
-			if(frontValues.getName().equals("dateOfBirth")) signUpUser.setDateOfBirth(frontValues.getValue());
+			if(frontValues.getName().equals("rowId")) signUpUser.setRowId(Long.valueOf(frontValues.getValue()));
+			else if(frontValues.getName().equals("dateOfBirth")) signUpUser.setDateOfBirth(frontValues.getValue());
 			else if(frontValues.getName().equals("address")) signUpUser.setAddress(frontValues.getValue());
 			else if(frontValues.getName().equals("email")) signUpUser.setEmail(frontValues.getValue());
 			else if(frontValues.getName().equals("postNum")) signUpUser.setPostNum(Integer.parseInt(frontValues.getValue()));
