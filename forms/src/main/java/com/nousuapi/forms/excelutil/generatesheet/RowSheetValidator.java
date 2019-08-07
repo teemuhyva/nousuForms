@@ -4,6 +4,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.ss.usermodel.Row;
 
 import com.nousuapi.forms.entity.UserPurpose;
+import com.nousuapi.forms.exceptions.ErrorLogging;
 import com.nousuapi.forms.helpers.DateHelper;
 import com.nousuapi.forms.signup.model.SignupResource;
 
@@ -28,20 +29,27 @@ public class RowSheetValidator {
 	
 	private void writeSignedUsersExcel(int rowIndex, int cellIndex, SignupResource signed, HSSFSheet sheet) {
 		Row row = sheet.getRow(rowIndex);
-		row.getCell(cellIndex).setCellValue(signed.getChildName());
-		row.getCell(cellIndex + 1).setCellValue(signed.getDateOfBirth());
-		row.getCell(cellIndex + 2).setCellValue(signed.getAddress());
-		row.getCell(cellIndex + 3).setCellValue(signed.getPostNum());
-		row.getCell(cellIndex + 4).setCellValue(signed.getPostOffice());
-		row.getCell(cellIndex + 5).setCellValue(signed.getPhone());
-		row.getCell(cellIndex + 6).setCellValue(signed.getEmail());
-		row.getCell(cellIndex + 7).setCellValue(signed.getParentName());
 		
-		if(signed.getPayment() != null) {
-			row.getCell(cellIndex + 8).setCellValue(signed.getPayment());	
-		}
-		if(signed.getOther() != null) {
-			row.getCell(cellIndex + 9).setCellValue(signed.getOther());	
-		}		
+		if(row.getCell(cellIndex) != null) {
+			row.getCell(cellIndex).setCellValue(signed.getChildName());
+		} else if(row.getCell(cellIndex + 1) != null) {
+			row.getCell(cellIndex + 1).setCellValue(signed.getDateOfBirth());
+		} else if(row.getCell(cellIndex + 2) != null) {
+			row.getCell(cellIndex + 2).setCellValue(signed.getAddress());
+		} else if(row.getCell(cellIndex + 3) != null) {
+			row.getCell(cellIndex + 3).setCellValue(signed.getPostNum());
+		} else if(row.getCell(cellIndex + 4) != null) {
+			row.getCell(cellIndex + 4).setCellValue(signed.getPostOffice());
+		} else if(row.getCell(cellIndex + 5) != null) {
+			row.getCell(cellIndex + 5).setCellValue(signed.getPhone());
+		} else if(row.getCell(cellIndex + 6) != null) {
+			row.getCell(cellIndex + 6).setCellValue(signed.getEmail());
+		} else if(row.getCell(cellIndex + 7) != null) {
+			row.getCell(cellIndex + 7).setCellValue(signed.getParentName());
+		} else if(signed.getPayment() != null && row.getCell(cellIndex + 8) != null) {
+			row.getCell(cellIndex + 8).setCellValue(signed.getPayment());
+		} else if(signed.getOther() != null && row.getCell(cellIndex + 9) != null) {
+			row.getCell(cellIndex + 9).setCellValue(signed.getOther());
+		}			
 	}
 }

@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.core.Context;
 
 import org.docx4j.openpackaging.exceptions.Docx4JException;
 import org.slf4j.Logger;
@@ -75,14 +78,12 @@ public class SignUpController {
 	}
 	
 	@GetMapping("/generate")
-	public void generateExcel() {
+	public ResponseEntity<?> generateExcel(@Context HttpServletResponse response) throws IOException {
 		List<SignupResource> listUsers = signUpService.getSignedUsers();
 		SignUpExcel generate = new SignUpExcel();
-		try {
-			generate.generateForSignedUsers(listUsers);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		generate.generateForSignedUsers(response, listUsers);
+		return new ResponseEntity<>(HttpStatus.CREATED);
+		
 	}
 		
 	public void sendPaymentEmail(File file, SignupResource signUpFormModel) throws Exception {
