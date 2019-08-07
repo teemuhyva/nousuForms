@@ -17,9 +17,9 @@ public interface PractiseRepository extends JpaRepository<SignUp, String> {
 	@Transactional
 	@Query("SELECT u FROM SignUp u")
 	List<SignUp> getUsers();
-		
+	
 	@Transactional
-	@Modifying
-	@Query("DELETE FROM SignUp u WHERE u.dateOfBirth =:dateOfBirth and u.email =:email and u.childName =:childName")
-	void deleteSignedUpChildern(String dateOfBirth, String childName, String email);
+	@Query("SELECT u FROM SignUp u WHERE u.id =:rowId")
+	SignUp getSingleUserById(long rowId);
+
 }

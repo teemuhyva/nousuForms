@@ -27,9 +27,14 @@ public class SignUpServiceImpl implements SignUpService {
 	}
 
 	@Override
-	public void removeChildFromSignedUp(SignupResource signUpForm) {
-		SignUp removeSigned = SignupResource.valueOf(signUpForm);
-		practiseRepository.deleteSignedUpChildern(removeSigned.getDateOfBirth(), removeSigned.getChildName(), removeSigned.getEmail());
+	public void removeChildFromSignedUp(SignupResource signUpForm) {		
+		SignUp signUpChild = practiseRepository.getSingleUserById(SignupResource.valueOf(signUpForm).getId());
+		
+		if(signUpChild != null) {
+			if(signUpChild.getId() == signUpForm.getRowId() && signUpChild.getChildName().contains(signUpForm.getChildName())) {
+				practiseRepository.delete(signUpChild);
+			}
+		}
 	}
 
 	@Override
