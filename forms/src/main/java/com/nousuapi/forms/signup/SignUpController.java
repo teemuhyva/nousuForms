@@ -78,11 +78,11 @@ public class SignUpController {
 	}
 	
 	@GetMapping("/generate")
-	public ResponseEntity<?> generateExcel(@Context HttpServletResponse response) throws IOException {
+	public ResponseEntity<String> generateExcel(@Context HttpServletResponse response) throws IOException {
 		List<SignupResource> listUsers = signUpService.getSignedUsers();
 		SignUpExcel generate = new SignUpExcel();
 		generate.generateForSignedUsers(response, listUsers);
-		return new ResponseEntity<>(HttpStatus.CREATED);
+		return new ResponseEntity<String>("OK", HttpStatus.CREATED);
 		
 	}
 		
