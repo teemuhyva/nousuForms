@@ -138,7 +138,7 @@ public class EmailUtil {
 	      Email to = new Email("jyvaskylanousu@gmail.com");
 	      Content content = new Content();
 	      content.setType("text/plain");
-	      content.setValue("Ilmoittautuneet");
+	      content.setValue("uudetlmoittautuneet");
 	      Personalization perz = new Personalization();
 	      perz.addTo(to);
 	      perz.setSubject(subject);

@@ -4,7 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,7 +37,7 @@ public class SignUpExcel {
     		rowCount++;
     	}
     	
-    	OutputStream fileOut = new FileOutputStream("Ilmoittautuneet.xls");
+    	OutputStream fileOut = new FileOutputStream("uudetIlmoittautuneet.xls");
         wb.write(fileOut);
         wb.close();
         fileOut.close();
@@ -46,10 +45,12 @@ public class SignUpExcel {
         sendViaEmail();
         
         //TODO webdownload, doesn't work yet 8.8.2019
-        downloadFile(fileToByte("Ilmoittautuneet.xls"), response);
+        downloadFile(fileToByte("uudetIlmoittautuneet.xls"), response);
 	}
 	
 	public void downloadFile(byte[] fileByte, HttpServletResponse response) throws IOException {
+		
+		String fileName = "uudetIlmoittautuneet.xls";
 		
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ByteArrayInputStream bais = null;
@@ -64,8 +65,9 @@ public class SignUpExcel {
 		bais.close();
 		
 		ServletOutputStream sos = response.getOutputStream();
+		response.addHeader("Access-Control-Expose-Headers", "Content-Disposition");
 		response.setContentType("application/vnd.ms-sheet");
-		response.setHeader("Content-Disposition", "attachment; filename=ilmoittautuneet.xls ");
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
 		sos.write(baos.toByteArray());
 		sos.flush();
 		baos.close();
@@ -101,7 +103,7 @@ public class SignUpExcel {
 	
 	public void sendViaEmail() {
 		EmailUtil send = new EmailUtil();
-		File file = new File("Ilmoittautuneet.xls");
+		File file = new File("uudetIlmoittautuneet.xls");
 		try {
 			send.signUppedEmail(file);
 		} catch (Exception e) {
