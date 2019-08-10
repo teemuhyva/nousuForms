@@ -22,4 +22,9 @@ public interface PractiseRepository extends JpaRepository<SignUp, String> {
 	@Query("SELECT u FROM SignUp u WHERE u.id =:rowId")
 	SignUp getSingleUserById(long rowId);
 
+	@Transactional
+	@Modifying
+	@Query("DELETE FROM SignUp u WHERE u.id =:rowId")
+	void deleteById(Long rowId);
+
 }
