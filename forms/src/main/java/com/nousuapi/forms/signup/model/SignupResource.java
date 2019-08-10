@@ -73,10 +73,11 @@ public class SignupResource  extends ResourceSupport {
 		
 		return userRes;
 	}
-	
+		
 	//ugly implementation but needs to be done as wp front will send only key value pair
 	//here we going to map those values depending on map value.
 	//hopefully someday we get actual resource from frontend
+	
 	public static SignupResource mapFromActionModel(List<ActionFormModel> signUpForm) {
 		SignupResource signUpUser = new SignupResource();
 		
@@ -97,4 +98,7 @@ public class SignupResource  extends ResourceSupport {
 		
 		return signUpUser;
 	}
+	
+	
+	
 }

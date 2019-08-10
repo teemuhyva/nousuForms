@@ -8,7 +8,7 @@ public interface SignUpService {
 
 	void signChild(SignupResource signUpForm);
 	
-	void removeChildFromSignedUp(SignupResource signUpForm);
+	void removeChildFromSignedUp(String rowId);
 	
 	void removeAllSignedUpChilds();
 	
