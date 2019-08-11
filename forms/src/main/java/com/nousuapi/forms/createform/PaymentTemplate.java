@@ -4,14 +4,15 @@ import java.util.List;
 import java.util.ListIterator;
 
 import javax.mail.MessagingException;
-import org.docx4j.wml.Text;
 
 import org.docx4j.openpackaging.exceptions.Docx4JException;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
+import org.docx4j.wml.Text;
 import org.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.nousuapi.forms.helpers.DateHelper;
 import com.nousuapi.forms.helpers.DocumentHelperUtil;
 import com.nousuapi.forms.signup.model.SignupResource;
 
@@ -42,6 +43,8 @@ public class PaymentTemplate {
 					formText.setValue(signUpFormModel.getAddress());
 				} else if(currentIndex == 2) {
 					formText.setValue(signUpFormModel.getPostNum() + " " + signUpFormModel.getPostOffice());
+				} else if(currentIndex == 19) {
+					formText.setValue(DateHelper.calcExpDate());
 				} else if(currentIndex == 52) {
 					formText.setValue(signUpFormModel.getChildName());
 				} else if(currentIndex == 100) {
@@ -50,6 +53,8 @@ public class PaymentTemplate {
 					formText.setValue(signUpFormModel.getAddress());
 				} else if(currentIndex == 102) {
 					formText.setValue(signUpFormModel.getPostNum() + " " + signUpFormModel.getPostOffice());
+				} else if(currentIndex == 112) {
+					formText.setValue(DateHelper.calcExpDate());
 				}
 			}
 			

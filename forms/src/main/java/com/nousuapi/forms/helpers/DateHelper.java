@@ -18,4 +18,15 @@ public class DateHelper {
         String timeOnsite = localDateFormat.format(startTime)  + localDateFormat.format(endTime);
         return timeOnsite;
 	}
+	
+	public static String calcExpDate() {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");  
+		Date currentDay = new Date();
+		int noOfDays = 14; //i.e two weeks
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(currentDay);            
+		calendar.add(Calendar.DAY_OF_YEAR, noOfDays);
+		String date = formatter.format(calendar.getTime());
+		return date;
+	}
 }
