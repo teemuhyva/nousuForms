@@ -21,8 +21,6 @@ import com.nousuapi.forms.exceptions.ErrorLogging;
 import com.nousuapi.forms.signup.model.SignupResource;
 
 public class SignUpExcel {
-	
-	ErrorLogging log = new ErrorLogging();
 
 	public void generateForSignedUsers(HttpServletResponse response, List<SignupResource> userList) throws IOException {
 		

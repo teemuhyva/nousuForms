@@ -6,6 +6,13 @@ import java.util.Date;
 
 public class DateHelper {
 	
+	private static SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
+	private static Date currentDay = new Date();
+	
+	public static String getCurrentTime() {
+		return formatter.format(currentDay);
+	}
+	
 	public int getDayOfWeek(Date givenDate) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(givenDate);
@@ -20,8 +27,6 @@ public class DateHelper {
 	}
 	
 	public static String calcExpDate() {
-		SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");  
-		Date currentDay = new Date();
 		int noOfDays = 14; //i.e two weeks
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(currentDay);            

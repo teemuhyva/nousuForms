@@ -25,9 +25,7 @@ import com.google.gson.Gson;
 import com.nousuapi.forms.model.ActionFormModel;
 
 public class DocumentHelperUtil {
-	
-	private static Logger logger = LoggerFactory.getLogger(DocumentHelperUtil.class);	
-	
+		
 	public WordprocessingMLPackage getTemplate(File file) throws FileNotFoundException, Docx4JException {
 		WordprocessingMLPackage template = WordprocessingMLPackage.load(new FileInputStream(file));
 		

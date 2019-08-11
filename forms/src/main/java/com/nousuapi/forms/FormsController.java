@@ -26,7 +26,6 @@ public class FormsController {
 	@PostMapping("/actionForm")
 	public ResponseEntity<?> createForm(@RequestBody List<ActionFormModel> actionForm) throws Exception {
 		
-		ErrorLogging log = new ErrorLogging();
 		CreateFormDoc form = new CreateFormDoc();
 		File file = new File("Toimintakertomus.docx");		
 		
@@ -34,30 +33,25 @@ public class FormsController {
 			DocumentHelperUtil docs = new DocumentHelperUtil();
 			form.populateWord(docs.getTemplate(file), actionForm, null);
 		} catch (FileNotFoundException e) {
-			log.setError1(e.getMessage());
 		} catch (IOException e) {
 		}
 		
 		try {
-			log = SendEmailWithAttachment(new File("Toimintakertomus2.docx"), actionForm);
+			SendEmailWithAttachment(new File("Toimintakertomus2.docx"), actionForm);
 		} catch (IOException e) {
 			e.printStackTrace();
-			log.setError3(e.getMessage());
 		}
 		
-		return new ResponseEntity<>(log,HttpStatus.CREATED);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
-	public ErrorLogging SendEmailWithAttachment(File file, List<ActionFormModel> actionForm) throws Exception {
-		ErrorLogging log = new ErrorLogging();
+	public void SendEmailWithAttachment(File file, List<ActionFormModel> actionForm) throws Exception {
 		EmailUtil sendAttachmentViaEmail = new EmailUtil();
 		 
 		try {			 
-			 log = sendAttachmentViaEmail.createEmail(file, actionForm);
+			 sendAttachmentViaEmail.createEmail(file, actionForm);
 		} catch (FileNotFoundException e) {
-			log.setError4(e.getMessage());
+			e.printStackTrace();
 		}
-		 
-		return log;
 	}
 }
