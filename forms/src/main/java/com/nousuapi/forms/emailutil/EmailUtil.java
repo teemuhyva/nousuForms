@@ -94,10 +94,13 @@ public class EmailUtil {
 	      Email to = new Email(signUpFormModel.getEmail());
 	      Content content = new Content();
 	      content.setType("text/plain");
-	      content.setValue("Hei.\n\n Olemme vastaanottaneet ilmoittautumisenne jalkapallokerhoon. \n\n "
-	      				+ "Liitteenä lasku. Muistahan laittaa viestikenttään maksupohjassa olevan tekstin. Kiitos \n\n"
-	      				+ "Ystävällisin Terveisin\n"
-	      				+ "Jyväskylän nousu ry");
+	      content.setValue("Hei!.\n\n Kiitos ilmoittautumisesta!\nOlemme vastaanottaneet ilmoittautumisenne jalkapallokerhoon. \n\n "
+	      				+ "Liitteenä lasku. Muistahan laittaa viestikenttään maksupohjassa olevan tekstin. \n\n"
+	      				+ "Huom. Toimintamaksulla vahvistetaan osallistuminen Nousun toimintaan. Eräpäivä kaksi viikkoa\n "
+	      				+ "ilmoittautumisesta mutta toimintamaksu on maksettava viimeistään ennen ensimmäisiä harjouituksia.\n "
+	      				+ "Maksettuasi toimintamaksuja ei palauteta.\n\n Laitamme ryhmänne toiminnasta tietoa viikolla 38-39.\n"
+	      				+ "Akuuttisista muutoksista ilmoitamme pikaisesti ja sähköpostin välityksellä!\n "
+	      				+ "Ystävällisin Terveisin Jyväskylän Nousu ry");
 	      Personalization perz = new Personalization();
 	      perz.addTo(to);
 	      perz.setSubject(subject);
