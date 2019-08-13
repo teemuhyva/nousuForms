@@ -93,14 +93,19 @@ public class EmailUtil {
 	      Email from = new Email("jyvaskylanousu@gmail.com");
 	      Email to = new Email(signUpFormModel.getEmail());
 	      Content content = new Content();
-	      content.setType("text/plain");
-	      content.setValue("Hei!.\n\n Kiitos ilmoittautumisesta!\nOlemme vastaanottaneet ilmoittautumisenne jalkapallokerhoon. \n\n "
-	      				+ "Liitteenä lasku. Muistahan laittaa viestikenttään maksupohjassa olevan tekstin. \n\n"
-	      				+ "Huom. Toimintamaksulla vahvistetaan osallistuminen Nousun toimintaan. Eräpäivä kaksi viikkoa\n "
-	      				+ "ilmoittautumisesta mutta toimintamaksu on maksettava viimeistään ennen ensimmäisiä harjouituksia.\n "
-	      				+ "Maksettuasi toimintamaksuja ei palauteta.\n\n Laitamme ryhmänne toiminnasta tietoa viikolla 38-39.\n"
-	      				+ "Akuuttisista muutoksista ilmoitamme pikaisesti ja sähköpostin välityksellä!\n "
-	      				+ "Ystävällisin Terveisin Jyväskylän Nousu ry");
+	      content.setType("text/html");
+	      content.setValue(
+	    		  "<p>Hei!</p><br>" +
+	    		    "<p>Kiitos ilmoittautumisesta!<br>" +
+	    		    "Olemme vastaanottaneet ilmoittautumisenne jalkapallokerhoon.</p><br>" +
+	    		    "<p>Liittenä lasku. Muistathan laittaa viestikenttään maksupohjassa olevan tekstin.<br>" +
+	    		    "Huom. Toimintamaksulla vahvistetaan osallistuminen Nousun toimintaan. Eräpäivä kaksi viikkoa<br>" +
+	    		    "ilmoittautumisesta mutta toimintamaksu on maksettava viimeistään ennen ensimmäisiä harjoituksia.<br>" +
+	    		    "<p>Maksettuja toimintamaksuja ei palauteta.</p><br>" +
+	    		    "<p>Laitamme ryhmänne toiminnasta tietoa viikolla 38-39.<br>" +
+	    		    "Akuuteista muutoksista ilmoitamme pikaisesti ja sähköpostin välityksellä!</p><br>" +
+	    		    "<p>Ystävällisin Terveisin<br>Jyväskylän Nousu ry</p>"
+	      		);
 	      Personalization perz = new Personalization();
 	      perz.addTo(to);
 	      perz.setSubject(subject);
