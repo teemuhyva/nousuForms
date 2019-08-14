@@ -29,12 +29,49 @@ public class SignUpExcel {
 		InputStream inp = new FileInputStream("Ilmoittautuneet.xls");
     	HSSFWorkbook wb = new HSSFWorkbook(inp);
     	
-    	int rowCount = 2;
+    	int firstSheet = 2;
+    	int secondSheet = 2;
+    	int thirdSheet = 2;
+    	int fourthSheet = 2;
+    	int fifthSheet = 2;
+    	int sixthSeet = 2;
+    	int seventhSheet = 2;
     	
     	for(SignupResource sign : userList) {
     		RowSheetValidator validator = new RowSheetValidator();
-    		validator.updateSignedUserExcel(rowCount, 1, sign, wb.getSheetAt(0));
-    		rowCount++;
+    		
+    		switch (sign.getAgeClass()) {
+			case "Lapset 2015/2016 -syntyneet (Keljonkangas)":
+				validator.updateSignedUserExcel(firstSheet, 1, sign, wb.getSheetAt(0));
+				firstSheet++;
+				break;
+			case "Lapset 2015 -syntyneet (Halssila)":
+				validator.updateSignedUserExcel(secondSheet, 1, sign, wb.getSheetAt(1));
+				secondSheet++;
+				break;
+			case "Lapset 2014 -syntyneet (Halssila)":
+				validator.updateSignedUserExcel(thirdSheet, 1, sign, wb.getSheetAt(2));
+				thirdSheet++;
+				break;
+			case "Lapset 2014 -syntyneet (Keljonkangas)":
+				validator.updateSignedUserExcel(fourthSheet, 1, sign, wb.getSheetAt(3));
+				fourthSheet++;
+				break;
+			case "Pojat 2013 -syntyneet (Halssila)":
+				validator.updateSignedUserExcel(fifthSheet, 1, sign, wb.getSheetAt(4));
+				fifthSheet++;
+				break;
+			case "Pojat 2011/2012 -syntyneet (Halssila)":
+				validator.updateSignedUserExcel(sixthSeet, 1, sign, wb.getSheetAt(5));
+				sixthSeet++;
+				break;
+			case "Tytöt 2012/2013 -syntyneet (Halssila)":
+				validator.updateSignedUserExcel(seventhSheet, 1, sign, wb.getSheetAt(6));
+				seventhSheet++;
+				break;
+			default:
+				break;
+			}
     	}
     	
     	OutputStream fileOut = new FileOutputStream("uudetIlmoittautuneet.xls");
