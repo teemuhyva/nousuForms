@@ -47,6 +47,8 @@ public class PaymentTemplate {
 					formText.setValue(DateHelper.calcExpDate());
 				} else if(currentIndex == 52) {
 					formText.setValue(signUpFormModel.getChildName());
+				} else if(currentIndex == 95) {
+					formText.setValue(signUpFormModel.getAgeClass());
 				} else if(currentIndex == 100) {
 					formText.setValue(signUpFormModel.getParentName());
 				} else if(currentIndex == 101) {
