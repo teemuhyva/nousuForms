@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nousuapi.forms.createform.CreateActionPlan;
 import com.nousuapi.forms.createform.CreateFormDoc;
 import com.nousuapi.forms.emailutil.EmailUtil;
+import com.nousuapi.forms.excelutil.BudgetExcel;
 import com.nousuapi.forms.exceptions.ErrorLogging;
 import com.nousuapi.forms.helpers.DocumentHelperUtil;
 import com.nousuapi.forms.model.ActionFormModel;
+import com.nousuapi.forms.model.BudgetModelResource;
 
 
 @RestController
@@ -72,6 +74,12 @@ public class FormsController {
 		}
 		
 		return new ResponseEntity<>(log,HttpStatus.CREATED);
+	}
+	
+	@PostMapping("/budgetassesment")
+	public ResponseEntity<?> createBudgetAssesment(@RequestBody BudgetModelResource budget) throws Exception {		
+		BudgetExcel.createBudgetExcel(budget);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
 	public ErrorLogging SendEmailWithAttachment(File file, List<ActionFormModel> actionForm) throws Exception {
