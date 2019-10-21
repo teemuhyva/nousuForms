@@ -37,7 +37,7 @@ public class BudgetExcel {
 		EmailUtil send = new EmailUtil();
 		File file = new File("TalousarvioTaytetty.xls");
 		try {
-			send.signUppedEmail(file);
+			send.budgetExcelEmail(file);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

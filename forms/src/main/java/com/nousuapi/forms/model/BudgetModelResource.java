@@ -13,6 +13,7 @@ public class BudgetModelResource {
 
 	int ageClass;
 	double osallistumisMaksut;
+	double lisenssiMaksut;
 	double kenttamaksut;
 	double erotuomariMaksut;
 	double piiriJoukkueTapahtumat;
@@ -27,12 +28,20 @@ public class BudgetModelResource {
 	double koulutusMaksut;
 	double essentials;
 	double menotTotal;
+	double other1;
+	String other1Reason;
 	
 	double tulotToimintaMaksut;
 	double tulotTilaisuudet;
 	double tulotTuotemyynnit;
 	double tulotTukijat;
 	double tulotOther;
+	double tulotOther2;
+	String otherReason2;
+	double tulotOther3;
+	String otherReason3;
+	double tulotOther4;
+	String otherReason4;
 	double tulotTotal;
 	
 	String date;
