@@ -74,7 +74,7 @@ public class RowSheetValidator {
 					if(row.getRowNum() == 19) row.getCell(3).setCellValue(budget.getOther1());
 				}
 				
-				if(row.getRowNum() == 20) row.getCell(3).setCellValue(budget.getMenotTotal());
+				if(row.getRowNum() == 20) row.getCell(3).setCellValue(calcMenotTotal(budget));
 				if(row.getRowNum() == 23) row.getCell(3).setCellValue(budget.getTulotToimintaMaksut());
 				if(row.getRowNum() == 24) row.getCell(3).setCellValue(budget.getTulotTilaisuudet());
 				if(row.getRowNum() == 25) row.getCell(3).setCellValue(budget.getTulotTuotemyynnit());
@@ -93,13 +93,59 @@ public class RowSheetValidator {
 					if(row.getRowNum() == 30) row.getCell(3).setCellValue(budget.getTulotOther4());
 				}
 				
-				if(row.getRowNum() == 31) row.getCell(3).setCellValue(budget.getTulotTotal());
+				if(row.getRowNum() == 31) row.getCell(3).setCellValue(calcTulotTotal(budget));
 				if(row.getRowNum() == 35) row.getCell(1).setCellValue(budget.getExtraFieldForNeededInfo());
 				if(row.getRowNum() == 38) row.getCell(1).setCellValue(budget.getBudgetFiledDate() + " " + budget.getPlace());				
 				if(row.getRowNum() == 38) row.getCell(2).setCellValue(budget.getMoneyManager());
 				if(row.getRowNum() == 38) row.getCell(3).setCellValue(budget.getTeamLeader());
 			}
+		}		
+	}
+	
+	private double calcMenotTotal(BudgetModelResource budget) {
+		double total = 0.0;
+		
+		total += budget.getOsallistumisMaksut();
+		total += budget.getLisenssiMaksut();
+		total += budget.getKenttamaksut();
+		total += budget.getErotuomariMaksut();
+		total += budget.getPiiriJoukkueTapahtumat();
+		total += budget.getTapatumaOsallistumiset();
+		total += budget.getKenttaVuorot();
+		total += budget.getJasenMaksut();
+		total += budget.getTarvikkeet();
+		total += budget.getEdustusAsut();
+		total += budget.getOheisHarjoitteet();
+		total += budget.getTurnausosallistumisMaksut();
+		total += budget.getMatkat();
+		total += budget.getKoulutusMaksut();
+		total += budget.getEssentials();
+		if(budget.getOther1Reason() != null) {
+			total += budget.getOther1();
 		}
 		
+		return total;
+	}
+	
+	private double calcTulotTotal(BudgetModelResource budget) {
+		
+		double total = 0;
+		
+		total += budget.getTulotToimintaMaksut();
+		total += budget.getTulotTilaisuudet();
+		total += budget.getTulotTuotemyynnit();
+		total += budget.getTulotTukijat();
+		total += budget.getTulotOther();
+		if(budget.getOtherReason2() != null) {
+			total += budget.getTulotOther2();
+		}
+		if(budget.getOtherReason3() != null) {
+			total += budget.getTulotOther3();
+		}
+		if(budget.getOtherReason4() != null) {
+			total += budget.getTulotOther4();
+		}
+		
+		return total;
 	}
 }

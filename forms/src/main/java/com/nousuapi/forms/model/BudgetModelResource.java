@@ -27,7 +27,6 @@ public class BudgetModelResource {
 	double matkat;
 	double koulutusMaksut;
 	double essentials;
-	double menotTotal;
 	double other1;
 	String other1Reason;
 	
@@ -42,7 +41,6 @@ public class BudgetModelResource {
 	String otherReason3;
 	double tulotOther4;
 	String otherReason4;
-	double tulotTotal;
 	
 	String budgetFiledDate;
 	String place;
