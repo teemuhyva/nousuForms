@@ -95,7 +95,7 @@ public class RowSheetValidator {
 				
 				if(row.getRowNum() == 31) row.getCell(3).setCellValue(budget.getTulotTotal());
 				if(row.getRowNum() == 35) row.getCell(1).setCellValue(budget.getExtraFieldForNeededInfo());
-				if(row.getRowNum() == 38) row.getCell(1).setCellValue(budget.getDate() + " " + budget.getPlace());				
+				if(row.getRowNum() == 38) row.getCell(1).setCellValue(budget.getBudgetFiledDate() + " " + budget.getPlace());				
 				if(row.getRowNum() == 38) row.getCell(2).setCellValue(budget.getMoneyManager());
 				if(row.getRowNum() == 38) row.getCell(3).setCellValue(budget.getTeamLeader());
 			}

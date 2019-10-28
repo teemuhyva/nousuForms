@@ -44,7 +44,7 @@ public class BudgetModelResource {
 	String otherReason4;
 	double tulotTotal;
 	
-	String date;
+	String budgetFiledDate;
 	String place;
 	String moneyManager;
 	String teamLeader;
