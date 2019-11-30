@@ -184,5 +184,51 @@ public class EmailUtil {
 	    	  throw new Exception(CustomException.SENDING_EMAIL_FAILED);
 	      }
 	}
+	
+	public void budgetExcelEmail(File file) throws Exception {
+		  SendGrid sendGrid = new SendGrid(System.getenv("SENDGRID_APIKEY_PAYMENT"));
+		  String subject = "Talousarvio";
+	      Email from = new Email("jyvaskylanousu@gmail.com");
+	      Email to = new Email("jyvaskylanousu@gmail.com");
+	      Content content = new Content();
+	      content.setType("text/plain");
+	      content.setValue("TalousarvioTaytetty");
+	      Personalization perz = new Personalization();
+	      perz.addTo(to);
+	      perz.setSubject(subject);
+	      
+	      Mail mail = new Mail();
+	      mail.setFrom(from);
+	      mail.setSubject(subject);
+	      mail.setReplyTo(to);
+	      mail.addContent(content);
+	      mail.addPersonalization(perz);
+	      
+	      byte[] filedata = org.apache.commons.io.IOUtils.toByteArray(new FileInputStream(file));
+	      Attachments attachment = new Attachments();
+	      String fileString = Base64.getEncoder().encodeToString(filedata);
+	      
+	      attachment.setContent(fileString);
+	      attachment.setFilename("Talousarvio.xls");
+	      attachment.setDisposition("attachment");
+	      mail.addAttachments(attachment);
+	      
+	      Request req = new Request();
+	      
+	      try {    	  
+	    	  req.setMethod(Method.POST);
+	    	  req.setEndpoint("mail/send");
+	    	  req.setBody(mail.build());
+	    	  Response response = sendGrid.api(req);
+	    	  System.out.println(response.getStatusCode());
+	    	  response.getStatusCode();
+	    	  System.out.println(response.getBody());
+	    	  response.getBody();
+	    	  
+	      } catch(IOException e) {
+	    	  logger.error(":::::::: " + e.getMessage());
+	    	  throw new Exception(CustomException.SENDING_EMAIL_FAILED);
+	      }
+	}
    
 }

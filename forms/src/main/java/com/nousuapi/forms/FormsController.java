@@ -12,11 +12,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nousuapi.forms.createform.CreateActionPlan;
 import com.nousuapi.forms.createform.CreateFormDoc;
 import com.nousuapi.forms.emailutil.EmailUtil;
+import com.nousuapi.forms.excelutil.BudgetExcel;
 import com.nousuapi.forms.exceptions.ErrorLogging;
 import com.nousuapi.forms.helpers.DocumentHelperUtil;
 import com.nousuapi.forms.model.ActionFormModel;
+import com.nousuapi.forms.model.BudgetModelResource;
 
 
 @RestController
@@ -46,6 +49,37 @@ public class FormsController {
 		}
 		
 		return new ResponseEntity<>(log,HttpStatus.CREATED);
+	}
+	
+	@PostMapping("/actionplan")
+	public ResponseEntity<?> createActionPlan(@RequestBody List<ActionFormModel> actionPlan) throws Exception {
+		
+		ErrorLogging log = new ErrorLogging();
+		CreateActionPlan form = new CreateActionPlan();
+		File file = new File("Toimintasuunnitelma.docx");		
+		
+		try {
+			DocumentHelperUtil docs = new DocumentHelperUtil();
+			form.generateActionPlan(docs.getTemplate(file), actionPlan);
+		} catch (FileNotFoundException e) {
+			log.setError1(e.getMessage());
+		} catch (IOException e) {
+		}
+		
+		try {
+			log = SendEmailWithAttachment(new File("Toimintasuunnitelma2.docx"), actionPlan);
+		} catch (IOException e) {
+			e.printStackTrace();
+			log.setError3(e.getMessage());
+		}
+		
+		return new ResponseEntity<>(log,HttpStatus.CREATED);
+	}
+	
+	@PostMapping("/budgetassesment")
+	public ResponseEntity<?> createBudgetAssesment(@RequestBody BudgetModelResource budget) throws Exception {		
+		BudgetExcel.createBudgetExcel(budget);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
 	public ErrorLogging SendEmailWithAttachment(File file, List<ActionFormModel> actionForm) throws Exception {
