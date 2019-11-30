@@ -74,7 +74,13 @@ public class SignUpExcel {
 			}
     	}
     	
-    	OutputStream fileOut = new FileOutputStream("uudetIlmoittautuneet.xls");
+    	OutputStream fileOut = null;
+    	if(userList.get(0).getSignedUpFor().equals("kerho")) {
+    		fileOut = new FileOutputStream("uudetKerhoIlmoittautuneet.xls");
+    	} else {
+    		fileOut = new FileOutputStream("uudetJoukkueIlmoittautuneet.xls");
+    	}
+    	
         wb.write(fileOut);
         wb.close();
         fileOut.close();

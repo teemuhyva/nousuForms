@@ -12,5 +12,5 @@ public interface SignUpService {
 	
 	void removeAllSignedUpChilds();
 	
-	List<SignupResource> getSignedUsers();
+	List<SignupResource> getSignedUsers(String name);
 }

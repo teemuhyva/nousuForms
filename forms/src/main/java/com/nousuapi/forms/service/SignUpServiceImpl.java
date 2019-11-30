@@ -5,8 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.nousuapi.forms.entity.SignUp;
-import com.nousuapi.forms.entity.UserPurpose;
 import com.nousuapi.forms.repository.PractiseRepository;
 import com.nousuapi.forms.signup.model.SignupResource;
 
@@ -22,8 +20,8 @@ public class SignUpServiceImpl implements SignUpService {
 	}
 
 	@Override
-	public List<SignupResource> getSignedUsers() {
-		return SignupResource.fromEntityToResource(practiseRepository.getUsers());
+	public List<SignupResource> getSignedUsers(String name) {
+		return SignupResource.fromEntityToResource(practiseRepository.getUsers(), name);
 	}
 
 	@Override
