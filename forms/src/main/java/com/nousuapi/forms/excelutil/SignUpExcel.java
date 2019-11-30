@@ -23,6 +23,8 @@ import com.nousuapi.forms.signup.model.SignupResource;
 public class SignUpExcel {
 	
 	ErrorLogging log = new ErrorLogging();
+	private final String KERHO = "uudetKerhoIlmoittautuneet.xls";
+	private final String JOUKKUE = "uudetJoukkueIlmoittautuneet.xls";
 
 	public void generateForSignedUsers(HttpServletResponse response, List<SignupResource> userList) throws IOException {
 		
@@ -74,20 +76,29 @@ public class SignUpExcel {
 			}
     	}
     	
-    	OutputStream fileOut = new FileOutputStream("uudetIlmoittautuneet.xls");
-        wb.write(fileOut);
-        wb.close();
+    	OutputStream fileOut = null;
+    	if(userList.get(0).getSignedUpFor().equals("kerho")) {
+    		fileOut = new FileOutputStream(KERHO);
+    		wb.write(fileOut);	
+	        sendViaEmail(KERHO);
+	        
+	        //TODO webdownload, doesn't work yet 8.8.2019
+	        downloadFile(fileToByte(KERHO), response, KERHO);
+    	} else {
+    		fileOut = new FileOutputStream(JOUKKUE);
+    		wb.write(fileOut); 
+	        sendViaEmail(JOUKKUE);
+	        
+	        //TODO webdownload, doesn't work yet 8.8.2019
+	        downloadFile(fileToByte(JOUKKUE), response, JOUKKUE);
+    	}
+    	wb.close();
         fileOut.close();
-
-        sendViaEmail();
-        
-        //TODO webdownload, doesn't work yet 8.8.2019
-        downloadFile(fileToByte("uudetIlmoittautuneet.xls"), response);
+        fileOut.flush();
+    	inp.close();       
 	}
 	
-	public void downloadFile(byte[] fileByte, HttpServletResponse response) throws IOException {
-		
-		String fileName = "uudetIlmoittautuneet.xls";
+	public void downloadFile(byte[] fileByte, HttpServletResponse response, String chosenPath) throws IOException {
 		
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ByteArrayInputStream bais = null;
@@ -104,7 +115,7 @@ public class SignUpExcel {
 		ServletOutputStream sos = response.getOutputStream();
 		response.addHeader("Access-Control-Expose-Headers", "Content-Disposition");
 		response.setContentType("application/vnd.ms-sheet");
-		response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+		response.setHeader("Content-Disposition", "attachment; filename=\"" + chosenPath + "\"");
 		sos.write(baos.toByteArray());
 		sos.flush();
 		baos.close();
@@ -138,9 +149,9 @@ public class SignUpExcel {
         return bytesArray;
 	}
 	
-	public void sendViaEmail() {
+	public void sendViaEmail(String name) {
 		EmailUtil send = new EmailUtil();
-		File file = new File("uudetIlmoittautuneet.xls");
+		File file = new File(name);
 		try {
 			send.signUppedEmail(file);
 		} catch (Exception e) {

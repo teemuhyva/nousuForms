@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -69,16 +70,17 @@ public class SignUpController {
 	
 	@GetMapping("/")
 	public ResponseEntity<SignUpResourceMapper> getSignedUpUsers() {
-		List<SignupResource> listUsers = signUpService.getSignedUsers();
+		List<SignupResource> listUsers = signUpService.getSignedUsers(null);
 		SignUpResourceMapper result = new SignUpResourceMapper();
 		result.setSignUpList(listUsers);
-		result.add(linkTo(SignUpController.class).slash("/generate").withRel("download"));
+		result.add(linkTo(SignUpController.class).slash("/generate/kerho").withRel("downloadClubSheet"));
+		result.add(linkTo(SignUpController.class).slash("/generate/joukkue").withRel("downloadTeamSheet"));
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
-	@GetMapping("/generate")
-	public ResponseEntity<String> generateExcel(@Context HttpServletResponse response) throws IOException {
-		List<SignupResource> listUsers = signUpService.getSignedUsers();
+	@GetMapping("/generate/{name}")
+	public ResponseEntity<String> generateExcel(@Context HttpServletResponse response, @PathVariable(name = "name") String name) throws IOException {
+		List<SignupResource> listUsers = signUpService.getSignedUsers(name);
 		SignUpExcel generate = new SignUpExcel();
 		generate.generateForSignedUsers(response, listUsers);
 		return new ResponseEntity<String>("OK", HttpStatus.CREATED);

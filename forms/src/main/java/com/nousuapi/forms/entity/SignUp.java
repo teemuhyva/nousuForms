@@ -47,6 +47,8 @@ public class SignUp {
 	private String phone;
 	@NotNull
 	private String ageClass;
+	@NotNull
+	private String signedUpFor;
 	
 	private Double payment;
 	private String other;

@@ -25,6 +25,7 @@ public class SignupResource  extends ResourceSupport {
 	private String childName;
 	private String phone;
 	private String ageClass;
+	private String signedUpFor;
 	private Double payment;
 	private String other;
 	
@@ -40,18 +41,28 @@ public class SignupResource  extends ResourceSupport {
 		sign.setChildName(signUp.getChildName());
 		sign.setPhone(signUp.getPhone());
 		sign.setAgeClass(signUp.getAgeClass());
+		sign.setSignedUpFor(signUp.getSignedUpFor());
 		sign.setPayment(signUp.getPayment());
 		sign.setOther(signUp.getOther());
 		
 		return sign;
 	}
 	
-	public static List<SignupResource> fromEntityToResource(List<SignUp> allUsers) {
+	public static List<SignupResource> fromEntityToResource(List<SignUp> allUsers, String name) {
 		List<SignupResource> allUsersList = new ArrayList<>();
 		
-		for(SignUp user : allUsers) {			
-			allUsersList.add(SignupResource.mapUserDetails(user));
+		if(name != null) {
+			for(SignUp user : allUsers) {
+				if(user.getSignedUpFor().equals(name)) {
+					allUsersList.add(SignupResource.mapUserDetails(user));	
+				}				
+			}
+		} else {
+			for(SignUp user : allUsers) {
+				allUsersList.add(SignupResource.mapUserDetails(user));				
+			}
 		}
+		
 		
 		return allUsersList;
 	}
@@ -68,6 +79,7 @@ public class SignupResource  extends ResourceSupport {
 		userRes.setEmail(user.getEmail());
 		userRes.setParentName(user.getParentName());
 		userRes.setPhone(user.getPhone());
+		userRes.setSignedUpFor(user.getSignedUpFor());
 		userRes.setPayment(user.getPayment());
 		userRes.setOther(user.getOther());
 		
@@ -92,6 +104,7 @@ public class SignupResource  extends ResourceSupport {
 			else if(frontValues.getName().equals("childName")) signUpUser.setChildName(frontValues.getValue());
 			else if(frontValues.getName().equals("phone")) signUpUser.setPhone(frontValues.getValue());
 			else if(frontValues.getName().equals("ageClass")) signUpUser.setAgeClass(frontValues.getValue());
+			else if(frontValues.getName().equals("signedUpfor")) signUpUser.setSignedUpFor(frontValues.getValue());
 			else if(frontValues.getName().equals("payment")) signUpUser.setPayment(Double.parseDouble(frontValues.getValue()));
 			else if(frontValues.getName().equals("other")) signUpUser.setOther(frontValues.getValue());
 		}
