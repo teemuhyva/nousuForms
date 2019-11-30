@@ -53,12 +53,9 @@ public class SignupResource  extends ResourceSupport {
 		
 		if(name != null) {
 			for(SignUp user : allUsers) {
-				if(user.getSignedUpFor().equals("kerho")) {
+				if(user.getSignedUpFor().equals(name)) {
 					allUsersList.add(SignupResource.mapUserDetails(user));	
-				} else {
-					allUsersList.add(SignupResource.mapUserDetails(user));
-				}
-				
+				}				
 			}
 		} else {
 			for(SignUp user : allUsers) {
