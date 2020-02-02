@@ -1,19 +1,13 @@
 package com.nousuapi.forms.service;
 
-
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.nousuapi.forms.admin.model.UserPurposeResource;
 import com.nousuapi.forms.entity.Customer;
 import com.nousuapi.forms.entity.UserPurpose;
-import com.nousuapi.forms.enums.UserRole;
 import com.nousuapi.forms.exceptions.CustomException;
 import com.nousuapi.forms.repository.UserPurposeRepository;
 import com.nousuapi.forms.repository.UserRepository;
@@ -51,7 +45,7 @@ public class UserPurposeServiceImpl implements UserPurposeService {
 		}
 		
 		for(UserPurpose u : up) {
-			if(userPurpose.getId() == u.getId()) {
+			if(Long.compare(u.getId(), userPurpose.getId()) == 1) {
 				u.setLocation(userPurpose.getLocation());
 				u.setPersonName(userPurpose.getPersonName());
 				u.setIlGroup(userPurpose.getIlGroup());

@@ -68,7 +68,7 @@ public class JklCupController {
 		return new ResponseEntity<>(result, HttpStatus.CREATED);
 	}
 	
-	@PatchMapping("/updatepurpose")
+	@PutMapping("/updatepurpose")
 	public ResponseEntity<CustomerResource> updatePurpose(@RequestBody UserPurpose userPurpose) throws Exception {
 		userPurposeService.updatePurpose(userPurpose);
 		CustomerResource result = new CustomerResource();
