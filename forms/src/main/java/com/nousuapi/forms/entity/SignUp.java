@@ -19,7 +19,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "signup")
-public class SignUp {
+public class SignUp  {
 
 	/*
 	 * Table is for parents to signup their childs to football practise for season
