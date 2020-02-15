@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class DateHelper {
 	
-	private static final String pattern = "yyyy-MM-dd: hh:mm:ss";
+	private static final String pattern = "yyyy-MM-dd: hh:mm";
 	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);	
 	private static Calendar calendar = Calendar.getInstance();
 	
@@ -38,6 +38,9 @@ public class DateHelper {
 	}
 	
 	private static String formatDateString() {
-		return simpleDateFormat.format(new Date());
+		calendar.setTime(new Date());
+		calendar.add(Calendar.HOUR_OF_DAY, 2);
+		Date date = calendar.getTime();
+		return simpleDateFormat.format(date);
 	}
 }
