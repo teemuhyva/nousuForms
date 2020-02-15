@@ -50,6 +50,7 @@ public class SignUp  {
 	@NotNull
 	private String signedUpFor;
 	
+	private String signedUpDate;
 	private Double payment;
 	private String other;
 }

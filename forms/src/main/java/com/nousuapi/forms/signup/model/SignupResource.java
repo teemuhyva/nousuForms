@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.hateoas.ResourceSupport;
 
 import com.nousuapi.forms.entity.SignUp;
+import com.nousuapi.forms.helpers.DateHelper;
 import com.nousuapi.forms.model.ActionFormModel;
 
 import lombok.Getter;
@@ -13,8 +14,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class SignupResource  extends ResourceSupport {
-
+public class SignupResource extends ResourceSupport {
 	private long rowId;
 	private String dateOfBirth;
 	private String email;
@@ -26,6 +26,7 @@ public class SignupResource  extends ResourceSupport {
 	private String phone;
 	private String ageClass;
 	private String signedUpFor;
+	private String signedUpDate;
 	private Double payment;
 	private String other;
 	
@@ -42,6 +43,7 @@ public class SignupResource  extends ResourceSupport {
 		sign.setPhone(signUp.getPhone());
 		sign.setAgeClass(signUp.getAgeClass());
 		sign.setSignedUpFor(signUp.getSignedUpFor());
+		sign.setSignedUpDate(DateHelper.currentTime());
 		sign.setPayment(signUp.getPayment());
 		sign.setOther(signUp.getOther());
 		
@@ -80,6 +82,7 @@ public class SignupResource  extends ResourceSupport {
 		userRes.setParentName(user.getParentName());
 		userRes.setPhone(user.getPhone());
 		userRes.setSignedUpFor(user.getSignedUpFor());
+		userRes.setSignedUpDate(user.getSignedUpDate());
 		userRes.setPayment(user.getPayment());
 		userRes.setOther(user.getOther());
 		

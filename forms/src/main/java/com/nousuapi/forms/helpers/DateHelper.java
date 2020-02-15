@@ -6,6 +6,14 @@ import java.util.Date;
 
 public class DateHelper {
 	
+	private static final String pattern = "yyyy-MM-dd: hh:mm:ss";
+	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);	
+	private static Calendar calendar = Calendar.getInstance();
+	
+	public static String currentTime() {
+		return formatDateString();
+	}
+	
 	public int getDayOfWeek(Date givenDate) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(givenDate);
@@ -22,11 +30,14 @@ public class DateHelper {
 	public static String calcExpDate() {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");  
 		Date currentDay = new Date();
-		int noOfDays = 14; //i.e two weeks
-		Calendar calendar = Calendar.getInstance();
+		int noOfDays = 14; //i.e two weeks		
 		calendar.setTime(currentDay);            
 		calendar.add(Calendar.DAY_OF_YEAR, noOfDays);
 		String date = formatter.format(calendar.getTime());
 		return date;
+	}
+	
+	private static String formatDateString() {
+		return simpleDateFormat.format(new Date());
 	}
 }
