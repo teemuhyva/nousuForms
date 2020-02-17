@@ -13,13 +13,14 @@ import org.docx4j.openpackaging.exceptions.Docx4JException;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.docx4j.wml.Text;
 import org.json.JSONArray;
+import org.json.JSONException;
 
 import com.nousuapi.forms.helpers.DocumentHelperUtil;
 import com.nousuapi.forms.model.ActionFormModel;
 
 public class CreateActionPlan {
 	
-	public void generateActionPlan(WordprocessingMLPackage template, List<ActionFormModel> actionPlan) throws  Docx4JException, MessagingException, FileNotFoundException, IOException {
+	public void generateActionPlan(WordprocessingMLPackage template, List<ActionFormModel> actionPlan) throws  Docx4JException, MessagingException, FileNotFoundException, IOException, JSONException {
 		DocumentHelperUtil docs = new DocumentHelperUtil();		
 		JSONArray jsonModelObject =  docs.generateJsonFromForm(actionPlan);		
 		DocumentHelperUtil docHelper = new DocumentHelperUtil();

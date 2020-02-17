@@ -13,6 +13,7 @@ import org.docx4j.openpackaging.exceptions.Docx4JException;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.docx4j.wml.Text;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,7 +26,7 @@ public class CreateFormDoc {
 		  
 	private static Logger logger = LoggerFactory.getLogger(CreateFormDoc.class);
 	
-	public void populateWord(WordprocessingMLPackage template, List<ActionFormModel> actionForm, SignupResource signUpFormModel) throws  Docx4JException, MessagingException, FileNotFoundException, IOException {
+	public void populateWord(WordprocessingMLPackage template, List<ActionFormModel> actionForm, SignupResource signUpFormModel) throws  Docx4JException, MessagingException, FileNotFoundException, IOException, JSONException {
 		DocumentHelperUtil docs = new DocumentHelperUtil();
 		
 		JSONArray jsonModelObject =  docs.generateJsonFromForm(actionForm);

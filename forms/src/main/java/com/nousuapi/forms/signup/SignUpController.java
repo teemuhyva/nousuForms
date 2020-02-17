@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.core.Context;
 
 import org.docx4j.openpackaging.exceptions.Docx4JException;
+import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ public class SignUpController {
 	private SignUpService signUpService;
 	
 	@PostMapping("/")
-	public ResponseEntity<SignupResource> signUp(@RequestBody List<ActionFormModel> signUpForm) throws Docx4JException, MessagingException {
+	public ResponseEntity<SignupResource> signUp(@RequestBody List<ActionFormModel> signUpForm) throws Docx4JException, MessagingException, JSONException {
 		
 		SignupResource signUpFormModel = SignupResource.mapFromActionModel(signUpForm);
 		signUpService.signChild(signUpFormModel);

@@ -15,6 +15,7 @@ import org.docx4j.openpackaging.exceptions.Docx4JException;
 import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import org.docx4j.wml.ContentAccessor;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,7 +57,7 @@ public class DocumentHelperUtil {
 		  return result;
 	  }
 	
-	public String loopJsonObjectToGetValue(JSONArray jArray, String desiredValue) {
+	public String loopJsonObjectToGetValue(JSONArray jArray, String desiredValue) throws JSONException {
 		
 		String desired = "";		
 		
@@ -85,7 +86,7 @@ public class DocumentHelperUtil {
 		 template.save(f);		 
 	}
 	
-	public JSONArray generateJsonFromForm(List<ActionFormModel> actionForm) throws JsonParseException, JsonMappingException, IOException {
+	public JSONArray generateJsonFromForm(List<ActionFormModel> actionForm) throws JsonParseException, JsonMappingException, IOException, JSONException {
 		String json = new Gson().toJson(actionForm);
 		JSONArray arr = new JSONArray(json);
 		
