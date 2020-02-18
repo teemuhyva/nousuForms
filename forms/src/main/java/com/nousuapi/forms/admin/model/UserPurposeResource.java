@@ -32,6 +32,10 @@ public class UserPurposeResource  extends ResourceSupport {
 	private String successMessage;
 	private IlGroup ilGroup;
 	
+	public UserPurposeResource() {
+		add(linkTo(AdminController.class).slash("adduserpurpose").withRel("newpurpose"));
+	}
+	
 	public static List<UserPurposeResource> mapList(List<UserPurpose> userPurpose) {
 		List<UserPurposeResource> resultList = new ArrayList<UserPurposeResource>();
 		

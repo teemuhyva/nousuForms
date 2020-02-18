@@ -18,11 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nousuapi.forms.admin.model.CustomerResource;
+import com.nousuapi.forms.admin.model.TeamLeaderResource;
 import com.nousuapi.forms.admin.model.UserPurposeLinkedResource;
 import com.nousuapi.forms.admin.model.UserPurposeResource;
 import com.nousuapi.forms.entity.Customer;
 import com.nousuapi.forms.entity.UserPurpose;
 import com.nousuapi.forms.excelutil.JklCupExcel;
+import com.nousuapi.forms.mapper.EntityMapper;
 import com.nousuapi.forms.service.UserPurposeService;
 import com.nousuapi.forms.service.UserService;
 import com.nousuapi.forms.tournament.JklCupController;
@@ -37,10 +39,15 @@ public class AdminController {
 	@Autowired
 	private UserPurposeService userPurposeService;
 
+	@PostMapping("/createleader")
+	private ResponseEntity<UserPurposeResource> createLeader(@RequestBody TeamLeaderResource teamLeader) {
+		userService.createTeamLeader(teamLeader);
+		return new ResponseEntity<>(new UserPurposeResource(), HttpStatus.CREATED);
+	}
+	
 	@DeleteMapping("/removeuser")
-	private ResponseEntity<CustomerResource> removeUser(@RequestBody Customer user) {
-		userService.deleteUser(user.getFullName());
-		
+	private ResponseEntity<CustomerResource> removeUser(@RequestBody CustomerResource user) {
+		userService.deleteUser(user.getTeamleader().getFirstName() + " " + user.getTeamleader().getLastName());		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
@@ -60,14 +67,10 @@ public class AdminController {
 	
 	@GetMapping("/userpurposeinfo/{leaderfullname}")
 	private ResponseEntity<UserPurposeLinkedResource> getUserPurposeInfo(
-			@PathVariable(value = "leaderfullname") String leaderFullName) {
-		
-		List<UserPurpose> userPurposeList = userPurposeService.getUserPurposeInfo(leaderFullName);
-		
+			@PathVariable(value = "leaderfullname") String leaderFullName) {		
+		List<UserPurpose> userPurposeList = userPurposeService.getUserPurposeInfo(leaderFullName);		
 		UserPurposeLinkedResource result = UserPurposeLinkedResource.checkResult(userPurposeList);
-
-		result.add(linkTo(AdminController.class).slash("adduserpurpose").withRel("newpurpose"));
-		
+		result.add(linkTo(AdminController.class).slash("adduserpurpose").withRel("newpurpose"));		
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	

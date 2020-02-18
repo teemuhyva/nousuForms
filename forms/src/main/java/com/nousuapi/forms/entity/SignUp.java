@@ -8,16 +8,17 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@Entity
 @Table(name = "signup")
 public class SignUp  {
 
@@ -25,6 +26,9 @@ public class SignUp  {
 	 * Table is for parents to signup their childs to football practise for season
 	 */
 	
+	public SignUp() {
+	}
+			
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="userid")

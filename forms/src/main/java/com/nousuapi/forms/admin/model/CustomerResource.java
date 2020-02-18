@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.nousuapi.forms.admin.AdminController;
 import com.nousuapi.forms.entity.Customer;
+import com.nousuapi.forms.entity.TeamLeader;
 import com.nousuapi.forms.entity.UserPurpose;
 import com.nousuapi.forms.tournament.JklCupController;
 
@@ -22,8 +23,8 @@ import lombok.Setter;
 @Setter
 public class CustomerResource extends ResourceSupport {
 	
+	private TeamLeader teamleader;
 	private long userId;
-	private String leaderFullName;
 	private String email;
 	private String phone;
 	private String team;
@@ -38,7 +39,7 @@ public class CustomerResource extends ResourceSupport {
 	public static CustomerResource valueOf(Customer user) {
 		CustomerResource customerResource = new CustomerResource();
 		customerResource.setUserId(user.getId());
-		customerResource.setLeaderFullName(user.getFullName());
+		customerResource.setTeamleader(user.getTeamLeader());
 		customerResource.setEmail(user.getEmail());
 		customerResource.setPhone(user.getPhone());
 		customerResource.setTeam(user.getTeam());
@@ -53,7 +54,7 @@ public class CustomerResource extends ResourceSupport {
 		for(Customer u : users) {
 			result = new CustomerResource();
 			result.setUserId(u.getId());
-			result.setLeaderFullName(u.getFullName());
+			result.setTeamleader(u.getTeamLeader());
 			result.setTeam(u.getTeam());
 			result.setEmail(u.getEmail());
 			result.setPhone(u.getPhone());

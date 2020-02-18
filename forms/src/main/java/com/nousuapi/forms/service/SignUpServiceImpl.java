@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.nousuapi.forms.mapper.EntityMapper;
 import com.nousuapi.forms.repository.PractiseRepository;
 import com.nousuapi.forms.signup.model.SignupResource;
 
@@ -16,7 +17,7 @@ public class SignUpServiceImpl implements SignUpService {
 
 	@Override
 	public void signChild(SignupResource signUpForm) {
-		practiseRepository.save(SignupResource.valueOf(signUpForm));
+		practiseRepository.save(EntityMapper.valueOf(signUpForm));
 	}
 
 	@Override

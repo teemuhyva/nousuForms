@@ -28,11 +28,13 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "userpurpose")
 public class UserPurpose {
-
+	
+	public UserPurpose() {
+	}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="userid")

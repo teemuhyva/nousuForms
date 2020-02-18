@@ -52,7 +52,7 @@ public class JklCupController {
 			cust = CustomerResource.valueOf(user);
 			cust.add(linkTo(JklCupController.class)
 					.slash("userpurpose")
-					.slash(cust.getLeaderFullName())
+					.slash(cust.getTeamleader().getFirstName() + " " + cust.getTeamleader().getLastName())
 					.withRel("userpurposeinfo"));
 		}
 		

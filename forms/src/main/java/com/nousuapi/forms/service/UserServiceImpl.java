@@ -7,9 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nousuapi.forms.admin.model.CustomerResource;
+import com.nousuapi.forms.admin.model.TeamLeaderResource;
 import com.nousuapi.forms.entity.Customer;
 import com.nousuapi.forms.entity.UserPurpose;
 import com.nousuapi.forms.exceptions.CustomException;
+import com.nousuapi.forms.mapper.EntityMapper;
+import com.nousuapi.forms.repository.TeamLeaderRepository;
 import com.nousuapi.forms.repository.UserPurposeRepository;
 import com.nousuapi.forms.repository.UserRepository;
 
@@ -19,6 +22,8 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
+	@Autowired
+	private TeamLeaderRepository teamLeaderRepository;
 	
 	@Override
 	public Customer findUser(String fullName) {
@@ -56,5 +61,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<Customer> listUsers() {		
 		return userRepository.findAll();
+	}
+
+	@Override
+	public void createTeamLeader(TeamLeaderResource leader) {
+		teamLeaderRepository.save(EntityMapper.valueOf(leader));
 	}
 }

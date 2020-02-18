@@ -29,25 +29,6 @@ public class SignupResource  extends ResourceSupport {
 	private Double payment;
 	private String other;
 	
-	public static SignUp valueOf(SignupResource signUp) {
-		SignUp sign = new SignUp();
-		sign.setId(signUp.getRowId());
-		sign.setDateOfBirth(signUp.getDateOfBirth());
-		sign.setAddress(signUp.getAddress());
-		sign.setPostNum(signUp.getPostNum());
-		sign.setPostOffice(signUp.getPostOffice());
-		sign.setEmail(signUp.getEmail());
-		sign.setParentName(signUp.getParentName());
-		sign.setChildName(signUp.getChildName());
-		sign.setPhone(signUp.getPhone());
-		sign.setAgeClass(signUp.getAgeClass());
-		sign.setSignedUpFor(signUp.getSignedUpFor());
-		sign.setPayment(signUp.getPayment());
-		sign.setOther(signUp.getOther());
-		
-		return sign;
-	}
-	
 	public static List<SignupResource> fromEntityToResource(List<SignUp> allUsers, String name) {
 		List<SignupResource> allUsersList = new ArrayList<>();
 		
