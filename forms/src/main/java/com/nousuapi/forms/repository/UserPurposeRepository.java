@@ -9,22 +9,19 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.nousuapi.forms.admin.model.UserPurposeResource;
-import com.nousuapi.forms.entity.UserPurpose;
-import com.nousuapi.forms.enums.Location;
-import com.nousuapi.forms.enums.UserRole;
+import com.nousuapi.forms.entity.UserPurposeDao;
 
 @Repository
-public interface UserPurposeRepository extends JpaRepository<UserPurpose, String>{
+public interface UserPurposeRepository extends JpaRepository<UserPurposeDao, String>{
 	
 	@Transactional
 	@Modifying
 	@Query("SELECT u FROM UserPurpose u WHERE u.leaderFullName =:leaderFullName")	
-	List<UserPurpose> getPurposeByTeamLeader(String leaderFullName);
+	List<UserPurposeDao> getPurposeByTeamLeader(String leaderFullName);
 	
 	@Transactional
 	@Query("SELECT u FROM UserPurpose u")
-	List<UserPurpose> listAll();
+	List<UserPurposeDao> listAll();
 	
 	@Transactional
 	@Modifying

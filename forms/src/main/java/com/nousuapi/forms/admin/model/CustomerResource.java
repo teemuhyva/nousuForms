@@ -8,18 +8,14 @@ import java.util.List;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.ResourceSupport;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.nousuapi.forms.admin.AdminController;
-import com.nousuapi.forms.entity.Customer;
-import com.nousuapi.forms.entity.UserPurpose;
 import com.nousuapi.forms.tournament.JklCupController;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 public class CustomerResource extends ResourceSupport {
 	
 	private long userId;
@@ -31,14 +27,31 @@ public class CustomerResource extends ResourceSupport {
 	
 	private String successMessage;
 	
+	public CustomerResource() {}
+	
 	public static String value(String fullname) {
 		return fullname;
 	}
 	
+	public static CustomerResource checkCustomer(Customer user) {
+		CustomerResource cust = new CustomerResource();
+		if(user == null) {		
+			Link link = linkTo(JklCupController.class).slash("createuser").withRel("createuser");
+			cust.add(link);
+		} else {
+			cust = CustomerResource.valueOf(user);
+			cust.add(linkTo(JklCupController.class)
+					.slash("userpurpose")
+					.slash(cust.getLeaderFullName())
+					.withRel("userpurposeinfo"));
+		}
+		return cust;
+	}
+	
 	public static CustomerResource valueOf(Customer user) {
 		CustomerResource customerResource = new CustomerResource();
-		customerResource.setUserId(user.getId());
-		customerResource.setLeaderFullName(user.getFullName());
+		customerResource.setUserId(user.getUserId());
+		customerResource.setLeaderFullName(user.getLeaderFullName());
 		customerResource.setEmail(user.getEmail());
 		customerResource.setPhone(user.getPhone());
 		customerResource.setTeam(user.getTeam());
@@ -48,16 +61,15 @@ public class CustomerResource extends ResourceSupport {
 	
 	public static List<CustomerResource> toList(List<Customer> users) {
 		List<CustomerResource> resultList = new ArrayList<CustomerResource>();
-		CustomerResource result;
 		
 		for(Customer u : users) {
-			result = new CustomerResource();
-			result.setUserId(u.getId());
-			result.setLeaderFullName(u.getFullName());
+			CustomerResource result = new CustomerResource();
+			result.setUserId(u.getUserId());
+			result.setLeaderFullName(u.getLeaderFullName());
 			result.setTeam(u.getTeam());
 			result.setEmail(u.getEmail());
 			result.setPhone(u.getPhone());
-			result.add(linkTo(AdminController.class).slash("userpurposeinfo").slash(u.getFullName()).withRel("userpurposeinfo"));
+			result.add(linkTo(AdminController.class).slash("userpurposeinfo").slash(u.getLeaderFullName()).withRel("userpurposeinfo"));
 			result.add(linkTo(AdminController.class).slash("removeuser").withRel("delete"));
 			resultList.add(result);
 		}

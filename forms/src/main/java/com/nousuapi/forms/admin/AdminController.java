@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.apache.poi.EncryptedDocumentException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +18,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nousuapi.forms.admin.model.Customer;
 import com.nousuapi.forms.admin.model.CustomerResource;
+import com.nousuapi.forms.admin.model.UserPurpose;
 import com.nousuapi.forms.admin.model.UserPurposeLinkedResource;
 import com.nousuapi.forms.admin.model.UserPurposeResource;
-import com.nousuapi.forms.entity.Customer;
-import com.nousuapi.forms.entity.UserPurpose;
+import com.nousuapi.forms.entity.CustomerDao;
+import com.nousuapi.forms.entity.UserPurposeDao;
 import com.nousuapi.forms.excelutil.JklCupExcel;
 import com.nousuapi.forms.service.UserPurposeService;
 import com.nousuapi.forms.service.UserService;
@@ -36,25 +39,23 @@ public class AdminController {
 	
 	@Autowired
 	private UserPurposeService userPurposeService;
-
+	
 	@DeleteMapping("/removeuser")
-	private ResponseEntity<CustomerResource> removeUser(@RequestBody Customer user) {
-		userService.deleteUser(user.getFullName());
-		
+	private ResponseEntity<String> removeUser(@PathVariable(value = "personName") String personName) {
+		userService.deleteUser(personName);		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/deletepurpose")
-	private ResponseEntity<UserPurposeLinkedResource> removeUserPurpose(@RequestBody UserPurpose userPurpose) {
-		userPurposeService.deleteUserPurpose(userPurpose);
+	private ResponseEntity<UserPurposeLinkedResource> removeUserPurpose(@RequestBody UserPurposeResource userPurpose) {
+		userPurposeService.deleteUserPurpose(UserPurposeResource.mapPurpose(userPurpose));
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@GetMapping("/getusers")
 	private ResponseEntity<List<CustomerResource>> getUsers() {
-		List<CustomerResource> result = CustomerResource.toList(userService.listUsers());
-		
+		List<CustomerResource> result = CustomerResource.toList(userService.listUsers());		
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
@@ -62,18 +63,16 @@ public class AdminController {
 	private ResponseEntity<UserPurposeLinkedResource> getUserPurposeInfo(
 			@PathVariable(value = "leaderfullname") String leaderFullName) {
 		
-		List<UserPurpose> userPurposeList = userPurposeService.getUserPurposeInfo(leaderFullName);
-		
-		UserPurposeLinkedResource result = UserPurposeLinkedResource.checkResult(userPurposeList);
-
+		List<UserPurposeResource> userPurposeList = UserPurposeResource.mapUserPurpose(userPurposeService.getUserPurposeInfo(leaderFullName));		
+		UserPurposeLinkedResource result = UserPurposeLinkedResource.mapResource(userPurposeList, "");
 		result.add(linkTo(AdminController.class).slash("adduserpurpose").withRel("newpurpose"));
 		
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
 	@PostMapping("/adduserpurpose")
-	public ResponseEntity<UserPurposeResource> addUserPurpose(@RequestBody UserPurpose userPurpose) throws Exception  {
-		userPurposeService.addNewPurpose(userPurpose);
+	public ResponseEntity<UserPurposeResource> addUserPurpose(@RequestBody UserPurposeResource userPurpose) throws Exception  {
+		userPurposeService.addNewPurpose(UserPurposeResource.mapPurpose(userPurpose), new Customer());
 		UserPurposeResource result = UserPurposeResource.getMessage();
 		result.add(linkTo(AdminController.class).slash("adduserpurpose").withRel("newpurpose"));
 		result.add(linkTo(JklCupController.class).slash("updatePurpose").withRel("updatepurpose"));
@@ -82,7 +81,7 @@ public class AdminController {
 	
 	@GetMapping("/jyvaskylacupjobsForm")
 	public ResponseEntity<List<UserPurpose>> generateJob() throws EncryptedDocumentException, IOException {
-		List<UserPurpose> listUsersAndPurpose = userPurposeService.getAll();		
+		List<UserPurpose> listUsersAndPurpose = UserPurposeResource.mapUserPurposeList(userPurposeService.getAll());		
 		JklCupExcel createExcel = new JklCupExcel();
 		createExcel.JklExcelCreation(listUsersAndPurpose);
 		

@@ -2,8 +2,9 @@ package com.nousuapi.forms.service;
 
 import java.util.List;
 
-import com.nousuapi.forms.admin.model.UserPurposeResource;
-import com.nousuapi.forms.entity.UserPurpose;
+import com.nousuapi.forms.admin.model.Customer;
+import com.nousuapi.forms.admin.model.UserPurpose;
+import com.nousuapi.forms.entity.UserPurposeDao;
 
 public interface UserPurposeService {
 
@@ -11,11 +12,11 @@ public interface UserPurposeService {
 	
 	public void updatePurpose(UserPurpose userPurpose) throws Exception;
 	
-	public void addNewPurpose(UserPurpose userPurpose) throws Exception;
+	public void addNewPurpose(UserPurpose userPurpose, Customer customer) throws Exception;
 	
-	public List<UserPurpose> getAll();
+	public List<Customer> getAll();
 	
-	public List<UserPurpose> getUserPurposeInfo(String leaderFullName);
+	public Customer getUserPurposeInfo(String leaderFullName);
 
 	void deleteUserPurpose(UserPurpose userPurpose);
 }

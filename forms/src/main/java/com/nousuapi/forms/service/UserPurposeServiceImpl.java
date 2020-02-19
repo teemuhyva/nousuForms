@@ -6,9 +6,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.nousuapi.forms.entity.Customer;
-import com.nousuapi.forms.entity.UserPurpose;
+import com.nousuapi.forms.admin.model.Customer;
+import com.nousuapi.forms.admin.model.UserPurpose;
+import com.nousuapi.forms.admin.model.UserPurposeResource;
+import com.nousuapi.forms.entity.CustomerDao;
+import com.nousuapi.forms.entity.UserPurposeDao;
 import com.nousuapi.forms.exceptions.CustomException;
+import com.nousuapi.forms.mapper.ResourceMapper;
 import com.nousuapi.forms.repository.UserPurposeRepository;
 import com.nousuapi.forms.repository.UserRepository;
 
@@ -21,9 +25,11 @@ public class UserPurposeServiceImpl implements UserPurposeService {
 	@Autowired
 	private UserRepository userRepository;
 	
+	private ResourceMapper resourceMapper;
+	
 	@Override
 	public List<UserPurpose> getDetails(String leaderFullName) throws Exception {
-		List<UserPurpose> uPurpList = userPurposeRepository.getPurposeByTeamLeader(leaderFullName);
+		List<UserPurpose> uPurpList = resourceMapper.listUserPurposes(userPurposeRepository.getPurposeByTeamLeader(leaderFullName));
 		if(uPurpList.isEmpty()) {
 			 throw new Exception(CustomException.NO_USER_PURPOSE_ADDED);
 		}
@@ -32,9 +38,10 @@ public class UserPurposeServiceImpl implements UserPurposeService {
 	}
 
 	@Override
-	public void updatePurpose(UserPurpose userPurpose) throws Exception {
-		Customer cust = userRepository.findUserByFullName(userPurpose.getLeaderFullName());
-		List<UserPurpose> up = userPurposeRepository.getPurposeByTeamLeader(userPurpose.getLeaderFullName());
+	public void updatePurpose(UserPurpose userPurpose) throws Exception {		
+		CustomerDao cust = userRepository.findTeamLeaderByName(userPurpose.getTeamLeader());
+		List<UserPurpose> up = resourceMapper.listUserPurposes(userPurposeRepository.getPurposeByTeamLeader(userPurpose.getTeamLeader()));
+		UserPurposeDao updateUserPurpose = resourceMapper.userPurposeDaoMapper(userPurpose);
 		
 		if(cust == null) {
 			throw new Exception(CustomException.NO_USER_FOUND_FOR_PURPOSE);
@@ -45,54 +52,62 @@ public class UserPurposeServiceImpl implements UserPurposeService {
 		}
 		
 		for(UserPurpose u : up) {
-			if(Long.compare(u.getId(), userPurpose.getId()) == 1) {
-				u.setLocation(userPurpose.getLocation());
-				u.setPersonName(userPurpose.getPersonName());
-				u.setIlGroup(userPurpose.getIlGroup());
-				u.setWeekDay(userPurpose.getWeekDay());
-				u.setUserRole(userPurpose.getUserRole());
-				
-				userPurposeRepository.save(u);
+			if(Long.compare(u.getUserId(), userPurpose.getUserId()) == 1) {				
+				userPurposeRepository.save(updateUserPurpose);
 			}
 		}
-		
-		
 	}
 	
 	
 	//add new user purpose by superuser. Teamleaders cannot do purpose modification before this is done
 	@Override
-	public void addNewPurpose(UserPurpose userPurpose) throws Exception  {		
-		Customer checkExistUser = userRepository.findUserByFullName(userPurpose.getLeaderFullName());
-		if(checkExistUser == null) {
+	public void addNewPurpose(UserPurpose userPurpose, Customer customer) throws Exception  {		
+		UserPurposeDao newUserPurpose = resourceMapper.userPurposeDaoMapper(userPurpose);
+		if(userRepository.findTeamLeaderByName(userPurpose.getTeamLeader()) == null) {
 			throw new Exception(CustomException.USER_NOT_CREATED);
 		}
 		
-		userPurposeRepository.save(userPurpose);
+		userPurposeRepository.save(newUserPurpose);
 	}
 
 	@Override
-	public List<UserPurpose> getAll() {		
-		return userPurposeRepository.listAll();
-	}
-
-	@Override
-	public List<UserPurpose> getUserPurposeInfo(String leaderFullName) {
-		List<UserPurpose> uPurpList = userPurposeRepository.getPurposeByTeamLeader(leaderFullName);
+	public List<Customer> getAll() {
+		List<Customer> allTeamLeaders = resourceMapper.listCustomers(userRepository.listTeamLeaders());
+		List<UserPurpose> allUserPurposes = resourceMapper.listUserPurposes(userPurposeRepository.listAll());
 		
-		if(uPurpList.isEmpty()) {
-			List<UserPurpose> emptyListWithLeader = new ArrayList<>();
-			UserPurpose user = new UserPurpose();
-			user.setLeaderFullName(leaderFullName);
-			emptyListWithLeader.add(user);
-			return emptyListWithLeader;
+		List<UserPurpose> userPurposePerLeader = new ArrayList<>();
+		
+		for (Customer teamLeader : allTeamLeaders) {
+			for (UserPurpose userPurpose : allUserPurposes) {
+				if(userPurpose.getTeamLeader().equals(teamLeader.getLeaderFullName())) {
+					userPurposePerLeader.add(userPurpose);
+				}
+			}
+			teamLeader.setUserPurpose(userPurposePerLeader);
 		}
-		return uPurpList;
+		
+		
+		return allTeamLeaders;
+	}
+
+	@Override
+	public Customer getUserPurposeInfo(String leaderFullName) {
+		Customer customer = new Customer();
+		customer.setUserPurpose(resourceMapper.listUserPurposes(userPurposeRepository.getPurposeByTeamLeader(leaderFullName)));
+		
+		if(customer.getUserPurpose().isEmpty()) {
+			Customer user = new Customer();
+			List<UserPurpose> emptyListWithLeader = new ArrayList<>();			
+			user.setLeaderFullName(leaderFullName);
+			user.setUserPurpose(emptyListWithLeader);
+			return user;
+		}
+		return customer;
 	}
 	
 	@Override
 	public void deleteUserPurpose(UserPurpose userPurpose) {
-		userPurposeRepository.deleteGivenRow(userPurpose.getPersonName(), userPurpose.getId());
+		userPurposeRepository.deleteGivenRow(userPurpose.getPersonName(), userPurpose.getUserId());
 	}
 	
 

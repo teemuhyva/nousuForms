@@ -15,7 +15,9 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 
-import com.nousuapi.forms.entity.UserPurpose;
+import com.nousuapi.forms.admin.model.UserPurpose;
+import com.nousuapi.forms.admin.model.UserPurposeResource;
+import com.nousuapi.forms.entity.UserPurposeDao;
 import com.nousuapi.forms.enums.IlGroup;
 import com.nousuapi.forms.enums.OnsiteDay;
 import com.nousuapi.forms.enums.UserRole;

@@ -19,7 +19,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "signup")
-public class SignUp  {
+public class SignUpDao  {
 
 	/*
 	 * Table is for parents to signup their childs to football practise for season

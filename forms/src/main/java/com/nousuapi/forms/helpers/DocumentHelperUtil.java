@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.google.gson.Gson;
-import com.nousuapi.forms.model.ActionFormModel;
+import com.nousuapi.forms.model.ActionFormModelResource;
 
 public class DocumentHelperUtil {
 	
@@ -86,7 +86,7 @@ public class DocumentHelperUtil {
 		 template.save(f);		 
 	}
 	
-	public JSONArray generateJsonFromForm(List<ActionFormModel> actionForm) throws JsonParseException, JsonMappingException, IOException, JSONException {
+	public JSONArray generateJsonFromForm(List<ActionFormModelResource> actionForm) throws JsonParseException, JsonMappingException, IOException, JSONException {
 		String json = new Gson().toJson(actionForm);
 		JSONArray arr = new JSONArray(json);
 		

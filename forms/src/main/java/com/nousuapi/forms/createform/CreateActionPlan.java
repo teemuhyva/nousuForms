@@ -16,11 +16,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import com.nousuapi.forms.helpers.DocumentHelperUtil;
-import com.nousuapi.forms.model.ActionFormModel;
+import com.nousuapi.forms.model.ActionFormModelResource;
 
 public class CreateActionPlan {
 	
-	public void generateActionPlan(WordprocessingMLPackage template, List<ActionFormModel> actionPlan) throws  Docx4JException, MessagingException, FileNotFoundException, IOException, JSONException {
+	public void generateActionPlan(WordprocessingMLPackage template, List<ActionFormModelResource> actionPlan) throws  Docx4JException, MessagingException, FileNotFoundException, IOException, JSONException {
 		DocumentHelperUtil docs = new DocumentHelperUtil();		
 		JSONArray jsonModelObject =  docs.generateJsonFromForm(actionPlan);		
 		DocumentHelperUtil docHelper = new DocumentHelperUtil();

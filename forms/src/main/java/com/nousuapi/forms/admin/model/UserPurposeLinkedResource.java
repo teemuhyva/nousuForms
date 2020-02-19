@@ -4,35 +4,32 @@ import java.util.List;
 
 import org.springframework.hateoas.ResourceSupport;
 
-import com.nousuapi.forms.entity.UserPurpose;
+import lombok.Data;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
+@Data
 public class UserPurposeLinkedResource  extends ResourceSupport {
 
 	private String leaderFullName;
 	private List<UserPurposeResource> userPurposeResource;
 		
-	public static UserPurposeLinkedResource mapResource(List<UserPurpose> userPurposeList, String leaderName) {
+	public static UserPurposeLinkedResource mapResource(List<UserPurposeResource> userPurposeList, String leaderName) {
 		
 		UserPurposeLinkedResource result = new UserPurposeLinkedResource();
 		result.setLeaderFullName(leaderName);
-		result.setUserPurposeResource(UserPurposeResource.mapList(userPurposeList));
+		result.setUserPurposeResource(userPurposeList);
 		
 		return result;
 	}
 	
 	public static UserPurposeLinkedResource checkResult(List<UserPurpose> userPurposeList) {
 		UserPurposeLinkedResource upl = new UserPurposeLinkedResource();
+		
 		if(!userPurposeList.isEmpty()) {
 			String leaderName = "";
 			for(UserPurpose user : userPurposeList) {
-				leaderName = user.getLeaderFullName();
+				leaderName = user.getTeamLeader();
 			}
-			upl = mapResource(userPurposeList, leaderName);
+			upl = mapResource(UserPurposeResource.mapPurposeList(userPurposeList), leaderName);
 		}
 		
 		return upl;

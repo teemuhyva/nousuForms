@@ -5,14 +5,12 @@ import java.util.List;
 
 import org.springframework.hateoas.ResourceSupport;
 
-import com.nousuapi.forms.entity.SignUp;
-import com.nousuapi.forms.model.ActionFormModel;
+import com.nousuapi.forms.entity.SignUpDao;
+import com.nousuapi.forms.model.ActionFormModelResource;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class SignupResource  extends ResourceSupport {
 
 	private long rowId;
@@ -31,7 +29,7 @@ public class SignupResource  extends ResourceSupport {
 	
 	public static SignUp valueOf(SignupResource signUp) {
 		SignUp sign = new SignUp();
-		sign.setId(signUp.getRowId());
+		sign.setRowId(signUp.getRowId());
 		sign.setDateOfBirth(signUp.getDateOfBirth());
 		sign.setAddress(signUp.getAddress());
 		sign.setPostNum(signUp.getPostNum());
@@ -58,7 +56,7 @@ public class SignupResource  extends ResourceSupport {
 				}				
 			}
 		} else {
-			for(SignUp user : allUsers) {
+			for(SignUpDao user : allUsers) {
 				allUsersList.add(SignupResource.mapUserDetails(user));				
 			}
 		}
@@ -69,7 +67,7 @@ public class SignupResource  extends ResourceSupport {
 	
 	private static SignupResource mapUserDetails(SignUp user) {
 		SignupResource userRes = new SignupResource();
-		userRes.setRowId(user.getId());
+		userRes.setRowId(user.getRowId());
 		userRes.setDateOfBirth(user.getDateOfBirth());
 		userRes.setAddress(user.getAddress());
 		userRes.setPostNum(user.getPostNum());
@@ -90,10 +88,10 @@ public class SignupResource  extends ResourceSupport {
 	//here we going to map those values depending on map value.
 	//hopefully someday we get actual resource from frontend
 	
-	public static SignupResource mapFromActionModel(List<ActionFormModel> signUpForm) {
+	public static SignupResource mapFromActionModel(List<ActionFormModelResource> signUpForm) {
 		SignupResource signUpUser = new SignupResource();
 		
-		for(ActionFormModel frontValues : signUpForm) {
+		for(ActionFormModelResource frontValues : signUpForm) {
 			if(frontValues.getName().equals("rowId")) signUpUser.setRowId(Long.valueOf(frontValues.getValue()));
 			else if(frontValues.getName().equals("dateOfBirth")) signUpUser.setDateOfBirth(frontValues.getValue());
 			else if(frontValues.getName().equals("address")) signUpUser.setAddress(frontValues.getValue());

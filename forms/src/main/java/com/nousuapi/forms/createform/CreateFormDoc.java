@@ -18,7 +18,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.nousuapi.forms.helpers.DocumentHelperUtil;
-import com.nousuapi.forms.model.ActionFormModel;
+import com.nousuapi.forms.model.ActionFormModelResource;
 import com.nousuapi.forms.signup.model.SignupResource;
 
 
@@ -26,7 +26,7 @@ public class CreateFormDoc {
 		  
 	private static Logger logger = LoggerFactory.getLogger(CreateFormDoc.class);
 	
-	public void populateWord(WordprocessingMLPackage template, List<ActionFormModel> actionForm, SignupResource signUpFormModel) throws  Docx4JException, MessagingException, FileNotFoundException, IOException, JSONException {
+	public void populateWord(WordprocessingMLPackage template, List<ActionFormModelResource> actionForm, SignupResource signUpFormModel) throws  Docx4JException, MessagingException, FileNotFoundException, IOException, JSONException {
 		DocumentHelperUtil docs = new DocumentHelperUtil();
 		
 		JSONArray jsonModelObject =  docs.generateJsonFromForm(actionForm);

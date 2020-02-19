@@ -18,7 +18,7 @@ import com.nousuapi.forms.emailutil.EmailUtil;
 import com.nousuapi.forms.excelutil.BudgetExcel;
 import com.nousuapi.forms.exceptions.ErrorLogging;
 import com.nousuapi.forms.helpers.DocumentHelperUtil;
-import com.nousuapi.forms.model.ActionFormModel;
+import com.nousuapi.forms.model.ActionFormModelResource;
 import com.nousuapi.forms.model.BudgetModelResource;
 
 
@@ -27,9 +27,7 @@ import com.nousuapi.forms.model.BudgetModelResource;
 public class FormsController {
 	
 	@PostMapping("/actionForm")
-	public ResponseEntity<?> createForm(@RequestBody List<ActionFormModel> actionForm) throws Exception {
-		
-		ErrorLogging log = new ErrorLogging();
+	public ResponseEntity<?> createForm(@RequestBody List<ActionFormModelResource> actionForm) throws Exception {
 		CreateFormDoc form = new CreateFormDoc();
 		File file = new File("Toimintakertomus.docx");		
 		
@@ -37,24 +35,21 @@ public class FormsController {
 			DocumentHelperUtil docs = new DocumentHelperUtil();
 			form.populateWord(docs.getTemplate(file), actionForm, null);
 		} catch (FileNotFoundException e) {
-			log.setError1(e.getMessage());
+			e.getMessage();
 		} catch (IOException e) {
 		}
 		
 		try {
-			log = SendEmailWithAttachment(new File("Toimintakertomus2.docx"), actionForm);
+			SendEmailWithAttachment(new File("Toimintakertomus2.docx"), actionForm);
 		} catch (IOException e) {
-			e.printStackTrace();
-			log.setError3(e.getMessage());
+			e.getMessage();
 		}
 		
-		return new ResponseEntity<>(log,HttpStatus.CREATED);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
 	@PostMapping("/actionplan")
-	public ResponseEntity<?> createActionPlan(@RequestBody List<ActionFormModel> actionPlan) throws Exception {
-		
-		ErrorLogging log = new ErrorLogging();
+	public ResponseEntity<?> createActionPlan(@RequestBody List<ActionFormModelResource> actionPlan) throws Exception {
 		CreateActionPlan form = new CreateActionPlan();
 		File file = new File("Toimintasuunnitelma.docx");		
 		
@@ -62,18 +57,17 @@ public class FormsController {
 			DocumentHelperUtil docs = new DocumentHelperUtil();
 			form.generateActionPlan(docs.getTemplate(file), actionPlan);
 		} catch (FileNotFoundException e) {
-			log.setError1(e.getMessage());
+			e.getMessage();
 		} catch (IOException e) {
 		}
 		
 		try {
-			log = SendEmailWithAttachment(new File("Toimintasuunnitelma2.docx"), actionPlan);
+			SendEmailWithAttachment(new File("Toimintasuunnitelma2.docx"), actionPlan);
 		} catch (IOException e) {
-			e.printStackTrace();
-			log.setError3(e.getMessage());
+			e.getMessage();
 		}
 		
-		return new ResponseEntity<>(log,HttpStatus.CREATED);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
 	@PostMapping("/budgetassesment")
@@ -82,14 +76,14 @@ public class FormsController {
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 	
-	public ErrorLogging SendEmailWithAttachment(File file, List<ActionFormModel> actionForm) throws Exception {
+	public ErrorLogging SendEmailWithAttachment(File file, List<ActionFormModelResource> actionForm) throws Exception {
 		ErrorLogging log = new ErrorLogging();
 		EmailUtil sendAttachmentViaEmail = new EmailUtil();
 		 
 		try {			 
 			 log = sendAttachmentViaEmail.createEmail(file, actionForm);
 		} catch (FileNotFoundException e) {
-			log.setError4(e.getMessage());
+			e.getMessage();
 		}
 		 
 		return log;

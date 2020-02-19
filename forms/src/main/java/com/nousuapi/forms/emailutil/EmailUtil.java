@@ -19,7 +19,7 @@ import com.nousuapi.forms.createform.PaymentTemplate;
 import com.nousuapi.forms.exceptions.CustomException;
 import com.nousuapi.forms.exceptions.ErrorLogging;
 import com.nousuapi.forms.helpers.DocumentHelperUtil;
-import com.nousuapi.forms.model.ActionFormModel;
+import com.nousuapi.forms.model.ActionFormModelResource;
 import com.nousuapi.forms.signup.model.SignupResource;
 import com.sendgrid.Attachments;
 import com.sendgrid.Content;
@@ -37,7 +37,7 @@ public class EmailUtil {
 	
 	InputStream inputStream;
 	
-	public ErrorLogging createEmail(File file, List<ActionFormModel> actionForm) throws Exception {
+	public ErrorLogging createEmail(File file, List<ActionFormModelResource> actionForm) throws Exception {
 	  DocumentHelperUtil docs = new DocumentHelperUtil();
 	  ErrorLogging log = new ErrorLogging();
 	  

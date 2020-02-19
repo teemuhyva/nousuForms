@@ -6,10 +6,13 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.nousuapi.forms.admin.model.Customer;
 import com.nousuapi.forms.admin.model.CustomerResource;
-import com.nousuapi.forms.entity.Customer;
-import com.nousuapi.forms.entity.UserPurpose;
+import com.nousuapi.forms.admin.model.UserPurpose;
+import com.nousuapi.forms.entity.CustomerDao;
+import com.nousuapi.forms.entity.UserPurposeDao;
 import com.nousuapi.forms.exceptions.CustomException;
+import com.nousuapi.forms.mapper.ResourceMapper;
 import com.nousuapi.forms.repository.UserPurposeRepository;
 import com.nousuapi.forms.repository.UserRepository;
 
@@ -19,11 +22,11 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
+	private ResourceMapper resourceMapper;
 	
 	@Override
 	public Customer findUser(String fullName) {
-		//TODO:return message / coded exception if user is found
-		return userRepository.findUserByFullName(fullName);
+		return resourceMapper.customerDtoMapper(userRepository.findTeamLeaderByName(fullName));
 	}
 
 	@Override
@@ -33,19 +36,11 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void addNewUser(Customer user) throws Exception {
-		String fullName = CustomerResource.value(user.getFullName());
-		//TODO: add custom exception if user already found
-		if(userRepository.findUserByFullName(fullName) != null) {
+		if(userRepository.findTeamLeaderByName(user.getLeaderFullName()) != null) {
 			throw new Exception(CustomException.ALREADYFOUND);
-		}	
+		}
 		
-		userRepository.save(user);
-	}
-
-	@Override
-	public UserPurpose addUserPurpose(Customer user, UserPurpose userPurpose) {
-
-		return null;
+		userRepository.save(resourceMapper.customerDaoMapper(user));
 	}
 
 	@Override
@@ -54,7 +49,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<Customer> listUsers() {		
-		return userRepository.findAll();
+	public List<Customer> listUsers() {
+		return resourceMapper.listCustomers(userRepository.findAll());
 	}
 }

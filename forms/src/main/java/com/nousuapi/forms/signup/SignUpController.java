@@ -29,9 +29,9 @@ import com.nousuapi.forms.createform.CreateFormDoc;
 import com.nousuapi.forms.emailutil.EmailUtil;
 import com.nousuapi.forms.excelutil.SignUpExcel;
 import com.nousuapi.forms.helpers.DocumentHelperUtil;
-import com.nousuapi.forms.model.ActionFormModel;
+import com.nousuapi.forms.mapper.SignUpResourceMapper;
+import com.nousuapi.forms.model.ActionFormModelResource;
 import com.nousuapi.forms.service.SignUpService;
-import com.nousuapi.forms.signup.model.SignUpResourceMapper;
 import com.nousuapi.forms.signup.model.SignupResource;
 
 @RestController
@@ -44,7 +44,7 @@ public class SignUpController {
 	private SignUpService signUpService;
 	
 	@PostMapping("/")
-	public ResponseEntity<SignupResource> signUp(@RequestBody List<ActionFormModel> signUpForm) throws Docx4JException, MessagingException, JSONException {
+	public ResponseEntity<SignupResource> signUp(@RequestBody List<ActionFormModelResource> signUpForm) throws Docx4JException, MessagingException, JSONException {
 		
 		SignupResource signUpFormModel = SignupResource.mapFromActionModel(signUpForm);
 		signUpService.signChild(signUpFormModel);

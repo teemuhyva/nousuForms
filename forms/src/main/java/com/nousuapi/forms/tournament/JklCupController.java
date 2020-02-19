@@ -21,11 +21,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nousuapi.forms.admin.AdminController;
+import com.nousuapi.forms.admin.model.Customer;
 import com.nousuapi.forms.admin.model.CustomerResource;
+import com.nousuapi.forms.admin.model.UserPurpose;
 import com.nousuapi.forms.admin.model.UserPurposeLinkedResource;
 import com.nousuapi.forms.admin.model.UserPurposeResource;
-import com.nousuapi.forms.entity.Customer;
-import com.nousuapi.forms.entity.UserPurpose;
+import com.nousuapi.forms.entity.CustomerDao;
+import com.nousuapi.forms.entity.UserPurposeDao;
 import com.nousuapi.forms.service.UserPurposeService;
 import com.nousuapi.forms.service.UserService;
 
@@ -41,22 +43,9 @@ public class JklCupController {
 	private UserPurposeService userPurposeService;
 	
 	@GetMapping("/userinfo/{username}")
-	public ResponseEntity<CustomerResource> getUserInfo(@PathVariable(value = "username") String username) {	
-		
-		CustomerResource cust = new CustomerResource();
-		Customer user = userService.findUser(username);
-		if(user == null) {		
-			Link link = linkTo(JklCupController.class).slash("createuser").withRel("createuser");
-			cust.add(link);
-		} else {
-			cust = CustomerResource.valueOf(user);
-			cust.add(linkTo(JklCupController.class)
-					.slash("userpurpose")
-					.slash(cust.getLeaderFullName())
-					.withRel("userpurposeinfo"));
-		}
-		
-		return new ResponseEntity<>(cust, HttpStatus.OK);
+	public ResponseEntity<CustomerResource> getUserInfo(@PathVariable(value = "username") String username) {
+		CustomerResource customer = CustomerResource.valueOf(userService.findUser(username));
+		return new ResponseEntity<>(customer, HttpStatus.OK);
 	}
 
 	@PostMapping("/createuser")
@@ -76,7 +65,7 @@ public class JklCupController {
 				.slash("updatepurpose").withSelfRel(),
 				linkTo(JklCupController.class)
 				.slash("userinfo")
-				.slash(userPurpose.getLeaderFullName())
+				.slash(userPurpose.getTeamLeader())
 				.withRel("userinfo"));
 		
 		return new ResponseEntity<>(result, HttpStatus.CREATED);
