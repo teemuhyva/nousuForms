@@ -19,6 +19,7 @@ import com.nousuapi.forms.admin.model.Customer;
 import com.nousuapi.forms.admin.model.CustomerResource;
 import com.nousuapi.forms.admin.model.UserPurpose;
 import com.nousuapi.forms.admin.model.UserPurposeLinkedResource;
+import com.nousuapi.forms.mapper.ResourceMapper;
 import com.nousuapi.forms.service.UserPurposeService;
 import com.nousuapi.forms.service.UserService;
 
@@ -40,9 +41,9 @@ public class JklCupController {
 	}
 
 	@PostMapping("/createuser")
-	public ResponseEntity<CustomerResource> createNewUser(@RequestBody Customer user) throws Exception {
-		
-		userService.addNewUser(user);		
+	public ResponseEntity<CustomerResource> createUserWithPurpose(@RequestBody CustomerResource user) throws Exception {
+		ResourceMapper mapper = new ResourceMapper();
+		userPurposeService.addNewPurpose(mapper.customerResourceToCusomerMapper(user));		
 		CustomerResource result = CustomerResource.getMessage();
 					
 		return new ResponseEntity<>(result, HttpStatus.CREATED);

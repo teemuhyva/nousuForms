@@ -12,8 +12,9 @@ import com.nousuapi.forms.admin.AdminController;
 import com.nousuapi.forms.tournament.JklCupController;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
 public class CustomerResource extends ResourceSupport {
 	
 	private long userId;
@@ -22,9 +23,66 @@ public class CustomerResource extends ResourceSupport {
 	private String phone;
 	private String team;
 	private UserPurpose userPurpose;
-	
 	private String successMessage;
 	
+	
+	
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
+	public String getLeaderFullName() {
+		return leaderFullName;
+	}
+
+	public void setLeaderFullName(String leaderFullName) {
+		this.leaderFullName = leaderFullName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getTeam() {
+		return team;
+	}
+
+	public void setTeam(String team1) {
+		team = team1;
+	}
+
+	public UserPurpose getUserPurpose() {
+		return userPurpose;
+	}
+
+	public void setUserPurpose(UserPurpose userPurpose) {
+		this.userPurpose = userPurpose;
+	}
+
+	public String getSuccessMessage() {
+		return successMessage;
+	}
+
+	public void setSuccessMessage(String successMessage) {
+		this.successMessage = successMessage;
+	}
+
 	public CustomerResource() {}
 	
 	public static String value(String fullname) {

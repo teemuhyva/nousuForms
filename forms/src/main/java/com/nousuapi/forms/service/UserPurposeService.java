@@ -11,7 +11,7 @@ public interface UserPurposeService {
 	
 	public void updatePurpose(UserPurpose userPurpose) throws Exception;
 	
-	public void addNewPurpose(UserPurpose userPurpose, Customer customer) throws Exception;
+	public void addNewPurpose(Customer customer) throws Exception;
 	
 	public List<Customer> getAll();
 	

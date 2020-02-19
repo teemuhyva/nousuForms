@@ -3,6 +3,7 @@ package com.nousuapi.forms.admin;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.poi.EncryptedDocumentException;
@@ -23,6 +24,7 @@ import com.nousuapi.forms.admin.model.UserPurpose;
 import com.nousuapi.forms.admin.model.UserPurposeLinkedResource;
 import com.nousuapi.forms.admin.model.UserPurposeResource;
 import com.nousuapi.forms.excelutil.JklCupExcel;
+import com.nousuapi.forms.mapper.ResourceMapper;
 import com.nousuapi.forms.service.UserPurposeService;
 import com.nousuapi.forms.service.UserService;
 import com.nousuapi.forms.tournament.JklCupController;
@@ -36,6 +38,13 @@ public class AdminController {
 	
 	@Autowired
 	private UserPurposeService userPurposeService;
+	
+	@PostMapping("/createteamleader")
+	private ResponseEntity<String> create(@RequestBody CustomerResource teamLeader) throws Exception {
+		ResourceMapper mapper = new ResourceMapper();
+		userService.addNewTeamLeader(mapper.customerResourceToCusomerMapper(teamLeader));	
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 	
 	@DeleteMapping("/removeuser")
 	private ResponseEntity<String> removeUser(@PathVariable(value = "personName") String personName) {
@@ -69,7 +78,9 @@ public class AdminController {
 	
 	@PostMapping("/adduserpurpose")
 	public ResponseEntity<UserPurposeResource> addUserPurpose(@RequestBody UserPurposeResource userPurpose) throws Exception  {
-		userPurposeService.addNewPurpose(UserPurposeResource.mapPurpose(userPurpose), new Customer());
+		Customer customer = new Customer();
+		customer.setUserPurpose(Arrays.asList(UserPurposeResource.mapPurpose(userPurpose)));
+		userPurposeService.addNewPurpose(customer);
 		UserPurposeResource result = UserPurposeResource.getMessage();
 		result.add(linkTo(AdminController.class).slash("adduserpurpose").withRel("newpurpose"));
 		result.add(linkTo(JklCupController.class).slash("updatePurpose").withRel("updatepurpose"));

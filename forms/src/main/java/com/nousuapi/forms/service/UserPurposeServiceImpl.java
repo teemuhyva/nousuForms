@@ -61,9 +61,9 @@ public class UserPurposeServiceImpl implements UserPurposeService {
 	
 	//add new user purpose by superuser. Teamleaders cannot do purpose modification before this is done
 	@Override
-	public void addNewPurpose(UserPurpose userPurpose, Customer customer) throws Exception  {		
-		UserPurposeInfo newUserPurpose = resourceMapper.userPurposeDaoMapper(userPurpose);
-		if(userRepository.findTeamLeaderByName(userPurpose.getTeamLeader()) == null) {
+	public void addNewPurpose(Customer customer) throws Exception  {		
+		UserPurposeInfo newUserPurpose = resourceMapper.userPurposeDaoMapper(customer.getUserPurpose().get(0));
+		if(userRepository.findTeamLeaderByName(customer.getLeaderFullName()) == null) {
 			throw new Exception(CustomException.USER_NOT_CREATED);
 		}
 		

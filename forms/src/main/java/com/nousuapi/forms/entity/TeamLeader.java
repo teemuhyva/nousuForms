@@ -13,8 +13,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Getter
-@Setter
 @Table(name = "teamleader")
 public class TeamLeader {
 
@@ -36,4 +34,46 @@ public class TeamLeader {
 	private String email;
 	
 	private String phone;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+
+	public String getTeam() {
+		return team;
+	}
+
+	public void setTeam(String team1) {
+		team = team1;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	
+	
 }

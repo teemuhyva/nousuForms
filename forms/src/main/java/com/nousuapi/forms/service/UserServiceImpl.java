@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void addNewUser(Customer user) throws Exception {
+	public void addNewTeamLeader(Customer user) throws Exception {
 		if(userRepository.findTeamLeaderByName(user.getLeaderFullName()) != null) {
 			throw new Exception(CustomException.ALREADYFOUND);
 		}
@@ -47,4 +47,5 @@ public class UserServiceImpl implements UserService {
 	public List<Customer> listUsers() {
 		return resourceMapper.listCustomers(userRepository.findAll());
 	}
+
 }

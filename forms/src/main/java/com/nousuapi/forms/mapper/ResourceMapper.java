@@ -1,9 +1,11 @@
 package com.nousuapi.forms.mapper;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.nousuapi.forms.admin.model.Customer;
+import com.nousuapi.forms.admin.model.CustomerResource;
 import com.nousuapi.forms.admin.model.UserPurpose;
 import com.nousuapi.forms.entity.SignUpUser;
 import com.nousuapi.forms.entity.TeamLeader;
@@ -70,6 +72,10 @@ public class ResourceMapper {
 		return new SignUp();
 	}
 	
+	public Customer customerResourceToCusomerMapper(CustomerResource customer) {
+		return convertResourceToCustomer(customer);
+	}
+	
 	public Customer customerDtoMapper(TeamLeader customer) {
 		return convertToCustomerDto(customer);
 	}
@@ -111,12 +117,44 @@ public class ResourceMapper {
 	
 	private UserPurposeInfo convertToUserPurposeDaoObect(UserPurpose userPurpose) {
 		UserPurposeInfo userPurposeDao = new UserPurposeInfo();
+		
 		userPurposeDao.setEndTime(userPurpose.getEndTime());
+		userPurposeDao.setLocation(userPurpose.getFieldName());
 		userPurposeDao.setIlGroup(userPurpose.getIlGroup());
-		userPurposeDao.setLeaderFullName(userPurpose.getTeamLeader());
 		userPurposeDao.setLocation(userPurpose.getLocation());
+		userPurposeDao.setPersonName(userPurpose.getPersonName());
+		userPurposeDao.setPhoneNumber(userPurpose.getPhoneNumber());
+		userPurposeDao.setStartTime(userPurpose.getStartTime());
+		userPurposeDao.setLeaderFullName(userPurpose.getTeamLeader());
+		userPurposeDao.setUserRole(userPurpose.getUserRole());
+		userPurposeDao.setWeekDay(userPurpose.getWeekDay());
 		
 		return userPurposeDao;
+	}
+	
+	private Customer convertResourceToCustomer(CustomerResource customer) {
+		Customer cust = new Customer();
+		cust.setLeaderFullName(customer.getLeaderFullName());
+		cust.setEmail(customer.getEmail());
+		cust.setPhone(customer.getPhone());
+		cust.setTeam(customer.getTeam());
+		
+		/*
+		UserPurpose purpose = new UserPurpose();
+		purpose.setEndTime(customer.getUserPurpose().getEndTime());
+		purpose.setFieldName(customer.getUserPurpose().getFieldName());
+		purpose.setIlGroup(customer.getUserPurpose().getIlGroup());
+		purpose.setLocation(customer.getUserPurpose().getLocation());
+		purpose.setPersonName(customer.getUserPurpose().getPersonName());
+		purpose.setPhoneNumber(customer.getUserPurpose().getPhoneNumber());
+		purpose.setStartTime(customer.getUserPurpose().getStartTime());
+		purpose.setTeamLeader(customer.getUserPurpose().getTeamLeader());
+		purpose.setUserRole(customer.getUserPurpose().getUserRole());
+		purpose.setWeekDay(customer.getUserPurpose().getWeekDay());
+		
+		cust.setUserPurpose(Arrays.asList(purpose));
+		*/
+		return cust;
 	}
 	
 }
