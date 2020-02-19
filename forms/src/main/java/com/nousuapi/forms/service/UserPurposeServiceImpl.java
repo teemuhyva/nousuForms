@@ -25,7 +25,7 @@ public class UserPurposeServiceImpl implements UserPurposeService {
 	@Autowired
 	private UserRepository userRepository;
 	
-	private ResourceMapper resourceMapper;
+	ResourceMapper resourceMapper = new ResourceMapper();
 	
 	@Override
 	public List<UserPurpose> getDetails(String leaderFullName) throws Exception {

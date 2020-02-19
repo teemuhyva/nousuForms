@@ -16,10 +16,10 @@ public class SignUpServiceImpl implements SignUpService {
 	@Autowired
 	private PractiseRepository practiseRepository;
 	
-	private ResourceMapper resourceMapper;
-
+	ResourceMapper resourceMapper = new ResourceMapper();
+	
 	@Override
-	public void signChild(SignUp signUpForm) {
+	public void signChild(SignUp signUpForm) {		
 		practiseRepository.save(resourceMapper.signUpDtoMapper(signUpForm));
 	}
 

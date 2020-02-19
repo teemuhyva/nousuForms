@@ -14,4 +14,8 @@ import lombok.Setter;
 public class SignUpResourceMapper extends ResourceSupport {
 
 	private List<SignupResource> signUpList;
+	
+	public SignUpResourceMapper(List<SignupResource> signUpList) {
+		this.signUpList = signUpList;
+	}
 }

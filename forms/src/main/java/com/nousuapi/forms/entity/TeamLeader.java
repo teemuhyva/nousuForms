@@ -15,7 +15,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "TeamLeader")
+@Table(name = "teamleader")
 public class TeamLeader {
 
 	/*

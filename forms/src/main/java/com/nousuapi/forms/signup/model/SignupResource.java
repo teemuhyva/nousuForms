@@ -49,7 +49,7 @@ public class SignupResource  extends ResourceSupport {
 		List<SignupResource> allUsersList = new ArrayList<>();
 		
 		for(SignUp user : allUsers) {
-				allUsersList.add(SignupResource.mapUserDetails(user));
+				allUsersList.add(mapUserDetails(user));
 		}
 		
 		return allUsersList;

@@ -72,8 +72,7 @@ public class SignUpController {
 	@GetMapping("/")
 	public ResponseEntity<SignUpResourceMapper> getSignedUpUsers() {
 		List<SignupResource> listUsers = SignupResource.fromEntityToResource(signUpService.getSignedUsers()) ;
-		SignUpResourceMapper result = new SignUpResourceMapper();
-		result.setSignUpList(listUsers);
+		SignUpResourceMapper result = new SignUpResourceMapper(listUsers);
 		result.add(linkTo(SignUpController.class).slash("/generate/kerho").withRel("downloadClubSheet"));
 		result.add(linkTo(SignUpController.class).slash("/generate/joukkue").withRel("downloadTeamSheet"));
 		return new ResponseEntity<>(result, HttpStatus.OK);

@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userRepository;
 	
-	private ResourceMapper resourceMapper;
+	ResourceMapper resourceMapper = new ResourceMapper();
 	
 	@Override
 	public Customer findUser(String fullName) {
