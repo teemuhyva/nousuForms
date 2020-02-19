@@ -19,6 +19,10 @@ public interface PractiseRepository extends JpaRepository<SignUpDao, String> {
 	List<SignUpDao> getUsers();
 	
 	@Transactional
+	@Query("SELECT u FROM SignUp u WHERE u.signedUpFor =: signedUpFor")
+	List<SignUpDao> getUsers(String signedUpFor);
+	
+	@Transactional
 	@Query("SELECT u FROM SignUp u WHERE u.id =:rowId")
 	SignUpDao getSingleUserById(long rowId);
 

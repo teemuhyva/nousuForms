@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.nousuapi.forms.mapper.ResourceMapper;
 import com.nousuapi.forms.repository.PractiseRepository;
+import com.nousuapi.forms.signup.model.SignUp;
 import com.nousuapi.forms.signup.model.SignupResource;
 
 @Service
@@ -13,15 +15,22 @@ public class SignUpServiceImpl implements SignUpService {
 	
 	@Autowired
 	private PractiseRepository practiseRepository;
+	
+	private ResourceMapper resourceMapper;
 
 	@Override
-	public void signChild(SignupResource signUpForm) {
-		practiseRepository.save(SignupResource.valueOf(signUpForm));
+	public void signChild(SignUp signUpForm) {
+		practiseRepository.save(resourceMapper.signUpDtoMapper(signUpForm));
 	}
 
 	@Override
-	public List<SignupResource> getSignedUsers(String name) {
-		return SignupResource.fromEntityToResource(practiseRepository.getUsers(), name);
+	public List<SignUp> getSignedUsers() {
+		return resourceMapper.signUpDtoMapperList(practiseRepository.getUsers());
+	}
+	
+	@Override
+	public List<SignUp> getSignedUsers(String signedUpFor) {
+		return resourceMapper.signUpDtoMapperList(practiseRepository.getUsers(signedUpFor));
 	}
 
 	@Override

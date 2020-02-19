@@ -38,8 +38,8 @@ public class UserPurposeDao {
 	
 	//where user is located during tournament
 	@NotNull
-	@Enumerated(EnumType.STRING)
-	private Location location;
+	//@Enumerated(EnumType.STRING)
+	private String location;
 	
 	//name of user (not leader)	
 	@NotNull
@@ -70,7 +70,7 @@ public class UserPurposeDao {
 		
 	//what time person will be onsite
 	@Temporal(TemporalType.DATE)
-	private Date startTime;
+	private String startTime;
 	
-	private Date endTime;
+	private String endTime;
 }

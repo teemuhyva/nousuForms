@@ -16,7 +16,7 @@ public class RowSheetValidator {
 		updateCellValuesBySheet(rowIndex, columnIndex, up, sheet);
 	}
 	
-	public void updateSignedUserExcel(int rowIndex, int cellIndex, SignUp signed, HSSFSheet sheet) {
+	public void updateSignedUserExcel(int rowIndex, int cellIndex, SignupResource signed, HSSFSheet sheet) {
 		writeSignedUsersExcel(rowIndex, cellIndex, signed, sheet);
 	}
 	
@@ -33,7 +33,7 @@ public class RowSheetValidator {
 		row.getCell(cellIndex + 3).setCellValue(helper.startEndTime(up.getStartTime(), up.getEndTime()));	
 	}
 	
-	private void writeSignedUsersExcel(int rowIndex, int cellIndex, SignUp signed, HSSFSheet sheet) {
+	private void writeSignedUsersExcel(int rowIndex, int cellIndex, SignupResource signed, HSSFSheet sheet) {
 		Row row = sheet.getRow(rowIndex);
 		
 		row.getCell(cellIndex).setCellValue(signed.getChildName());
@@ -48,7 +48,7 @@ public class RowSheetValidator {
 		if(signed.getOther() != null) row.getCell(cellIndex + 9).setCellValue(signed.getOther());		
 	}
 	
-	private void writeBudgetExcel(BudgetModel budget, HSSFSheet sheet) {
+	private void writeBudgetExcel(BudgetModelResource budget, HSSFSheet sheet) {
 		
 		for(int i = 2; i < 39; i++) {
 			if(sheet.getRow(i) != null) {

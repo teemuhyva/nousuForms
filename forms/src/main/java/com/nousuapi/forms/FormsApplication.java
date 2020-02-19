@@ -11,7 +11,6 @@ import com.nousuapi.forms.configuration.ConfigurationContext;
 public class FormsApplication {
 	
 	public static void main(String[] args) {
-		ApplicationContext ctx = new AnnotationConfigApplicationContext(ConfigurationContext.class);
 		SpringApplication.run(FormsApplication.class, args);
 	}
 }

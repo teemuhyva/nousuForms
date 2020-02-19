@@ -103,7 +103,7 @@ public class UserPurpose {
 	public String getTeamLeader() {
 		return teamLeader;
 	}
-	public void setITeamLeader(String teamLeader) {
+	public void setTeamLeader(String teamLeader) {
 		this.teamLeader = teamLeader;
 	}
 

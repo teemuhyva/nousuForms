@@ -46,21 +46,12 @@ public class SignupResource  extends ResourceSupport {
 		return sign;
 	}
 	
-	public static List<SignupResource> fromEntityToResource(List<SignUp> allUsers, String name) {
+	public static List<SignupResource> fromEntityToResource(List<SignUp> allUsers) {
 		List<SignupResource> allUsersList = new ArrayList<>();
 		
-		if(name != null) {
-			for(SignUp user : allUsers) {
-				if(user.getSignedUpFor().equals(name)) {
-					allUsersList.add(SignupResource.mapUserDetails(user));	
-				}				
-			}
-		} else {
-			for(SignUpDao user : allUsers) {
-				allUsersList.add(SignupResource.mapUserDetails(user));				
-			}
+		for(SignUp user : allUsers) {
+				allUsersList.add(SignupResource.mapUserDetails(user));
 		}
-		
 		
 		return allUsersList;
 	}

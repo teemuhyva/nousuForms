@@ -25,7 +25,8 @@ public class UserPurposeResource  extends ResourceSupport {
 	private String location;
 	private String fieldName;
 	private OnsiteDay weekDay;
-	private Date time;
+	private String startTime;
+	private String endTime;
 	private String personName;
 	private UserRole userRole;
 	private String successMessage;
@@ -39,11 +40,12 @@ public class UserPurposeResource  extends ResourceSupport {
 		user.setIlGroup(userPurpose.getIlGroup());
 		user.setLocation(userPurpose.getLocation());
 		user.setPersonName(userPurpose.getPersonName());
-		user.setTime(userPurpose.getTime());
+		user.setStartTime(userPurpose.getStartTime());
+		user.setEndTime(userPurpose.getEndTime());
 		user.setUserId(userPurpose.getUserId());
 		user.setUserRole(userPurpose.getUserRole());
 		user.setWeekDay(userPurpose.getWeekDay());
-		user.setITeamLeader(userPurpose.getTeamLeader());
+		user.setTeamLeader(userPurpose.getTeamLeader());
 		return user;
 	}
 	 
@@ -53,11 +55,12 @@ public class UserPurposeResource  extends ResourceSupport {
 		for (Customer userPurpose : customerList) {
 			for (UserPurpose userPurpose2 : userPurpose.getUserPurpose()) {
 				UserPurpose user = new UserPurpose();
-				user.setFieldName(userPurpose2.get);
+				user.setFieldName(userPurpose2.getFieldName());
 				user.setIlGroup(userPurpose2.getIlGroup());
 				user.setLocation(userPurpose2.getLocation());
 				user.setPersonName(userPurpose2.getPersonName());
-				user.setTime(userPurpose2.getTime());
+				user.setStartTime(userPurpose2.getStartTime());
+				user.setEndTime(userPurpose2.getEndTime());
 				user.setUserId(userPurpose2.getUserId());
 				user.setUserRole(userPurpose2.getUserRole());
 				user.setWeekDay(userPurpose2.getWeekDay());
@@ -79,7 +82,8 @@ public class UserPurposeResource  extends ResourceSupport {
 			user.setIlGroup(userPurpose.getIlGroup());
 			user.setLocation(userPurpose.getLocation());
 			user.setPersonName(userPurpose.getPersonName());
-			user.setTime(userPurpose.getTime());
+			user.setStartTime(userPurpose.getStartTime());
+			user.setEndTime(userPurpose.getEndTime());
 			user.setUserId(userPurpose.getUserId());
 			user.setUserRole(userPurpose.getUserRole());
 			user.setWeekDay(userPurpose.getWeekDay());
@@ -102,7 +106,8 @@ public class UserPurposeResource  extends ResourceSupport {
 				result.setIlGroup(up.getIlGroup());
 				result.setPersonName(up.getPersonName());
 				result.setUserRole(up.getUserRole());
-				result.setTime(up.getTime());
+				result.setStartTime(up.getStartTime());
+				result.setEndTime(up.getEndTime());
 				result.add(
 					linkTo(JklCupController.class).slash("updatepurpose").withRel("updatepurpose"),
 					linkTo(AdminController.class).slash("deletepurpose").withRel("removepurpose")

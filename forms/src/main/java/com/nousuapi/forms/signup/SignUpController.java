@@ -29,6 +29,7 @@ import com.nousuapi.forms.createform.CreateFormDoc;
 import com.nousuapi.forms.emailutil.EmailUtil;
 import com.nousuapi.forms.excelutil.SignUpExcel;
 import com.nousuapi.forms.helpers.DocumentHelperUtil;
+import com.nousuapi.forms.mapper.ResourceMapper;
 import com.nousuapi.forms.mapper.SignUpResourceMapper;
 import com.nousuapi.forms.model.ActionFormModelResource;
 import com.nousuapi.forms.service.SignUpService;
@@ -46,15 +47,15 @@ public class SignUpController {
 	@PostMapping("/")
 	public ResponseEntity<SignupResource> signUp(@RequestBody List<ActionFormModelResource> signUpForm) throws Docx4JException, MessagingException, JSONException {
 		
-		SignupResource signUpFormModel = SignupResource.mapFromActionModel(signUpForm);
-		signUpService.signChild(signUpFormModel);
+		SignupResource signUp = SignupResource.mapFromActionModel(signUpForm);
+		signUpService.signChild(SignupResource.valueOf(signUp));
 		
 		File file = new File("Laskupohjamalli.docx");
 		
 		try {
 			DocumentHelperUtil docs = new DocumentHelperUtil();
 			CreateFormDoc form = new CreateFormDoc();
-			form.populateWord(docs.getTemplate(file), signUpForm, signUpFormModel);
+			form.populateWord(docs.getTemplate(file), signUpForm, signUp);
 		} catch (FileNotFoundException e) {
 			logger.error("File not found :: " + e.getStackTrace());
 		} catch (IOException e) {
@@ -62,7 +63,7 @@ public class SignUpController {
 		}
 		
 		try {
-			sendPaymentEmail(new File("Ilmoittautumislasku.docx"), signUpFormModel);
+			sendPaymentEmail(new File("Ilmoittautumislasku.docx"), signUp);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -71,7 +72,7 @@ public class SignUpController {
 	
 	@GetMapping("/")
 	public ResponseEntity<SignUpResourceMapper> getSignedUpUsers() {
-		List<SignupResource> listUsers = signUpService.getSignedUsers(null);
+		List<SignupResource> listUsers = SignupResource.fromEntityToResource(signUpService.getSignedUsers()) ;
 		SignUpResourceMapper result = new SignUpResourceMapper();
 		result.setSignUpList(listUsers);
 		result.add(linkTo(SignUpController.class).slash("/generate/kerho").withRel("downloadClubSheet"));
@@ -81,7 +82,7 @@ public class SignUpController {
 	
 	@GetMapping("/generate/{name}")
 	public ResponseEntity<String> generateExcel(@Context HttpServletResponse response, @PathVariable(name = "name") String name) throws IOException {
-		List<SignupResource> listUsers = signUpService.getSignedUsers(name);
+		List<SignupResource> listUsers = SignupResource.fromEntityToResource(signUpService.getSignedUsers(name));
 		SignUpExcel generate = new SignUpExcel();
 		generate.generateForSignedUsers(response, listUsers);
 		return new ResponseEntity<String>("OK", HttpStatus.CREATED);
