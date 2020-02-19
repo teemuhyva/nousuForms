@@ -9,24 +9,22 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.nousuapi.forms.entity.CustomerDao;
-import com.nousuapi.forms.entity.SignUpDao;
-import com.nousuapi.forms.entity.UserPurposeDao;
+import com.nousuapi.forms.entity.TeamLeader;
 
 @Repository
-public interface UserRepository extends JpaRepository<CustomerDao, String> {
+public interface UserRepository extends JpaRepository<TeamLeader, String> {
 
 	@Transactional
-	@Query("SELECT u FROM Customer  u WHERE u.fullName =:fullName")
-	CustomerDao findTeamLeaderByName(String fullName);
+	@Query("SELECT u FROM TeamLeader u WHERE u.fullName =:fullName")
+	TeamLeader findTeamLeaderByName(String fullName);
 	
 	
 	@Transactional
 	@Modifying
-	@Query("DELETE FROM Customer  u WHERE u.fullName =:fullName")
+	@Query("DELETE FROM TeamLeader u WHERE u.fullName =:fullName")
 	void deleteByFullName(String fullName);
 	
 	@Transactional
-	@Query("SELECT u FROM Customer u")
-	List<CustomerDao> listTeamLeaders();
+	@Query("SELECT u FROM TeamLeader u")
+	List<TeamLeader> listTeamLeaders();
 }

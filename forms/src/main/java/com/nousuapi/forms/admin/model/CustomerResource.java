@@ -12,8 +12,6 @@ import com.nousuapi.forms.admin.AdminController;
 import com.nousuapi.forms.tournament.JklCupController;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Data
 public class CustomerResource extends ResourceSupport {

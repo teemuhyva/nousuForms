@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import com.nousuapi.forms.admin.model.Customer;
 import com.nousuapi.forms.admin.model.UserPurpose;
 import com.nousuapi.forms.admin.model.UserPurposeResource;
-import com.nousuapi.forms.entity.CustomerDao;
-import com.nousuapi.forms.entity.UserPurposeDao;
+import com.nousuapi.forms.entity.TeamLeader;
+import com.nousuapi.forms.entity.UserPurposeInfo;
 import com.nousuapi.forms.exceptions.CustomException;
 import com.nousuapi.forms.mapper.ResourceMapper;
 import com.nousuapi.forms.repository.UserPurposeRepository;
@@ -39,9 +39,9 @@ public class UserPurposeServiceImpl implements UserPurposeService {
 
 	@Override
 	public void updatePurpose(UserPurpose userPurpose) throws Exception {		
-		CustomerDao cust = userRepository.findTeamLeaderByName(userPurpose.getTeamLeader());
+		TeamLeader cust = userRepository.findTeamLeaderByName(userPurpose.getTeamLeader());
 		List<UserPurpose> up = resourceMapper.listUserPurposes(userPurposeRepository.getPurposeByTeamLeader(userPurpose.getTeamLeader()));
-		UserPurposeDao updateUserPurpose = resourceMapper.userPurposeDaoMapper(userPurpose);
+		UserPurposeInfo updateUserPurpose = resourceMapper.userPurposeDaoMapper(userPurpose);
 		
 		if(cust == null) {
 			throw new Exception(CustomException.NO_USER_FOUND_FOR_PURPOSE);
@@ -62,7 +62,7 @@ public class UserPurposeServiceImpl implements UserPurposeService {
 	//add new user purpose by superuser. Teamleaders cannot do purpose modification before this is done
 	@Override
 	public void addNewPurpose(UserPurpose userPurpose, Customer customer) throws Exception  {		
-		UserPurposeDao newUserPurpose = resourceMapper.userPurposeDaoMapper(userPurpose);
+		UserPurposeInfo newUserPurpose = resourceMapper.userPurposeDaoMapper(userPurpose);
 		if(userRepository.findTeamLeaderByName(userPurpose.getTeamLeader()) == null) {
 			throw new Exception(CustomException.USER_NOT_CREATED);
 		}

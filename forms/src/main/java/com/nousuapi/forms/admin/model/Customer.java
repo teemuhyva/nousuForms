@@ -13,14 +13,14 @@ public class Customer {
 	
 	public Customer() {}
 	
-	public Customer(long userId, String leaderFullName, String email, String phone, String team1,
+	public Customer(long userId, String leaderFullName, String email, String phone, String team,
 			List<UserPurpose> userPurpose) {
 		super();
 		this.userId = userId;
 		this.leaderFullName = leaderFullName;
 		this.email = email;
 		this.phone = phone;
-		team = team1;
+		this.team = team;
 		this.userPurpose = userPurpose;
 	}
 	

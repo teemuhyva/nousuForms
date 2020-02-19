@@ -9,32 +9,45 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Data
 @Entity
-@Table(name = "customer")
-public class CustomerDao {
+@Getter
+@Setter
+@Table(name = "SignUpUser")
+public class SignUpUser  {
 
 	/*
-	 * Teamleader info 
-	 * 
+	 * Table is for parents to signup their childs to football practise for season
 	 */
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="userid")
 	private long id;
-	
 	@NotNull
-	private String fullName;
-	
-	private String team;
-	
+	private String dateOfBirth;
+	@NotNull
+	private String address;
+	@NotNull
 	private String email;
-	
+	@NotNull
+	private int postNum;
+	@NotNull
+	private String postOffice;
+	@NotNull
+	private String parentName;
+	@NotNull
+	private String childName;
+	@NotNull
 	private String phone;
+	@NotNull
+	private String ageClass;
+	@NotNull
+	private String signedUpFor;
+	
+	private Double payment;
+	private String other;
 }

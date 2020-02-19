@@ -2,20 +2,16 @@ package com.nousuapi.forms.emailutil;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Base64;
 import java.util.List;
-
-import javax.mail.MessagingException;
 
 import org.json.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.nousuapi.forms.createform.CreateFormDoc;
-import com.nousuapi.forms.createform.PaymentTemplate;
 import com.nousuapi.forms.exceptions.CustomException;
 import com.nousuapi.forms.exceptions.ErrorLogging;
 import com.nousuapi.forms.helpers.DocumentHelperUtil;
@@ -81,7 +77,7 @@ public class EmailUtil {
     	  req.setBody(mail.build());
     	  Response response = sendGrid.api(req);    	  
       } catch(IOException e) {
-    	  log.setError5(e.getMessage());
+    	  e.getMessage();
     	  throw new Exception(CustomException.SENDING_EMAIL_FAILED);
       }
       return log;

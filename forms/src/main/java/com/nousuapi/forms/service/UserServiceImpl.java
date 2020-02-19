@@ -1,19 +1,14 @@
 package com.nousuapi.forms.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nousuapi.forms.admin.model.Customer;
-import com.nousuapi.forms.admin.model.CustomerResource;
 import com.nousuapi.forms.admin.model.UserPurpose;
-import com.nousuapi.forms.entity.CustomerDao;
-import com.nousuapi.forms.entity.UserPurposeDao;
 import com.nousuapi.forms.exceptions.CustomException;
 import com.nousuapi.forms.mapper.ResourceMapper;
-import com.nousuapi.forms.repository.UserPurposeRepository;
 import com.nousuapi.forms.repository.UserRepository;
 
 @Service

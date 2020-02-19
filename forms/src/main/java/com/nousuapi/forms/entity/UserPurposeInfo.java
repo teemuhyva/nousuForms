@@ -28,8 +28,8 @@ import lombok.Setter;
 
 @Entity
 @Data
-@Table(name = "userpurpose")
-public class UserPurposeDao {
+@Table(name = "UserPurposeInfo")
+public class UserPurposeInfo {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,7 +69,6 @@ public class UserPurposeDao {
 	private OnsiteDay weekDay;
 		
 	//what time person will be onsite
-	@Temporal(TemporalType.DATE)
 	private String startTime;
 	
 	private String endTime;

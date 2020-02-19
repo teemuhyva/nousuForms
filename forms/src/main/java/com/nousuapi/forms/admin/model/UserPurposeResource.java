@@ -3,7 +3,6 @@ package com.nousuapi.forms.admin.model;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.hateoas.ResourceSupport;
@@ -15,8 +14,6 @@ import com.nousuapi.forms.enums.UserRole;
 import com.nousuapi.forms.tournament.JklCupController;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Data
 public class UserPurposeResource  extends ResourceSupport {

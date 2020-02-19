@@ -9,22 +9,22 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.nousuapi.forms.entity.UserPurposeDao;
+import com.nousuapi.forms.entity.UserPurposeInfo;
 
 @Repository
-public interface UserPurposeRepository extends JpaRepository<UserPurposeDao, String>{
+public interface UserPurposeRepository extends JpaRepository<UserPurposeInfo, String>{
 	
 	@Transactional
 	@Modifying
-	@Query("SELECT u FROM UserPurpose u WHERE u.leaderFullName =:leaderFullName")	
-	List<UserPurposeDao> getPurposeByTeamLeader(String leaderFullName);
+	@Query("SELECT u FROM UserPurposeInfo u WHERE u.leaderFullName =:leaderFullName")	
+	List<UserPurposeInfo> getPurposeByTeamLeader(String leaderFullName);
 	
 	@Transactional
-	@Query("SELECT u FROM UserPurpose u")
-	List<UserPurposeDao> listAll();
+	@Query("SELECT u FROM UserPurposeInfo u")
+	List<UserPurposeInfo> listAll();
 	
 	@Transactional
 	@Modifying
-	@Query("DELETE FROM UserPurpose  u WHERE u.personName =:personName and u.id =:id")
+	@Query("DELETE FROM UserPurposeInfo  u WHERE u.personName =:personName and u.id =:id")
 	void deleteGivenRow(String personName, long id);
 }

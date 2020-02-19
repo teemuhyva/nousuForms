@@ -1,7 +1,5 @@
 package com.nousuapi.forms.admin.model;
 
-import java.util.Date;
-
 import com.nousuapi.forms.enums.IlGroup;
 import com.nousuapi.forms.enums.OnsiteDay;
 import com.nousuapi.forms.enums.UserRole;

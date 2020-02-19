@@ -3,14 +3,11 @@ package com.nousuapi.forms.mapper;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.nousuapi.forms.admin.model.Customer;
 import com.nousuapi.forms.admin.model.UserPurpose;
-import com.nousuapi.forms.entity.CustomerDao;
-import com.nousuapi.forms.entity.SignUpDao;
-import com.nousuapi.forms.entity.UserPurposeDao;
+import com.nousuapi.forms.entity.SignUpUser;
+import com.nousuapi.forms.entity.TeamLeader;
+import com.nousuapi.forms.entity.UserPurposeInfo;
 import com.nousuapi.forms.signup.model.SignUp;
 
 public class ResourceMapper {
@@ -18,10 +15,10 @@ public class ResourceMapper {
 	//@Autowired
     //private ModelMapper modelMapper;
 	
-	public List<Customer> listCustomers(List<CustomerDao> customerDaoList) {
+	public List<Customer> listCustomers(List<TeamLeader> customerDaoList) {
 		List<Customer> customers = new ArrayList<Customer>();
 		
-		for (CustomerDao customer : customerDaoList) {
+		for (TeamLeader customer : customerDaoList) {
 			Customer cust = convertToCustomerDto(customer);
 			customers.add(cust);
 		}
@@ -29,10 +26,10 @@ public class ResourceMapper {
 		return customers;
 	}
 	
-	public List<UserPurpose> listUserPurposes(List<UserPurposeDao> userDaoList) {
+	public List<UserPurpose> listUserPurposes(List<UserPurposeInfo> userDaoList) {
 		List<UserPurpose> userPurpose = new ArrayList<UserPurpose>();
 		
-		for (UserPurposeDao user : userDaoList) {
+		for (UserPurposeInfo user : userDaoList) {
 			UserPurpose purpose = convertToUserPurposeDto(user);
 			userPurpose.add(purpose);
 		}
@@ -40,69 +37,69 @@ public class ResourceMapper {
 		return userPurpose;
 	}
 	
-	public List<SignUp> signUpDtoMapperList(List<SignUpDao> signUpList) {
+	public List<SignUp> signUpDtoMapperList(List<SignUpUser> signUpList) {
 		List<SignUp> signUpChildList = new ArrayList<SignUp>();
-		for (SignUpDao signUp : signUpList) {
+		for (SignUpUser signUp : signUpList) {
 			signUpChildList.add(signUpMapper(signUp));
 		}
 		return signUpChildList;
 	}
 	
 	
-	public SignUpDao signUpDtoMapper(SignUp signUp) {
+	public SignUpUser signUpDtoMapper(SignUp signUp) {
 		return convertToSignUpDao(signUp);
 	}
 	
-	public SignUpDao convertToSignUpDao(SignUp signUp) {
+	public SignUpUser convertToSignUpDao(SignUp signUp) {
 		//SignUpDao signUpChild = modelMapper.map(signUp, SignUpDao.class);
 		//return signUpChild;
-		return new SignUpDao();
+		return new SignUpUser();
 	}
 	
-	public UserPurposeDao userPurposeDaoMapper(UserPurpose purpose) {
+	public UserPurposeInfo userPurposeDaoMapper(UserPurpose purpose) {
 		return convertToUserPurposeDto(purpose);
 	}
 	
-	public CustomerDao customerDaoMapper(Customer customer) {
+	public TeamLeader customerDaoMapper(Customer customer) {
 		return convertToCustomerDao(customer);
 	}
 	
-	public SignUp signUpMapper(SignUpDao signUp) {
+	public SignUp signUpMapper(SignUpUser signUp) {
 		//SignUp signUpChild = modelMapper.map(signUp, SignUp.class);
 		//return signUpChild;
 		return new SignUp();
 	}
 	
-	public Customer customerDtoMapper(CustomerDao customer) {
+	public Customer customerDtoMapper(TeamLeader customer) {
 		return convertToCustomerDto(customer);
 	}
 
-	private Customer convertToCustomerDto(CustomerDao customer) {
+	private Customer convertToCustomerDto(TeamLeader customer) {
 		//Customer customerDto = modelMapper.map(customer, Customer.class);
 		//return customerDto;
 		return new Customer();
 	}
 	
-	private UserPurpose convertToUserPurposeDto(UserPurposeDao customer) {
+	private UserPurpose convertToUserPurposeDto(UserPurposeInfo customer) {
 		//UserPurpose userPurposeDto = modelMapper.map(customer, UserPurpose.class);
 		//return userPurposeDto;
 		return new UserPurpose();
 	}
 	
-	private UserPurposeDao convertToUserPurposeDto(UserPurpose userPurpose) {
+	private UserPurposeInfo convertToUserPurposeDto(UserPurpose userPurpose) {
 		//UserPurposeDao userPurposeDao = modelMapper.map(userPurpose, UserPurposeDao.class);
-		UserPurposeDao userPurposeDao = convertToUserPurposeDaoObect(userPurpose);
+		UserPurposeInfo userPurposeDao = convertToUserPurposeDaoObect(userPurpose);
 		return userPurposeDao;
 	}
 	
-	private CustomerDao convertToCustomerDao(Customer customer) {
+	private TeamLeader convertToCustomerDao(Customer customer) {
 		//CustomerDao customerDao = modelMapper.map(customer, CustomerDao.class);
-		CustomerDao customerDao = convertToCustomerDaoObect(customer);
+		TeamLeader customerDao = convertToCustomerDaoObect(customer);
 		return customerDao;
 	}
 	
-	private CustomerDao convertToCustomerDaoObect(Customer customer) {
-		CustomerDao customerDao = new CustomerDao();
+	private TeamLeader convertToCustomerDaoObect(Customer customer) {
+		TeamLeader customerDao = new TeamLeader();
 		customerDao.setFullName(customer.getLeaderFullName());
 		customerDao.setId(customer.getUserId());
 		customerDao.setEmail(customer.getEmail());
@@ -112,8 +109,8 @@ public class ResourceMapper {
 		return customerDao;
 	}
 	
-	private UserPurposeDao convertToUserPurposeDaoObect(UserPurpose userPurpose) {
-		UserPurposeDao userPurposeDao = new UserPurposeDao();
+	private UserPurposeInfo convertToUserPurposeDaoObect(UserPurpose userPurpose) {
+		UserPurposeInfo userPurposeDao = new UserPurposeInfo();
 		userPurposeDao.setEndTime(userPurpose.getEndTime());
 		userPurposeDao.setIlGroup(userPurpose.getIlGroup());
 		userPurposeDao.setLeaderFullName(userPurpose.getTeamLeader());
