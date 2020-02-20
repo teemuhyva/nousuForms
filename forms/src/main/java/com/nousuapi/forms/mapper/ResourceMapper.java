@@ -7,6 +7,7 @@ import java.util.List;
 import com.nousuapi.forms.admin.model.Customer;
 import com.nousuapi.forms.admin.model.CustomerResource;
 import com.nousuapi.forms.admin.model.UserPurpose;
+import com.nousuapi.forms.admin.model.UserPurposeResource;
 import com.nousuapi.forms.entity.SignUpUser;
 import com.nousuapi.forms.entity.TeamLeader;
 import com.nousuapi.forms.entity.UserPurposeInfo;
@@ -66,6 +67,10 @@ public class ResourceMapper {
 		return convertToCustomerDao(customer);
 	}
 	
+	public UserPurpose userPurposeResourceMapper(UserPurposeResource userPurpose) {
+		return convertToPurpose(userPurpose);
+	}
+	
 	public SignUp signUpMapper(SignUpUser signUp) {
 		//SignUp signUpChild = modelMapper.map(signUp, SignUp.class);
 		//return signUpChild;
@@ -81,15 +86,28 @@ public class ResourceMapper {
 	}
 
 	private Customer convertToCustomerDto(TeamLeader customer) {
-		//Customer customerDto = modelMapper.map(customer, Customer.class);
-		//return customerDto;
-		return new Customer();
+		Customer customerDto = new Customer();
+		customerDto.setEmail(customer.getEmail());
+		customerDto.setPhone(customer.getPhone());
+		customerDto.setTeam(customer.getTeam());
+		customerDto.setTeamLeader(customer.getFullName());
+		return customerDto;
 	}
 	
 	private UserPurpose convertToUserPurposeDto(UserPurposeInfo customer) {
-		//UserPurpose userPurposeDto = modelMapper.map(customer, UserPurpose.class);
-		//return userPurposeDto;
-		return new UserPurpose();
+		UserPurpose userPurposeDto = new UserPurpose();
+		userPurposeDto.setUserId(customer.getId());
+		userPurposeDto.setEndTime(customer.getEndTime());
+		userPurposeDto.setLocation(customer.getLocation());
+		userPurposeDto.setIlGroup(customer.getIlGroup());
+		userPurposeDto.setLocation(customer.getLocation());
+		userPurposeDto.setPersonName(customer.getPersonName());
+		userPurposeDto.setPhoneNumber(customer.getPhoneNumber());
+		userPurposeDto.setStartTime(customer.getStartTime());
+		userPurposeDto.setTeamLeader(customer.getTeamLeader());
+		userPurposeDto.setUserRole(customer.getUserRole());
+		userPurposeDto.setWeekDay(customer.getWeekDay());
+		return userPurposeDto;
 	}
 	
 	private UserPurposeInfo convertToUserPurposeDto(UserPurpose userPurpose) {
@@ -106,7 +124,7 @@ public class ResourceMapper {
 	
 	private TeamLeader convertToCustomerDaoObect(Customer customer) {
 		TeamLeader customerDao = new TeamLeader();
-		customerDao.setFullName(customer.getLeaderFullName());
+		customerDao.setFullName(customer.getTeamLeader());
 		customerDao.setId(customer.getUserId());
 		customerDao.setEmail(customer.getEmail());
 		customerDao.setPhone(customer.getPhone());
@@ -125,7 +143,24 @@ public class ResourceMapper {
 		userPurposeDao.setPersonName(userPurpose.getPersonName());
 		userPurposeDao.setPhoneNumber(userPurpose.getPhoneNumber());
 		userPurposeDao.setStartTime(userPurpose.getStartTime());
-		userPurposeDao.setLeaderFullName(userPurpose.getTeamLeader());
+		userPurposeDao.setTeamLeader(userPurpose.getTeamLeader());
+		userPurposeDao.setUserRole(userPurpose.getUserRole());
+		userPurposeDao.setWeekDay(userPurpose.getWeekDay());
+		
+		return userPurposeDao;
+	}
+	
+	private UserPurpose convertToPurpose(UserPurposeResource userPurpose) {
+		UserPurpose userPurposeDao = new UserPurpose();
+		userPurposeDao.setUserId(userPurpose.getUserId());
+		userPurposeDao.setEndTime(userPurpose.getEndTime());
+		userPurposeDao.setLocation(userPurpose.getFieldName());
+		userPurposeDao.setIlGroup(userPurpose.getIlGroup());
+		userPurposeDao.setLocation(userPurpose.getLocation());
+		userPurposeDao.setPersonName(userPurpose.getPersonName());
+		userPurposeDao.setPhoneNumber(userPurpose.getPhoneNumber());
+		userPurposeDao.setStartTime(userPurpose.getStartTime());
+		userPurposeDao.setTeamLeader(userPurpose.getTeamLeader());
 		userPurposeDao.setUserRole(userPurpose.getUserRole());
 		userPurposeDao.setWeekDay(userPurpose.getWeekDay());
 		
@@ -134,7 +169,7 @@ public class ResourceMapper {
 	
 	private Customer convertResourceToCustomer(CustomerResource customer) {
 		Customer cust = new Customer();
-		cust.setLeaderFullName(customer.getLeaderFullName());
+		cust.setTeamLeader(customer.getTeamLeader());
 		cust.setEmail(customer.getEmail());
 		cust.setPhone(customer.getPhone());
 		cust.setTeam(customer.getTeam());

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.nousuapi.forms.admin.model.Customer;
 import com.nousuapi.forms.admin.model.UserPurpose;
+import com.nousuapi.forms.admin.model.UserPurposeResource;
 
 public interface UserPurposeService {
 

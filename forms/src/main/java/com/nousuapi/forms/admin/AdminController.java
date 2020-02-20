@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,30 +41,33 @@ public class AdminController {
 	private UserPurposeService userPurposeService;
 	
 	@PostMapping("/createteamleader")
-	private ResponseEntity<String> create(@RequestBody CustomerResource teamLeader) throws Exception {
+	private ResponseEntity<CustomerResource> create(@RequestBody CustomerResource teamLeader) throws Exception {
 		ResourceMapper mapper = new ResourceMapper();
-		userService.addNewTeamLeader(mapper.customerResourceToCusomerMapper(teamLeader));	
-		return new ResponseEntity<>(HttpStatus.OK);
+		userService.addNewTeamLeader(mapper.customerResourceToCusomerMapper(teamLeader));
+		return new ResponseEntity<>(new CustomerResource(), HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/removeuser")
-	private ResponseEntity<String> removeUser(@PathVariable(value = "personName") String personName) {
-		userService.deleteUser(personName);		
+	@DeleteMapping("/removeteamleader")
+	private ResponseEntity<String> removeUser(@PathVariable(value = "leadername") String leadername) {
+		userService.deleteTeamLeader(leadername);		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/deletepurpose")
 	private ResponseEntity<UserPurposeLinkedResource> removeUserPurpose(@RequestBody UserPurposeResource userPurpose) {
-		userPurposeService.deleteUserPurpose(UserPurposeResource.mapPurpose(userPurpose));
+		ResourceMapper mapper = new ResourceMapper();
+		userPurposeService.deleteUserPurpose(mapper.userPurposeResourceMapper(userPurpose));
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
 	
 	@GetMapping("/getusers")
 	private ResponseEntity<List<CustomerResource>> getUsers() {
 		List<CustomerResource> result = CustomerResource.toList(userService.listUsers());		
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
 	
 	@GetMapping("/userpurposeinfo/{leaderfullname}")
 	private ResponseEntity<UserPurposeLinkedResource> getUserPurposeInfo(
@@ -76,15 +80,52 @@ public class AdminController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
+	@GetMapping("/userinfo/{username}")
+	public ResponseEntity<CustomerResource> getUserInfo(@PathVariable(value = "username") String username) throws Exception {
+		Customer customer = userService.findUser(username);
+		List<UserPurpose> userPurpose = userPurposeService.getDetails(customer.getTeamLeader());
+		customer.setUserPurpose(userPurpose);
+		
+		return new ResponseEntity<>(CustomerResource.valueOf(customer), HttpStatus.OK);
+	}
+	
 	@PostMapping("/adduserpurpose")
 	public ResponseEntity<UserPurposeResource> addUserPurpose(@RequestBody UserPurposeResource userPurpose) throws Exception  {
 		Customer customer = new Customer();
-		customer.setUserPurpose(Arrays.asList(UserPurposeResource.mapPurpose(userPurpose)));
+		ResourceMapper mapper = new ResourceMapper();
+		customer.setUserPurpose(Arrays.asList(mapper.userPurposeResourceMapper(userPurpose)));
 		userPurposeService.addNewPurpose(customer);
 		UserPurposeResource result = UserPurposeResource.getMessage();
 		result.add(linkTo(AdminController.class).slash("adduserpurpose").withRel("newpurpose"));
-		result.add(linkTo(JklCupController.class).slash("updatePurpose").withRel("updatepurpose"));
+		result.add(linkTo(AdminController.class).slash("updatePurpose").withRel("updatepurpose"));
 		return new ResponseEntity<>(result, HttpStatus.CREATED);
+	}
+	
+	@PutMapping("/updatepurpose")
+	public ResponseEntity<CustomerResource> updatePurpose(@RequestBody UserPurposeResource userPurpose) throws Exception {
+		ResourceMapper mapper = new ResourceMapper();
+		userPurposeService.updatePurpose(mapper.userPurposeResourceMapper(userPurpose));
+		CustomerResource result = new CustomerResource();
+		result.add(linkTo(AdminController.class)
+				.slash("updatepurpose").withSelfRel(),
+				linkTo(AdminController.class)
+				.slash("userinfo")
+				.slash(userPurpose.getTeamLeader())
+				.withRel("userinfo"));
+		
+		return new ResponseEntity<>(result, HttpStatus.CREATED);
+	}
+	
+	@GetMapping("/userpurpose/{leaderFullName}")
+	public ResponseEntity<UserPurposeLinkedResource> getUserPurpose(@PathVariable(required = true) String leaderFullname) throws Exception {
+		
+		List<UserPurpose> uPurposeByLeader = userPurposeService.getDetails(leaderFullname);
+		
+		UserPurposeLinkedResource upl = UserPurposeLinkedResource.checkResult(uPurposeByLeader);
+		
+		upl.add(linkTo(JklCupController.class).slash("updatepurpose").withRel("createpurpose"));
+						
+		return new ResponseEntity<>(upl, HttpStatus.OK);
 	}
 	
 	@GetMapping("/jyvaskylacupjobsForm")

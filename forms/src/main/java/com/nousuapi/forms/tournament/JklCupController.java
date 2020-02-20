@@ -1,7 +1,5 @@
 package com.nousuapi.forms.tournament;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nousuapi.forms.admin.model.Customer;
 import com.nousuapi.forms.admin.model.CustomerResource;
 import com.nousuapi.forms.admin.model.UserPurpose;
-import com.nousuapi.forms.admin.model.UserPurposeLinkedResource;
 import com.nousuapi.forms.mapper.ResourceMapper;
 import com.nousuapi.forms.service.UserPurposeService;
 import com.nousuapi.forms.service.UserService;
@@ -33,12 +29,6 @@ public class JklCupController {
 	
 	@Autowired
 	private UserPurposeService userPurposeService;
-	
-	@GetMapping("/userinfo/{username}")
-	public ResponseEntity<CustomerResource> getUserInfo(@PathVariable(value = "username") String username) {
-		CustomerResource customer = CustomerResource.valueOf(userService.findUser(username));
-		return new ResponseEntity<>(customer, HttpStatus.OK);
-	}
 
 	@PostMapping("/createuser")
 	public ResponseEntity<CustomerResource> createUserWithPurpose(@RequestBody CustomerResource user) throws Exception {
@@ -47,31 +37,5 @@ public class JklCupController {
 		CustomerResource result = CustomerResource.getMessage();
 					
 		return new ResponseEntity<>(result, HttpStatus.CREATED);
-	}
-	
-	@PutMapping("/updatepurpose")
-	public ResponseEntity<CustomerResource> updatePurpose(@RequestBody UserPurpose userPurpose) throws Exception {
-		userPurposeService.updatePurpose(userPurpose);
-		CustomerResource result = new CustomerResource();
-		result.add(linkTo(JklCupController.class)
-				.slash("updatepurpose").withSelfRel(),
-				linkTo(JklCupController.class)
-				.slash("userinfo")
-				.slash(userPurpose.getTeamLeader())
-				.withRel("userinfo"));
-		
-		return new ResponseEntity<>(result, HttpStatus.CREATED);
-	}
-	
-	@GetMapping("/userpurpose/{leaderFullName}")
-	public ResponseEntity<UserPurposeLinkedResource> getUserPurpose(@PathVariable(required = true) String leaderFullname) throws Exception {
-		
-		List<UserPurpose> uPurposeByLeader = userPurposeService.getDetails(leaderFullname);
-		
-		UserPurposeLinkedResource upl = UserPurposeLinkedResource.checkResult(uPurposeByLeader);
-		
-		upl.add(linkTo(JklCupController.class).slash("updatepurpose").withRel("createpurpose"));
-						
-		return new ResponseEntity<>(upl, HttpStatus.OK);
 	}
 }

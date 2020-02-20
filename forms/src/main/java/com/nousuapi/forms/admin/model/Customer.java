@@ -5,7 +5,7 @@ import java.util.List;
 public class Customer {
 	
 	private long userId;
-	private String leaderFullName;
+	private String teamLeader;
 	private String email;
 	private String phone;
 	private String team;
@@ -13,11 +13,11 @@ public class Customer {
 	
 	public Customer() {}
 	
-	public Customer(long userId, String leaderFullName, String email, String phone, String team,
+	public Customer(long userId, String teamLeader, String email, String phone, String team,
 			List<UserPurpose> userPurpose) {
 		super();
 		this.userId = userId;
-		this.leaderFullName = leaderFullName;
+		this.teamLeader = teamLeader;
 		this.email = email;
 		this.phone = phone;
 		this.team = team;
@@ -32,12 +32,12 @@ public class Customer {
 		this.userId = userId;
 	}
 
-	public String getLeaderFullName() {
-		return leaderFullName;
+	public String getTeamLeader() {
+		return teamLeader;
 	}
 
-	public void setLeaderFullName(String leaderFullName) {
-		this.leaderFullName = leaderFullName;
+	public void setTeamLeader(String teamLeader) {
+		this.teamLeader = teamLeader;
 	}
 
 	public String getEmail() {

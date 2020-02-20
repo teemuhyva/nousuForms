@@ -9,7 +9,7 @@ import com.nousuapi.forms.model.ActionFormModelResource;
 
 import lombok.Data;
 
-@Data
+
 public class SignupResource  extends ResourceSupport {
 
 	private long rowId;
@@ -98,6 +98,110 @@ public class SignupResource  extends ResourceSupport {
 		}
 		
 		return signUpUser;
+	}
+
+	public long getRowId() {
+		return rowId;
+	}
+
+	public void setRowId(long rowId) {
+		this.rowId = rowId;
+	}
+
+	public String getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	public void setDateOfBirth(String dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public int getPostNum() {
+		return postNum;
+	}
+
+	public void setPostNum(int postNum) {
+		this.postNum = postNum;
+	}
+
+	public String getPostOffice() {
+		return postOffice;
+	}
+
+	public void setPostOffice(String postOffice) {
+		this.postOffice = postOffice;
+	}
+
+	public String getParentName() {
+		return parentName;
+	}
+
+	public void setParentName(String parentName) {
+		this.parentName = parentName;
+	}
+
+	public String getChildName() {
+		return childName;
+	}
+
+	public void setChildName(String childName) {
+		this.childName = childName;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getAgeClass() {
+		return ageClass;
+	}
+
+	public void setAgeClass(String ageClass) {
+		this.ageClass = ageClass;
+	}
+
+	public String getSignedUpFor() {
+		return signedUpFor;
+	}
+
+	public void setSignedUpFor(String signedUpFor) {
+		this.signedUpFor = signedUpFor;
+	}
+
+	public Double getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Double payment) {
+		this.payment = payment;
+	}
+
+	public String getOther() {
+		return other;
+	}
+
+	public void setOther(String other) {
+		this.other = other;
 	}
 	
 	

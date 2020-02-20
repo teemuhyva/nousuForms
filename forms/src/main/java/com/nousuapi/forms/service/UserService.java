@@ -10,6 +10,6 @@ public interface UserService {
 	public Customer findUser(String username);
 	public UserPurpose findUserPurpose(String username);
 	public void addNewTeamLeader(Customer user) throws Exception;
-	public void deleteUser(String fullname);
+	public void deleteTeamLeader(String teamLeader);
 	public List<Customer> listUsers();
 }

@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void addNewTeamLeader(Customer user) throws Exception {
-		if(userRepository.findTeamLeaderByName(user.getLeaderFullName()) != null) {
+		if(userRepository.findTeamLeaderByName(user.getTeamLeader()) != null) {
 			throw new Exception(CustomException.ALREADYFOUND);
 		}
 		
@@ -39,8 +39,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void deleteUser(String fullname) {
-		userRepository.deleteByFullName(fullname);
+	public void deleteTeamLeader(String teamLeader) {
+		userRepository.deleteByFullName(teamLeader);
 	}
 
 	@Override

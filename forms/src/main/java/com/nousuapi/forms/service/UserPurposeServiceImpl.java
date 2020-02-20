@@ -28,8 +28,8 @@ public class UserPurposeServiceImpl implements UserPurposeService {
 	ResourceMapper resourceMapper = new ResourceMapper();
 	
 	@Override
-	public List<UserPurpose> getDetails(String leaderFullName) throws Exception {
-		List<UserPurpose> uPurpList = resourceMapper.listUserPurposes(userPurposeRepository.getPurposeByTeamLeader(leaderFullName));
+	public List<UserPurpose> getDetails(String teamLeader) throws Exception {
+		List<UserPurpose> uPurpList = resourceMapper.listUserPurposes(userPurposeRepository.getPurposeByTeamLeader(teamLeader));
 		if(uPurpList.isEmpty()) {
 			 throw new Exception(CustomException.NO_USER_PURPOSE_ADDED);
 		}
@@ -40,11 +40,11 @@ public class UserPurposeServiceImpl implements UserPurposeService {
 	@Override
 	public void updatePurpose(UserPurpose userPurpose) throws Exception {		
 		TeamLeader cust = userRepository.findTeamLeaderByName(userPurpose.getTeamLeader());
-		List<UserPurpose> up = resourceMapper.listUserPurposes(userPurposeRepository.getPurposeByTeamLeader(userPurpose.getTeamLeader()));
+		List<UserPurpose> up = resourceMapper.listUserPurposes(userPurposeRepository.getPurposeByTeamLeaderWeekDayUser(userPurpose.getTeamLeader(), userPurpose.getPersonName()));
 		UserPurposeInfo updateUserPurpose = resourceMapper.userPurposeDaoMapper(userPurpose);
 		
 		if(cust == null) {
-			throw new Exception(CustomException.NO_USER_FOUND_FOR_PURPOSE);
+			throw new Exception(CustomException.NO_TEAMLEADER_FOUND_FOR_PURPOSE);
 		}
 		
 		if(up.isEmpty()) {
@@ -63,7 +63,7 @@ public class UserPurposeServiceImpl implements UserPurposeService {
 	@Override
 	public void addNewPurpose(Customer customer) throws Exception  {		
 		UserPurposeInfo newUserPurpose = resourceMapper.userPurposeDaoMapper(customer.getUserPurpose().get(0));
-		if(userRepository.findTeamLeaderByName(customer.getLeaderFullName()) == null) {
+		if(userRepository.findTeamLeaderByName(newUserPurpose.getTeamLeader()) == null) {
 			throw new Exception(CustomException.USER_NOT_CREATED);
 		}
 		
@@ -79,7 +79,7 @@ public class UserPurposeServiceImpl implements UserPurposeService {
 		
 		for (Customer teamLeader : allTeamLeaders) {
 			for (UserPurpose userPurpose : allUserPurposes) {
-				if(userPurpose.getTeamLeader().equals(teamLeader.getLeaderFullName())) {
+				if(userPurpose.getTeamLeader().equals(teamLeader.getTeamLeader())) {
 					userPurposePerLeader.add(userPurpose);
 				}
 			}
@@ -91,14 +91,14 @@ public class UserPurposeServiceImpl implements UserPurposeService {
 	}
 
 	@Override
-	public Customer getUserPurposeInfo(String leaderFullName) {
+	public Customer getUserPurposeInfo(String teamLeader) {
 		Customer customer = new Customer();
-		customer.setUserPurpose(resourceMapper.listUserPurposes(userPurposeRepository.getPurposeByTeamLeader(leaderFullName)));
+		customer.setUserPurpose(resourceMapper.listUserPurposes(userPurposeRepository.getPurposeByTeamLeader(teamLeader)));
 		
 		if(customer.getUserPurpose().isEmpty()) {
 			Customer user = new Customer();
 			List<UserPurpose> emptyListWithLeader = new ArrayList<>();			
-			user.setLeaderFullName(leaderFullName);
+			user.setTeamLeader(teamLeader);
 			user.setUserPurpose(emptyListWithLeader);
 			return user;
 		}

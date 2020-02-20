@@ -15,7 +15,6 @@ import com.nousuapi.forms.tournament.JklCupController;
 
 import lombok.Data;
 
-@Data
 public class UserPurposeResource  extends ResourceSupport {
 
 	private long userId;
@@ -29,10 +28,14 @@ public class UserPurposeResource  extends ResourceSupport {
 	private String successMessage;
 	private IlGroup ilGroup;
 	private String teamLeader;
+	private String phoneNumber;
 	
 	
+	public UserPurposeResource() {}
+	/*
 	public static UserPurpose mapPurpose(UserPurposeResource userPurpose) {
 		UserPurpose user = new UserPurpose();
+		user.setUserId(userPurpose.getUserId());
 		user.setFieldName(userPurpose.getFieldName());
 		user.setIlGroup(userPurpose.getIlGroup());
 		user.setLocation(userPurpose.getLocation());
@@ -45,7 +48,7 @@ public class UserPurposeResource  extends ResourceSupport {
 		user.setTeamLeader(userPurpose.getTeamLeader());
 		return user;
 	}
-	 
+	 */
 	public static List<UserPurpose> mapUserPurposeList(List<Customer> customerList) {
 		List<UserPurpose> resultList = new ArrayList<UserPurpose>();
 		
@@ -85,6 +88,10 @@ public class UserPurposeResource  extends ResourceSupport {
 			user.setUserRole(userPurpose.getUserRole());
 			user.setWeekDay(userPurpose.getWeekDay());
 			user.setTeamLeader(userPurpose.getTeamLeader());
+			user.add(
+					linkTo(AdminController.class).slash("updatepurpose").withRel("updatepurpose"),
+					linkTo(AdminController.class).slash("deletepurpose").withRel("removepurpose")
+			);
 			resultList.add(user);
 		}
 		
@@ -106,7 +113,7 @@ public class UserPurposeResource  extends ResourceSupport {
 				result.setStartTime(up.getStartTime());
 				result.setEndTime(up.getEndTime());
 				result.add(
-					linkTo(JklCupController.class).slash("updatepurpose").withRel("updatepurpose"),
+					linkTo(AdminController.class).slash("updatepurpose").withRel("updatepurpose"),
 					linkTo(AdminController.class).slash("deletepurpose").withRel("removepurpose")
 				);
 				resultList.add(result);
@@ -122,4 +129,102 @@ public class UserPurposeResource  extends ResourceSupport {
 		message.setSuccessMessage("Päivitys onnistui");
 		return message;
 	}
+
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getFieldName() {
+		return fieldName;
+	}
+
+	public void setFieldName(String fieldName) {
+		this.fieldName = fieldName;
+	}
+
+	public OnsiteDay getWeekDay() {
+		return weekDay;
+	}
+
+	public void setWeekDay(OnsiteDay weekDay) {
+		this.weekDay = weekDay;
+	}
+
+	public String getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+
+	public String getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
+
+	public String getPersonName() {
+		return personName;
+	}
+
+	public void setPersonName(String personName) {
+		this.personName = personName;
+	}
+
+	public UserRole getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(UserRole userRole) {
+		this.userRole = userRole;
+	}
+
+	public String getSuccessMessage() {
+		return successMessage;
+	}
+
+	public void setSuccessMessage(String successMessage) {
+		this.successMessage = successMessage;
+	}
+
+	public IlGroup getIlGroup() {
+		return ilGroup;
+	}
+
+	public void setIlGroup(IlGroup ilGroup) {
+		this.ilGroup = ilGroup;
+	}
+
+	public String getTeamLeader() {
+		return teamLeader;
+	}
+
+	public void setTeamLeader(String teamLeader) {
+		this.teamLeader = teamLeader;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+	
+	
 }

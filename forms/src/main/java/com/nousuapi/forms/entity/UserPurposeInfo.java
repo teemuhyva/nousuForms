@@ -18,8 +18,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Getter
-@Setter
 @Table(name = "userpurposeinfo")
 public class UserPurposeInfo {
 
@@ -39,7 +37,7 @@ public class UserPurposeInfo {
 	
 	//teamleader (who will assign persons in purpose)
 	@NotNull
-	private String leaderFullName;
+	private String teamLeader;
 	
 	//leader team
 	private String leaderTeam;
@@ -64,4 +62,94 @@ public class UserPurposeInfo {
 	private String startTime;
 	
 	private String endTime;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getPersonName() {
+		return personName;
+	}
+
+	public void setPersonName(String personName) {
+		this.personName = personName;
+	}
+
+	public String getTeamLeader() {
+		return teamLeader;
+	}
+
+	public void setTeamLeader(String teamLeader) {
+		this.teamLeader = teamLeader;
+	}
+
+	public String getLeaderTeam() {
+		return leaderTeam;
+	}
+
+	public void setLeaderTeam(String leaderTeam) {
+		this.leaderTeam = leaderTeam;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public IlGroup getIlGroup() {
+		return ilGroup;
+	}
+
+	public void setIlGroup(IlGroup ilGroup) {
+		this.ilGroup = ilGroup;
+	}
+
+	public UserRole getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(UserRole userRole) {
+		this.userRole = userRole;
+	}
+
+	public OnsiteDay getWeekDay() {
+		return weekDay;
+	}
+
+	public void setWeekDay(OnsiteDay weekDay) {
+		this.weekDay = weekDay;
+	}
+
+	public String getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+
+	public String getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
+	
+	
 }
