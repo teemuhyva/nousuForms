@@ -30,9 +30,6 @@ public class UserPurposeServiceImpl implements UserPurposeService {
 	@Override
 	public List<UserPurpose> getDetails(String teamLeader) throws Exception {
 		List<UserPurpose> uPurpList = resourceMapper.listUserPurposes(userPurposeRepository.getPurposeByTeamLeader(teamLeader));
-		if(uPurpList.isEmpty()) {
-			 throw new Exception(CustomException.NO_USER_PURPOSE_ADDED);
-		}
 				
 		return uPurpList;
 	}

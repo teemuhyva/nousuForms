@@ -21,7 +21,7 @@ public class JklCupExcel {
 	DateHelper helper = new DateHelper();
 	
 	public void JklExcelCreation(List<UserPurpose> userList) throws EncryptedDocumentException, IOException {
-    	InputStream inp = new FileInputStream("src\\main\\resources\\jklcup.xls");
+    	InputStream inp = new FileInputStream("jklcup.xls");
     
     	HSSFWorkbook wb = new HSSFWorkbook(inp);
         
@@ -160,7 +160,7 @@ public class JklCupExcel {
         	} 
 		}   
         
-        OutputStream fileOut = new FileOutputStream("src\\main\\resources\\jklcup.xls");
+        OutputStream fileOut = new FileOutputStream("jklcup.xls");
         wb.write(fileOut);
         wb.close();
         fileOut.close();

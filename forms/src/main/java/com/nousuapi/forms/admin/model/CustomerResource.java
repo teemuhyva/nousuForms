@@ -70,7 +70,7 @@ public class CustomerResource extends ResourceSupport {
 			result.setTeam(u.getTeam());
 			result.setEmail(u.getEmail());
 			result.setPhone(u.getPhone());
-			result.add(linkTo(AdminController.class).slash("userpurposeinfo").slash(u.getTeamLeader()).withRel("userpurposeinfo"));
+			result.add(linkTo(AdminController.class).slash("userinfo").slash(u.getTeamLeader()).withRel("userinfo"));
 			result.add(linkTo(AdminController.class).slash("removeuser").withRel("delete"));
 			resultList.add(result);
 		}
