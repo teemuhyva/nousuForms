@@ -3,14 +3,14 @@ package com.nousuapi.forms.excelutil.generatesheet;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.ss.usermodel.Row;
 
-import com.nousuapi.forms.entity.UserPurpose;
+import com.nousuapi.forms.entity.UserPurposeInfo;
 import com.nousuapi.forms.helpers.DateHelper;
 import com.nousuapi.forms.model.BudgetModelResource;
 import com.nousuapi.forms.signup.model.SignupResource;
 
 public class RowSheetValidator {
 
-	public void updateSheetVehkaHalli(int rowIndex, int columnIndex, HSSFSheet sheet, UserPurpose up) {
+	public void updateSheetVehkaHalli(int rowIndex, int columnIndex, HSSFSheet sheet, UserPurposeInfo up) {
 		updateCellValuesBySheet(rowIndex, columnIndex, up, sheet);
 	}
 	
@@ -22,7 +22,7 @@ public class RowSheetValidator {
 		writeBudgetExcel(budget, sheet);
 	}
 	
-	private void updateCellValuesBySheet(int rowIndex, int cellIndex, UserPurpose up, HSSFSheet sheet) {
+	private void updateCellValuesBySheet(int rowIndex, int cellIndex, UserPurposeInfo up, HSSFSheet sheet) {
 		DateHelper helper = new DateHelper();
 		Row row = sheet.getRow(rowIndex);
 		row.getCell(cellIndex).setCellValue(up.getPersonName());

@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +22,7 @@ import com.nousuapi.forms.admin.model.CustomerResource;
 import com.nousuapi.forms.admin.model.UserPurposeLinkedResource;
 import com.nousuapi.forms.admin.model.UserPurposeResource;
 import com.nousuapi.forms.entity.Customer;
-import com.nousuapi.forms.entity.UserPurpose;
+import com.nousuapi.forms.entity.UserPurposeInfo;
 import com.nousuapi.forms.excelutil.JklCupExcel;
 import com.nousuapi.forms.service.UserPurposeService;
 import com.nousuapi.forms.service.UserService;
@@ -44,8 +45,8 @@ public class AdminController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/deletepurpose")
-	private ResponseEntity<UserPurposeLinkedResource> removeUserPurpose(@RequestBody UserPurpose userPurpose) {
+	@PatchMapping("/removeuserfromrole")
+	private ResponseEntity<UserPurposeLinkedResource> removeUserPurpose(@RequestBody UserPurposeInfo userPurpose) {
 		userPurposeService.deleteUserPurpose(userPurpose);
 		
 		return new ResponseEntity<>(HttpStatus.OK);
@@ -62,7 +63,7 @@ public class AdminController {
 	private ResponseEntity<UserPurposeLinkedResource> getUserPurposeInfo(
 			@PathVariable(value = "leaderfullname") String leaderFullName) {
 		
-		List<UserPurpose> userPurposeList = userPurposeService.getUserPurposeInfo(leaderFullName);
+		List<UserPurposeInfo> userPurposeList = userPurposeService.getUserPurposeInfo(leaderFullName);
 		
 		UserPurposeLinkedResource result = UserPurposeLinkedResource.checkResult(userPurposeList);
 
@@ -71,8 +72,11 @@ public class AdminController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
+	/*
+	 * not needed currently. Database contains static data and user will be added from /updatepurpose
+	 */
 	@PostMapping("/adduserpurpose")
-	public ResponseEntity<UserPurposeResource> addUserPurpose(@RequestBody UserPurpose userPurpose) throws Exception  {
+	public ResponseEntity<UserPurposeResource> addUserPurpose(@RequestBody UserPurposeInfo userPurpose) throws Exception  {
 		userPurposeService.addNewPurpose(userPurpose);
 		UserPurposeResource result = UserPurposeResource.getMessage();
 		result.add(linkTo(AdminController.class).slash("adduserpurpose").withRel("newpurpose"));
@@ -81,8 +85,8 @@ public class AdminController {
 	}
 	
 	@GetMapping("/jyvaskylacupjobsForm")
-	public ResponseEntity<List<UserPurpose>> generateJob() throws EncryptedDocumentException, IOException {
-		List<UserPurpose> listUsersAndPurpose = userPurposeService.getAll();		
+	public ResponseEntity<List<UserPurposeInfo>> generateJob() throws EncryptedDocumentException, IOException {
+		List<UserPurposeInfo> listUsersAndPurpose = userPurposeService.getAll();		
 		JklCupExcel createExcel = new JklCupExcel();
 		createExcel.JklExcelCreation(listUsersAndPurpose);
 		

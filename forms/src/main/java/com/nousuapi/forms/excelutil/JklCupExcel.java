@@ -15,7 +15,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 
-import com.nousuapi.forms.entity.UserPurpose;
+import com.nousuapi.forms.entity.UserPurposeInfo;
 import com.nousuapi.forms.enums.IlGroup;
 import com.nousuapi.forms.enums.OnsiteDay;
 import com.nousuapi.forms.enums.UserRole;
@@ -28,12 +28,12 @@ public class JklCupExcel {
 
 	DateHelper helper = new DateHelper();
 	
-	public void JklExcelCreation(List<UserPurpose> userList) throws EncryptedDocumentException, IOException {
+	public void JklExcelCreation(List<UserPurposeInfo> userList) throws EncryptedDocumentException, IOException {
     	InputStream inp = new FileInputStream("src\\main\\resources\\jklcup.xls");
     
     	HSSFWorkbook wb = new HSSFWorkbook(inp);
         
-        for(UserPurpose up : userList) {
+        for(UserPurposeInfo up : userList) {
         	RowSheetValidator validator = new RowSheetValidator();
         	
         	switch(up.getLocation()) {

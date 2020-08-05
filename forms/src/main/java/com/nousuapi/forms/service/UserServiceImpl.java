@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.nousuapi.forms.admin.model.CustomerResource;
 import com.nousuapi.forms.entity.Customer;
-import com.nousuapi.forms.entity.UserPurpose;
+import com.nousuapi.forms.entity.UserPurposeInfo;
 import com.nousuapi.forms.exceptions.CustomException;
 import com.nousuapi.forms.repository.UserPurposeRepository;
 import com.nousuapi.forms.repository.UserRepository;
@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserPurpose findUserPurpose(String username) {
+	public UserPurposeInfo findUserPurpose(String username) {
 		return null;
 	}
 
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserPurpose addUserPurpose(Customer user, UserPurpose userPurpose) {
+	public UserPurposeInfo addUserPurpose(Customer user, UserPurposeInfo userPurpose) {
 
 		return null;
 	}

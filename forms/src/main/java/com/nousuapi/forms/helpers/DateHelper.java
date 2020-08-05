@@ -13,7 +13,7 @@ public class DateHelper {
 		return dayOfWeek;
 	}
 	
-	public String startEndTime(Date startTime, Date endTime) {
+	public String startEndTime(String startTime, String endTime) {
 		SimpleDateFormat localDateFormat = new SimpleDateFormat("HH:mm:ss");
         String timeOnsite = localDateFormat.format(startTime)  + localDateFormat.format(endTime);
         return timeOnsite;

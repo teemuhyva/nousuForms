@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.nousuapi.forms.admin.AdminController;
 import com.nousuapi.forms.entity.Customer;
-import com.nousuapi.forms.entity.UserPurpose;
+import com.nousuapi.forms.entity.UserPurposeInfo;
 import com.nousuapi.forms.tournament.JklCupController;
 
 import lombok.Getter;
@@ -27,7 +27,7 @@ public class CustomerResource extends ResourceSupport {
 	private String email;
 	private String phone;
 	private String team;
-	private UserPurpose userPurpose;
+	private UserPurposeInfo userPurpose;
 	
 	private String successMessage;
 	
