@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.nousuapi.forms.entity.Customer;
-import com.nousuapi.forms.entity.UserPurpose;
+import com.nousuapi.forms.entity.UserPurposeInfo;
 
 @Repository
 public interface UserRepository extends JpaRepository<Customer, String> {

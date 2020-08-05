@@ -3,19 +3,19 @@ package com.nousuapi.forms.service;
 import java.util.List;
 
 import com.nousuapi.forms.admin.model.UserPurposeResource;
-import com.nousuapi.forms.entity.UserPurpose;
+import com.nousuapi.forms.entity.UserPurposeInfo;
 
 public interface UserPurposeService {
 
-	public List<UserPurpose> getDetails(String leaderFullName) throws Exception;
+	public List<UserPurposeInfo> getDetails(String leaderFullName) throws Exception;
 	
-	public void updatePurpose(UserPurpose userPurpose) throws Exception;
+	public void updatePurpose(UserPurposeInfo userPurpose) throws Exception;
 	
-	public void addNewPurpose(UserPurpose userPurpose) throws Exception;
+	public void addNewPurpose(UserPurposeInfo userPurpose) throws Exception;
 	
-	public List<UserPurpose> getAll();
+	public List<UserPurposeInfo> getAll();
 	
-	public List<UserPurpose> getUserPurposeInfo(String leaderFullName);
+	public List<UserPurposeInfo> getUserPurposeInfo(String leaderFullName);
 
-	void deleteUserPurpose(UserPurpose userPurpose);
+	void deleteUserPurpose(UserPurposeInfo userPurpose);
 }

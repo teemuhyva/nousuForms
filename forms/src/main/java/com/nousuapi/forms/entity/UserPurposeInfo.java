@@ -1,7 +1,5 @@
 package com.nousuapi.forms.entity;
 
-import java.util.Date;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -9,11 +7,10 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+
+import org.springframework.lang.Nullable;
 
 import com.nousuapi.forms.enums.IlGroup;
 import com.nousuapi.forms.enums.Location;
@@ -30,9 +27,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "userpurpose")
-public class UserPurpose {
+@Table(name = "userpurposeinfo")
+public class UserPurposeInfo {
 
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="userid")
@@ -43,36 +41,39 @@ public class UserPurpose {
 	@Enumerated(EnumType.STRING)
 	private Location location;
 	
-	//name of user (not leader)	
-	@NotNull
+	@Column(name = "person_name")
 	private String personName;
 	
-	//teamleader (who will assign persons in purpose)
-	@NotNull
-	private String leaderFullName;
+	@Column(name = "team_leader")
+	private String teamLeader;
 	
-	//leader team
+	@Column(name = "leader_team")
 	private String leaderTeam;
 	
+	@Column(name = "leader_full_name")
+	private String leader_full_name;
 	
+	@Column(name = "phone_number")
 	private String phoneNumber;
 	
 	@Enumerated(EnumType.STRING)
+	@Column(name = "il_group")
 	private IlGroup ilGroup;
-	//date when person will be onsite
-	//TODO: other date for when this info was entered / updated?
 	
 	@NotNull
 	@Enumerated(EnumType.STRING)
+	@Column(name = "user_role")
 	private UserRole userRole;
 	
 	@NotNull
 	@Enumerated(EnumType.STRING)
+	@Column(name = "week_day")
 	private OnsiteDay weekDay;
 		
 	//what time person will be onsite
-	@Temporal(TemporalType.DATE)
-	private Date startTime;
-	
-	private Date endTime;
+	@NotNull
+	@Column(name = "start_time")
+	private String startTime;
+	@Column(name = "end_time")
+	private String endTime;
 }

@@ -25,7 +25,7 @@ import com.nousuapi.forms.admin.model.CustomerResource;
 import com.nousuapi.forms.admin.model.UserPurposeLinkedResource;
 import com.nousuapi.forms.admin.model.UserPurposeResource;
 import com.nousuapi.forms.entity.Customer;
-import com.nousuapi.forms.entity.UserPurpose;
+import com.nousuapi.forms.entity.UserPurposeInfo;
 import com.nousuapi.forms.service.UserPurposeService;
 import com.nousuapi.forms.service.UserService;
 
@@ -39,6 +39,15 @@ public class JklCupController {
 	
 	@Autowired
 	private UserPurposeService userPurposeService;
+	
+	@GetMapping("/availability")
+	public ResponseEntity<List<UserPurposeResource>> getAvailableRoles() {
+		List<UserPurposeInfo> getAllPurposes = userPurposeService.getAll();
+		UserPurposeResource userPurposes = new UserPurposeResource();
+		List<UserPurposeResource> mapPurposes = userPurposes.mapList(getAllPurposes);
+		
+		return new ResponseEntity<>(mapPurposes, HttpStatus.OK);
+	}
 	
 	@GetMapping("/userinfo/{username}")
 	public ResponseEntity<CustomerResource> getUserInfo(@PathVariable(value = "username") String username) {	
@@ -69,14 +78,14 @@ public class JklCupController {
 	}
 	
 	@PutMapping("/updatepurpose")
-	public ResponseEntity<CustomerResource> updatePurpose(@RequestBody UserPurpose userPurpose) throws Exception {
+	public ResponseEntity<CustomerResource> updatePurpose(@RequestBody UserPurposeInfo userPurpose) throws Exception {
 		userPurposeService.updatePurpose(userPurpose);
 		CustomerResource result = new CustomerResource();
 		result.add(linkTo(JklCupController.class)
 				.slash("updatepurpose").withSelfRel(),
 				linkTo(JklCupController.class)
 				.slash("userinfo")
-				.slash(userPurpose.getLeaderFullName())
+				.slash(userPurpose.getTeamLeader())
 				.withRel("userinfo"));
 		
 		return new ResponseEntity<>(result, HttpStatus.CREATED);
@@ -85,7 +94,7 @@ public class JklCupController {
 	@GetMapping("/userpurpose/{leaderFullName}")
 	public ResponseEntity<UserPurposeLinkedResource> getUserPurpose(@PathVariable(required = true) String leaderFullname) throws Exception {
 		
-		List<UserPurpose> uPurposeByLeader = userPurposeService.getDetails(leaderFullname);
+		List<UserPurposeInfo> uPurposeByLeader = userPurposeService.getDetails(leaderFullname);
 		
 		UserPurposeLinkedResource upl = UserPurposeLinkedResource.checkResult(uPurposeByLeader);
 		

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.hateoas.ResourceSupport;
 
-import com.nousuapi.forms.entity.UserPurpose;
+import com.nousuapi.forms.entity.UserPurposeInfo;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,21 +16,21 @@ public class UserPurposeLinkedResource  extends ResourceSupport {
 	private String leaderFullName;
 	private List<UserPurposeResource> userPurposeResource;
 		
-	public static UserPurposeLinkedResource mapResource(List<UserPurpose> userPurposeList, String leaderName) {
-		
+	public static UserPurposeLinkedResource mapResource(List<UserPurposeInfo> userPurposeList, String leaderName) {
+		UserPurposeResource res = new UserPurposeResource();
 		UserPurposeLinkedResource result = new UserPurposeLinkedResource();
 		result.setLeaderFullName(leaderName);
-		result.setUserPurposeResource(UserPurposeResource.mapList(userPurposeList));
+		result.setUserPurposeResource(res.mapList(userPurposeList));
 		
 		return result;
 	}
 	
-	public static UserPurposeLinkedResource checkResult(List<UserPurpose> userPurposeList) {
+	public static UserPurposeLinkedResource checkResult(List<UserPurposeInfo> userPurposeList) {
 		UserPurposeLinkedResource upl = new UserPurposeLinkedResource();
 		if(!userPurposeList.isEmpty()) {
 			String leaderName = "";
-			for(UserPurpose user : userPurposeList) {
-				leaderName = user.getLeaderFullName();
+			for(UserPurposeInfo user : userPurposeList) {
+				leaderName = user.getTeamLeader();
 			}
 			upl = mapResource(userPurposeList, leaderName);
 		}

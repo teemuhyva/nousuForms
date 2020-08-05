@@ -9,7 +9,7 @@ import java.util.List;
 import org.springframework.hateoas.ResourceSupport;
 
 import com.nousuapi.forms.admin.AdminController;
-import com.nousuapi.forms.entity.UserPurpose;
+import com.nousuapi.forms.entity.UserPurposeInfo;
 import com.nousuapi.forms.enums.IlGroup;
 import com.nousuapi.forms.enums.OnsiteDay;
 import com.nousuapi.forms.enums.UserRole;
@@ -26,31 +26,38 @@ public class UserPurposeResource  extends ResourceSupport {
 	private String location;
 	private String fieldName;
 	private OnsiteDay weekDay;
-	private Date time;
 	private String personName;
 	private UserRole userRole;
 	private String successMessage;
 	private IlGroup ilGroup;
+	private String startTime;
+	private String endTime;
+	private String teamLeader;
+	private String team;
+	private String phoneNumber;
 	
-	public static List<UserPurposeResource> mapList(List<UserPurpose> userPurpose) {
+	public List<UserPurposeResource> mapList(List<UserPurposeInfo> userPurpose) {
 		List<UserPurposeResource> resultList = new ArrayList<UserPurposeResource>();
 		
-		for(UserPurpose up : userPurpose) {
-			if(up.getPersonName() != null) {
-				UserPurposeResource result = new UserPurposeResource();
-				result.setUserId(up.getId());
-				result.setLocation(up.getLocation().toString());
-				result.setWeekDay(up.getWeekDay());
-				result.setIlGroup(up.getIlGroup());
-				result.setPersonName(up.getPersonName());
-				result.setUserRole(up.getUserRole());
-				result.setTime(up.getStartTime());
-				result.add(
-					linkTo(JklCupController.class).slash("updatepurpose").withRel("updatepurpose"),
-					linkTo(AdminController.class).slash("deletepurpose").withRel("removepurpose")
-				);
-				resultList.add(result);
-			}
+		for(UserPurposeInfo up : userPurpose) {
+			UserPurposeResource result = new UserPurposeResource();
+			result.setUserId(up.getId());
+			result.setLocation(up.getLocation().toString());
+			result.setWeekDay(up.getWeekDay());
+			result.setIlGroup(up.getIlGroup());
+			result.setPersonName(up.getPersonName());
+			result.setTeamLeader(up.getTeamLeader());
+			result.setTeam(up.getLeaderTeam());
+			result.setUserRole(up.getUserRole());
+			result.setPhoneNumber(up.getPhoneNumber());
+			result.setStartTime(up.getStartTime());
+			result.setEndTime(up.getEndTime());
+			result.add(
+				linkTo(JklCupController.class).slash("updatepurpose").withRel("updatepurpose"),
+				linkTo(AdminController.class).slash("removeuserfromrole").withRel("removepurpose")
+			);
+			
+			resultList.add(result);
 			
 		}
 		
