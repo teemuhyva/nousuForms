@@ -10,7 +10,7 @@ import com.nousuapi.forms.signup.model.SignupResource;
 
 public class RowSheetValidator {
 
-	public void updateSheetVehkaHalli(int rowIndex, int columnIndex, HSSFSheet sheet, UserPurposeInfo up) {
+	public void updateSheet(int rowIndex, int columnIndex, HSSFSheet sheet, UserPurposeInfo up) {
 		updateCellValuesBySheet(rowIndex, columnIndex, up, sheet);
 	}
 	
@@ -23,12 +23,12 @@ public class RowSheetValidator {
 	}
 	
 	private void updateCellValuesBySheet(int rowIndex, int cellIndex, UserPurposeInfo up, HSSFSheet sheet) {
-		DateHelper helper = new DateHelper();
+		//DateHelper helper = new DateHelper();
 		Row row = sheet.getRow(rowIndex);
-		row.getCell(cellIndex).setCellValue(up.getPersonName());
-		row.getCell(cellIndex + 1).setCellValue(up.getIlGroup().toString());
-		row.getCell(cellIndex + 2).setCellValue(up.getPhoneNumber());
-		row.getCell(cellIndex + 3).setCellValue(helper.startEndTime(up.getStartTime(), up.getEndTime()));	
+		row.getCell(cellIndex).setCellValue(up.getPersonName() != null ? up.getPersonName() : "");
+		row.getCell(cellIndex + 1).setCellValue(up.getIlGroup() != null ? up.getIlGroup().toString() :  "");
+		row.getCell(cellIndex + 2).setCellValue(up.getPhoneNumber() != null ? up.getPhoneNumber() : "");
+		//row.getCell(cellIndex + 3).setCellValue(helper.startEndTime(up.getStartTime(), up.getEndTime()));	//uncomment if fixed times are added
 	}
 	
 	private void writeSignedUsersExcel(int rowIndex, int cellIndex, SignupResource signed, HSSFSheet sheet) {

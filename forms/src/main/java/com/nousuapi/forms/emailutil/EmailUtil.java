@@ -81,7 +81,6 @@ public class EmailUtil {
     	  req.setBody(mail.build());
     	  Response response = sendGrid.api(req);    	  
       } catch(IOException e) {
-    	  log.setError5(e.getMessage());
     	  throw new Exception(CustomException.SENDING_EMAIL_FAILED);
       }
       return log;

@@ -26,6 +26,9 @@ import com.nousuapi.forms.admin.model.UserPurposeLinkedResource;
 import com.nousuapi.forms.admin.model.UserPurposeResource;
 import com.nousuapi.forms.entity.Customer;
 import com.nousuapi.forms.entity.UserPurposeInfo;
+import com.nousuapi.forms.enums.Location;
+import com.nousuapi.forms.enums.OnsiteDay;
+import com.nousuapi.forms.enums.UserRole;
 import com.nousuapi.forms.service.UserPurposeService;
 import com.nousuapi.forms.service.UserService;
 
@@ -77,12 +80,15 @@ public class JklCupController {
 		return new ResponseEntity<>(result, HttpStatus.CREATED);
 	}
 	
-	@PutMapping("/updatepurpose")
-	public ResponseEntity<CustomerResource> updatePurpose(@RequestBody UserPurposeInfo userPurpose) throws Exception {
-		userPurposeService.updatePurpose(userPurpose);
+	@PatchMapping("/updatepurpose/{id}")
+	public ResponseEntity<CustomerResource> updatePurpose(
+			@RequestBody UserPurposeInfo userPurpose,
+			@PathVariable(value = "id") long id) throws Exception {
+		
+		userPurposeService.patchPurpose(userPurpose, id);
 		CustomerResource result = new CustomerResource();
 		result.add(linkTo(JklCupController.class)
-				.slash("updatepurpose").withSelfRel(),
+				.slash("updatepurpose").slash(id).withSelfRel(),
 				linkTo(JklCupController.class)
 				.slash("userinfo")
 				.slash(userPurpose.getTeamLeader())

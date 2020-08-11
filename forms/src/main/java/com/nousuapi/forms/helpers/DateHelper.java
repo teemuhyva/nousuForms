@@ -13,12 +13,16 @@ public class DateHelper {
 		return dayOfWeek;
 	}
 	
+	/*
+	 * excel now has times added. Also same with database. Do we need add fixed hours or rely what excel has???
+	 * */
+	/*
 	public String startEndTime(String startTime, String endTime) {
 		SimpleDateFormat localDateFormat = new SimpleDateFormat("HH:mm:ss");
         String timeOnsite = localDateFormat.format(startTime)  + localDateFormat.format(endTime);
         return timeOnsite;
 	}
-	
+	*/
 	public static String calcExpDate() {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");  
 		Date currentDay = new Date();
