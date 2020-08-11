@@ -17,5 +17,7 @@ public interface UserPurposeService {
 	
 	public List<UserPurposeInfo> getUserPurposeInfo(String leaderFullName);
 
-	void deleteUserPurpose(UserPurposeInfo userPurpose);
+	void deleteUserPurpose(long id);
+	
+	void patchPurpose(UserPurposeInfo userPurpose, long id);
 }

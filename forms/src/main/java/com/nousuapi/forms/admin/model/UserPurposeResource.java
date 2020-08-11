@@ -53,8 +53,10 @@ public class UserPurposeResource  extends ResourceSupport {
 			result.setStartTime(up.getStartTime());
 			result.setEndTime(up.getEndTime());
 			result.add(
-				linkTo(JklCupController.class).slash("updatepurpose").withRel("updatepurpose"),
-				linkTo(AdminController.class).slash("removeuserfromrole").withRel("removepurpose")
+				linkTo(JklCupController.class).slash("updatepurpose")
+												.slash(up.getId())
+												.withRel("updatepurpose"),
+				linkTo(AdminController.class).slash("removeuserfromrole").slash(up.getId()).withRel("removepurpose")
 			);
 			
 			resultList.add(result);

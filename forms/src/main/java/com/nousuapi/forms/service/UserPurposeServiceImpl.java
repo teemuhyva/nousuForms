@@ -55,11 +55,9 @@ public class UserPurposeServiceImpl implements UserPurposeService {
 				userPurposeRepository.save(u);
 			}
 		}
-		
-		
 	}
 	
-	
+
 	//add new user purpose by superuser. Teamleaders cannot do purpose modification before this is done
 	@Override
 	public void addNewPurpose(UserPurposeInfo userPurpose) throws Exception  {		
@@ -91,18 +89,24 @@ public class UserPurposeServiceImpl implements UserPurposeService {
 	}
 	
 	@Override
-	public void deleteUserPurpose(UserPurposeInfo userPurpose) {
-		UserPurposeInfo removeUser = userPurposeRepository.getUserByGivenInfo(userPurpose.getPersonName(), 
-				userPurpose.getUserRole(), userPurpose.getPhoneNumber(),
-				userPurpose.getStartTime(), userPurpose.getWeekDay());
+	public void deleteUserPurpose(long id) {
+		UserPurposeInfo removeUser = userPurposeRepository.getUserByGivenInfo(id);
 		
 		removeUser.setPersonName(null);
 		removeUser.setPhoneNumber(null);
 		removeUser.setIlGroup(null);
-		removeUser.setLeaderTeam(null);
 		removeUser.setTeamLeader(null);
 				
 		userPurposeRepository.save(removeUser);
+	}
+
+	@Override
+	public void patchPurpose(UserPurposeInfo updateInfo, long id) {
+		userPurposeRepository.updateFields(updateInfo.getPersonName(), 
+				updateInfo.getTeamLeader(), 
+				updateInfo.getPhoneNumber(), 
+				updateInfo.getIlGroup(),
+				id);
 	}
 	
 

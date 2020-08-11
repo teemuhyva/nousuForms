@@ -23,7 +23,8 @@ import com.nousuapi.forms.admin.model.UserPurposeLinkedResource;
 import com.nousuapi.forms.admin.model.UserPurposeResource;
 import com.nousuapi.forms.entity.Customer;
 import com.nousuapi.forms.entity.UserPurposeInfo;
-import com.nousuapi.forms.excelutil.JklCupExcel;
+import com.nousuapi.forms.excelutil.JklCupExcelWithVehka;
+import com.nousuapi.forms.excelutil.JklCupExcelWithoutVehka;
 import com.nousuapi.forms.service.UserPurposeService;
 import com.nousuapi.forms.service.UserService;
 import com.nousuapi.forms.tournament.JklCupController;
@@ -45,9 +46,9 @@ public class AdminController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@PatchMapping("/removeuserfromrole")
-	private ResponseEntity<UserPurposeLinkedResource> removeUserPurpose(@RequestBody UserPurposeInfo userPurpose) {
-		userPurposeService.deleteUserPurpose(userPurpose);
+	@PatchMapping("/removeuserfromrole/{id}")
+	private ResponseEntity<UserPurposeLinkedResource> removeUserFromPurpose(@PathVariable(value = "id") long id) {
+		userPurposeService.deleteUserPurpose(id);
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
@@ -84,12 +85,21 @@ public class AdminController {
 		return new ResponseEntity<>(result, HttpStatus.CREATED);
 	}
 	
-	@GetMapping("/jyvaskylacupjobsForm")
-	public ResponseEntity<List<UserPurposeInfo>> generateJob() throws EncryptedDocumentException, IOException {
+	@GetMapping("/jklcupformvehka")
+	public ResponseEntity<List<UserPurposeInfo>> generateCup() throws EncryptedDocumentException, IOException {
 		List<UserPurposeInfo> listUsersAndPurpose = userPurposeService.getAll();		
-		JklCupExcel createExcel = new JklCupExcel();
+		JklCupExcelWithVehka createExcel = new JklCupExcelWithVehka();
 		createExcel.JklExcelCreation(listUsersAndPurpose);
 		
-		return new ResponseEntity<>(HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(HttpStatus.CREATED);
+	}
+	
+	@GetMapping("/jklcupformpalokka")
+	public ResponseEntity<List<UserPurposeInfo>> generateCup2() throws EncryptedDocumentException, IOException {
+		List<UserPurposeInfo> listUsersAndPurpose = userPurposeService.getAll();		
+		JklCupExcelWithoutVehka createExcel = new JklCupExcelWithoutVehka();
+		createExcel.JklExcelCreation(listUsersAndPurpose);
+		
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 }

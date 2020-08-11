@@ -71,9 +71,11 @@ public class UserPurposeInfo {
 	private OnsiteDay weekDay;
 		
 	//what time person will be onsite
-	@NotNull
 	@Column(name = "start_time")
 	private String startTime;
 	@Column(name = "end_time")
 	private String endTime;
+	
+	@Column(name = "person_in_charge")
+	private String personInCharge;
 }
