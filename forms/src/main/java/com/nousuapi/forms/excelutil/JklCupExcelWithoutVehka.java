@@ -20,7 +20,7 @@ import com.nousuapi.forms.excelutil.generatesheet.RowSheetValidator;
 public class JklCupExcelWithoutVehka {
 	
 	public void JklExcelCreation(List<UserPurposeInfo> userList) throws EncryptedDocumentException, IOException {
-    	InputStream jklcupNormal = new FileInputStream("src\\main\\resources\\JKLCup2020-tyotehtavat.xls");
+    	InputStream jklcupNormal = new FileInputStream("JKLCup2020-tyotehtavat.xls");
     	//InputStream jklcupNormalSuper = new FileInputStream("src\\main\\resources\\jklcup.xls");
     	HSSFWorkbook wb = new HSSFWorkbook(jklcupNormal);
         
@@ -58,7 +58,7 @@ public class JklCupExcelWithoutVehka {
         	 * InputStream jklcupNormal = new FileInputStream("src\\main\\resources\\jklcup.xls"); -> with vehkalampi
         	 * */
 
-    	OutputStream fileOut = new FileOutputStream("src\\main\\resources\\JKLCup2020-tyotehtavat-taytetty.xls");
+    	OutputStream fileOut = new FileOutputStream("JKLCup2020-tyotehtavat-taytetty.xls");
         wb.write(fileOut);
         wb.close();
         fileOut.close();
